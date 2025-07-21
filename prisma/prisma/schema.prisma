@@ -1,0 +1,169 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// 用戶表
+model User {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  googleId      String   @unique
+  email         String   @unique
+  nickname      String
+  profileImage  String?
+  language      String   @default("zh") // zh, en
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  lastLoginAt   DateTime @default(now())
+  
+  // 關聯
+  progress      UserProgress[]
+  rewardClaims  RewardClaim[]
+  
+  @@map("users")
+}
+
+// 關卡表
+model Stage {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  stageNumber   Int      @unique // 1, 2, 3, 4, 5, 6, 7
+  password      String   // 通關密碼
+  
+  // 中文內容
+  titleZh       String
+  descriptionZh String
+  
+  // 英文內容
+  titleEn       String
+  descriptionEn String
+  
+  // 外部連結
+  externalUrl   String?
+  
+  // 狀態
+  isActive      Boolean  @default(true)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // 關聯
+  userProgress  UserProgress[]
+  
+  @@map("stages")
+}
+
+// 用戶闖關進度表
+model UserProgress {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String    @db.ObjectId
+  stageId     String    @db.ObjectId
+  passed      Boolean   @default(false)
+  passedAt    DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // 關聯
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stage       Stage     @relation(fields: [stageId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, stageId])
+  @@map("user_progress")
+}
+
+// 獎勵等級設定表
+model RewardLevel {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  level           Int      @unique // 1, 2, 3
+  requiredPassed  Int      // 所需通關數: 3, 5, 7
+  
+  // 中文內容
+  titleZh         String
+  descriptionZh   String
+  
+  // 英文內容
+  titleEn         String
+  descriptionEn   String
+  
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // 關聯
+  claims          RewardClaim[]
+  
+  @@map("reward_levels")
+}
+
+// 獎勵領取記錄表
+model RewardClaim {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String      @db.ObjectId
+  rewardLevelId String      @db.ObjectId
+  level         Int         // 冗餘字段，方便查詢
+  claimedAt     DateTime    @default(now())
+  claimedBy     String?     // 管理員ID或系統
+  
+  // 關聯
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rewardLevel   RewardLevel @relation(fields: [rewardLevelId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, rewardLevelId])
+  @@map("reward_claims")
+}
+
+// 公告表
+model Announcement {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  
+  // 中文內容
+  titleZh     String
+  contentZh   String
+  
+  // 英文內容
+  titleEn     String
+  contentEn   String
+  
+  // 狀態
+  isActive    Boolean  @default(true)
+  isPinned    Boolean  @default(false) // 置頂
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  publishedAt DateTime @default(now())
+  
+  @@map("announcements")
+}
+
+// 管理員表
+model Admin {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  username    String   @unique
+  password    String   // 加密後的密碼
+  isActive    Boolean  @default(true)
+  lastLoginAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("admins")
+}
+
+// 活動統計快照表 (用於加速統計查詢)
+model StatisticsSnapshot {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  date          DateTime @unique @db.Date
+  totalUsers    Int      @default(0)
+  activeUsers   Int      @default(0) // 當日活躍用戶數
+  
+  // 每關通過人數
+  stageStats    Json     // [{"stageId": "...", "passedCount": 120, "passRate": 0.8}]
+  
+  // 獎勵統計
+  rewardStats   Json     // [{"level": 1, "eligibleUsers": 65, "claimedCount": 45}]
+  
+  createdAt     DateTime @default(now())
+  
+  @@map("statistics_snapshots")
+}
