@@ -271,3 +271,6 @@ pnpm --filter api lint
 - **後端 (Express)**: 可部署至 Render, Heroku, AWS EC2, Google Cloud Run 或任何支援 Node.js 的伺服器。
 
 部署前請確保生產環境的環境變數已正確配置。
+
+
+1235645612312312
