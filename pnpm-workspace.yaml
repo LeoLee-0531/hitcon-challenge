@@ -1,6 +1,10 @@
 packages:
-  - 'apps/*'
-  - 'packages/*'
-  - 'prisma'
-  - 'docs'
+  - apps/*
+  - packages/*
+  - prisma
+  - docs
 
+ignoredBuiltDependencies:
+  - '@prisma/client'
+  - bcrypt
+  - esbuild
