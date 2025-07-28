@@ -7,19 +7,31 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "pnpm -r lint",
     "format": "pnpm -r format",
-    "format:check": "pnpm -r format:check"
+    "format:check": "pnpm -r format:check",
+    "db:generate": "prisma generate --schema=prisma/schema.prisma",
+    "db:push": "prisma db push --schema=prisma/schema.prisma",
+    "db:push:dev": "dotenv -e .env.development -- prisma db push --schema=prisma/schema.prisma",
+    "db:push:prod": "dotenv -e .env.production -- prisma db push --schema=prisma/schema.prisma"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad",
   "devDependencies": {
-    "eslint": "^9",
-    "@eslint/js": "^9",
     "@eslint/eslintrc": "^3",
+    "@eslint/js": "^9",
+    "@types/bcrypt": "^5.0.2",
+    "@types/node": "^24.1.0",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
+    "bcrypt": "^5.1.1",
+    "eslint": "^9",
     "eslint-plugin-prettier": "^5",
-    "prettier": "^3"
+    "prettier": "^3",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.3"
   }
 }
