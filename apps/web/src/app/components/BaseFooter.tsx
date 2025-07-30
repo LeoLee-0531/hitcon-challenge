@@ -1,0 +1,213 @@
+// components/BaseFooter.tsx
+import Link from 'next/link'
+import FacebookLogo from './logos/facebook'
+import FlickrLogo from './logos/flickr'
+import InstagramLogo from './logos/instagram'
+import TelegramLogo from './logos/telegram'
+import ThreadsLogo from './logos/threads'
+import YoutubeLogo from './logos/youtube'
+import SitconLogo from './logos/sitcon'
+
+export interface NavigationLink {
+  text: string
+  href: string
+}
+
+export default function BaseFooter({
+  navigationLinks,
+}: {
+  navigationLinks: NavigationLink[]
+}) {
+  return (
+    <footer className="space-y-7 bg-gray-100 px-5 pb-7 pt-4 text-gray-800 mobile:px-10 mobile:py-16 mobile:pt-16">
+      {/* Divider */}
+      <hr className="border-gray-300 pb-7 max-mobile:hidden" />
+
+        {/* 應該調整成切在1050 待調整 */}
+      {/* Desktop Layout ≥820px */}
+      <div className="grid grid-cols-12 gap-2 max-[820px]:hidden">
+        <div className="col-span-2" />
+        <div className="col-span-8 flex justify-between">
+            <span><PastEvents /></span>
+            <span><Contact /> </span>
+        </div>
+        <div className="col-span-2" />
+      </div>
+
+      {/* Tablet Layout 550px–819px */}
+      <div className="block space-y-6 max-[550px]:hidden min-[820px]:hidden">
+        <div className="min-[710px]:hidden">
+          <Brand />
+        </div>
+        <div className="flex justify-between">
+          <Contact />
+        </div>
+        <PastEvents />
+      </div>
+
+      {/* Mobile Layout <550px */}
+      <div className="space-y-6 min-[550px]:hidden">
+        <Brand />
+        <div className="flex justify-between">
+          <div className="flex flex-col gap-6">
+            <Contact />
+          </div>
+        </div>
+        <PastEvents />
+      </div>
+
+      {/* Social Media Links */}
+      <SocialMediasSection />
+    </footer>
+  )
+}
+
+function PastEvents() {
+  return (
+    <FooterSubMenuGrid
+      title="歷年網站"
+      links={[
+        { text: '2013', href: 'https://sitcon.org/2013' },
+        { text: '2014', href: 'https://sitcon.org/2014' },
+        { text: '2015', href: 'https://sitcon.org/2015' },
+        { text: '2016', href: 'https://sitcon.org/2016' },
+        { text: '2017', href: 'https://sitcon.org/2017' },
+        { text: '2018', href: 'https://sitcon.org/2018' },
+        { text: '2019', href: 'https://sitcon.org/2019' },
+        { text: '2020', href: 'https://sitcon.org/2020' },
+        { text: '2021', href: 'https://sitcon.org/2021' },
+        { text: '2022', href: 'https://sitcon.org/2022' },
+        { text: '2024', href: 'https://sitcon.org/2024' },
+        { text: '2025', href: 'https://sitcon.org/2025' },
+      ]}
+    />
+  )
+}
+
+function Contact() {
+  return (
+    <FooterSubMenu
+      title="聯絡我們"
+      links={[{ text: 'contact@sitcon.org', href: 'mailto:contact@sitcon.org' }]}
+      internal={false}
+    />
+  )
+}
+
+function Brand() {
+  return (
+    <div className="flex flex-row gap-6 max-mobile:flex-col mobile:items-end">
+    {/* <div className="flex flex-col justify-end h-[60px] min-w-[210px]"> */}
+      <SitconLogo height={60} width={200} />
+      {/* <p className="max-[1060px]:hidden">
+        學生計算機年會 <br />
+        Students&#39; Information Technology Conference
+      </p> */}
+    </div>
+  )
+}
+
+function SocialLinks() {
+  return (
+    // <div className="items-end gap-2 max-[710px]:w-full max-[710px]:justify-between min-[490px]:gap-3">
+    <div className="flex items-end gap-2 md:gap-3 max-[710px]:w-full max-[710px]:justify-between">
+      <RadioLinkButton href="https://sitcon.org/fb" logo={<FacebookLogo />} />
+      <RadioLinkButton href="https://sitcon.org/threads" logo={<ThreadsLogo />} />
+      <RadioLinkButton href="https://sitcon.org/yt" logo={<YoutubeLogo />} />
+      <RadioLinkButton href="https://sitcon.org/instagram" logo={<InstagramLogo />} />
+      <RadioLinkButton href="https://sitcon.org/flickr" logo={<FlickrLogo />} />
+      <RadioLinkButton href="https://sitcon.org/tg" logo={<TelegramLogo />} />
+    </div>
+  )
+}
+
+function SocialMediasSection() {
+  return (
+    <div className="grid grid-cols-12 gap-4">
+      <div className="col-span-2" />
+      <div className="col-span-8 flex justify-between items-end">
+        <div className="max-[710px]:hidden">
+            <Brand />
+        </div>
+        <SocialLinks />
+      </div>
+      <div className="col-span-2" />
+    </div>
+  )
+}
+
+interface LinkText {
+  text: string
+  href: string
+}
+
+function FooterSubMenu({
+  title,
+  links,
+  internal,
+}: {
+  title: string
+  links: LinkText[]
+  internal: boolean
+}) {
+  return (
+    <ul className="flex flex-col gap-2">
+      <li className="mb-2 font-bold">{title}</li>
+      {links.map((link) => (
+        <li key={link.href}>
+          <Link
+            href={link.href}
+            target={internal ? undefined : '_blank'}
+            className="hover:opacity-70"
+          >
+            {link.text}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function FooterSubMenuGrid({
+  title,
+  links,
+}: {
+  title: string
+  links: LinkText[]
+}) {
+  return (
+    <ul>
+      <p className="mb-4 font-bold">{title}</p>
+      <ul className="flex flex-row flex-nowrap gap-3 text-center">
+        {links.map((link) => (
+          <li key={link.href}>
+            <a
+              href={link.href}
+              target="_blank"
+              className="inline-block hover:opacity-70 text-[14px]"
+            >
+              {link.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </ul>
+  )
+}
+
+function RadioLinkButton({
+  logo,
+  href,
+}: {
+  logo: React.ReactNode
+  href: string
+}) {
+  return (
+    <Link
+      href={href}
+      className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-800 px-2 py-1 text-gray-800 hover:bg-blue-600 hover:text-white mobile:h-12 mobile:w-12 mobile:px-3"
+    >
+      {logo}
+    </Link>
+  )
+}
