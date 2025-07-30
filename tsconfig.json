@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "declaration": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "types": ["./packages/types"],
+      "types/*": ["./packages/types/*"],
+      "utils": ["./packages/utils"],
+      "utils/*": ["./packages/utils/*"]
+    }
+  },
+  "references": [
+    { "path": "./apps/api" },
+    { "path": "./packages/types" },
+    { "path": "./packages/utils" },
+    { "path": "./prisma" }
+  ]
+}
