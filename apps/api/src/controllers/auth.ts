@@ -101,19 +101,13 @@ export const adminLogin = async (
       where: { isActive: true },
     });
 
-    if (!admin) {
+    // 驗證管理員是否存在以及密碼是否正確
+    const isValidAdmin = admin && (await bcrypt.compare(password, admin.password));
+
+    if (!isValidAdmin) {
       sendError(res, ERROR_CODES.UNAUTHORIZED, 'Invalid credentials', 401);
       return;
     }
-
-    // 驗證密碼
-    const isValidPassword = await bcrypt.compare(password, admin.password);
-
-    if (!isValidPassword) {
-      sendError(res, ERROR_CODES.UNAUTHORIZED, '密碼錯誤', 401);
-      return;
-    }
-
     // 更新最後登入時間
     await prisma.admin.update({
       where: { id: admin.id },

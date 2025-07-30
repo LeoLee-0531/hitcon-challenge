@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { config } from 'dotenv';
 import { resolve } from 'path';
+// 使用 bcryptjs 而非 bcrypt，因為 bcrypt 可能在某些環境中遇到相容性或安裝問題。
 import bcrypt from 'bcryptjs';
 
 // 載入 .env
