@@ -1,10 +1,15 @@
 import jwt from 'jsonwebtoken';
 import type { JWTUserPayload, JWTAdminPayload } from '../types';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret';
-const ADMIN_JWT_SECRET =
-  process.env.ADMIN_JWT_SECRET || 'fallback-admin-secret';
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is not set.');
+}
+const JWT_SECRET = process.env.JWT_SECRET;
 
+if (!process.env.ADMIN_JWT_SECRET) {
+  throw new Error('ADMIN_JWT_SECRET environment variable is not set.');
+}
+const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET;
 export const generateUserToken = (payload: JWTUserPayload): string => {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: '2d' });
 };
