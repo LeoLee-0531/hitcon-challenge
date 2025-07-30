@@ -62,7 +62,7 @@ export const getRewardStatus = async (
       claimed_at: claimedAt,
     });
   } catch (error) {
-    console.error('Get reward status error:', error);
+    console.error('取得獎勵狀態錯誤:', error);
     sendError(
       res,
       ERROR_CODES.INTERNAL_ERROR,
@@ -80,7 +80,11 @@ export const claimReward = async (
     const { user_id }: RewardClaimPayload = req.body;
 
     if (!req.admin) {
-      sendError(res, ERROR_CODES.UNAUTHORIZED, ERROR_MESSAGES.UNAUTHORIZED);
+      sendError(
+        res,
+        ERROR_CODES.UNAUTHORIZED,
+        ERROR_MESSAGES[ERROR_CODES.UNAUTHORIZED]
+      );
       return;
     }
 
@@ -145,7 +149,7 @@ export const claimReward = async (
       claimed_at: rewardClaim.claimedAt,
     });
   } catch (error) {
-    console.error('Claim reward error:', error);
+    console.error('領取獎勵錯誤:', error);
     sendError(
       res,
       ERROR_CODES.INTERNAL_ERROR,
@@ -200,7 +204,7 @@ export const resetReward = async (
       claimed_at: null,
     });
   } catch (error) {
-    console.error('Reset reward error:', error);
+    console.error('重設獎勵錯誤:', error);
     sendError(
       res,
       ERROR_CODES.INTERNAL_ERROR,

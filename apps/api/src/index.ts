@@ -19,7 +19,7 @@ import { PORT as ENV_PORT, ALLOWED_ORIGINS, NODE_ENV } from './config/env';
 // 導入路由
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
-import stageRoutes from './routes/stages'; // 修正為 stages.ts
+import stageRoutes from './routes/stages';
 import rewardRoutes from './routes/reward';
 import adminRoutes from './routes/admin';
 
@@ -88,7 +88,7 @@ if (NODE_ENV !== 'production' && specs) {
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: 'HITCON Challenge API is running!'
+ *                   example: 'HITCON Challenge API 正在運行！'
  *                 timestamp:
  *                   type: string
  *                   format: date-time
@@ -96,7 +96,7 @@ if (NODE_ENV !== 'production' && specs) {
 app.get('/', (req, res) => {
   res.json({
     success: true,
-    message: 'HITCON Challenge API is running!',
+    message: 'HITCON Challenge API 正在運行！',
     timestamp: new Date().toISOString(),
   });
 });

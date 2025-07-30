@@ -39,19 +39,21 @@ export function validateEnvironmentVariables(): RequiredEnvVars &
   }
 
   if (missingVars.length > 0) {
-    console.error(`
-應用程式啟動失敗！缺少必要的環境變數。
+    console.error(
+      `
+應用程式啟動失敗！缺少必要的環境變數：${missingVars.join(', ')}
 請檢查您的環境配置並在 .env 文件中設定所有必要的變數後重新啟動應用程式。
-    `.trim());
+    `.trim()
+    );
     process.exit(1);
   }
 
   // 返回驗證過的環境變數
   return {
-    JWT_SECRET: process.env.JWT_SECRET!,
-    ADMIN_JWT_SECRET: process.env.ADMIN_JWT_SECRET!,
-    DATABASE_URL: process.env.DATABASE_URL!,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID!,
+    JWT_SECRET: process.env.JWT_SECRET as string,
+    ADMIN_JWT_SECRET: process.env.ADMIN_JWT_SECRET as string,
+    DATABASE_URL: process.env.DATABASE_URL as string,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID as string,
     PORT: process.env.PORT,
     NODE_ENV: process.env.NODE_ENV,
     ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS,
