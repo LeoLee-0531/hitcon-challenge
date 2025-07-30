@@ -28,6 +28,11 @@
     cd hitcon-challenge
     ```
 
+    或更新分支
+    ``` bash
+    git pull origin main
+    ```
+
 2.  **安裝依賴套件：**
 
     ```bash
