@@ -1,39 +1,8 @@
 import type { Response } from 'express';
 import { prisma } from '../lib/prisma';
-import { generateQRCodeUrl } from '../lib/qrcode';
 import { sendSuccess, sendError } from '../utils/response';
 import { ERROR_CODES, ERROR_MESSAGES } from '../constants/errors';
 import type { AuthenticatedRequest, RewardClaimPayload } from '../types';
-
-export const generateUserQRCode = async (
-  req: AuthenticatedRequest,
-  res: Response
-): Promise<void> => {
-  try {
-    if (!req.user) {
-      sendError(res, ERROR_CODES.UNAUTHORIZED, ERROR_MESSAGES.UNAUTHORIZED);
-      return;
-    }
-
-    const userId = req.user.id;
-
-    // 生成 QR Code URL
-    const qrcodeUrl = generateQRCodeUrl(userId);
-
-    sendSuccess(res, {
-      qrcode_url: qrcodeUrl,
-      user_id: userId,
-    });
-  } catch (error) {
-    console.error('Generate QR code error:', error);
-    sendError(
-      res,
-      ERROR_CODES.INTERNAL_ERROR,
-      ERROR_MESSAGES[ERROR_CODES.INTERNAL_ERROR],
-      500
-    );
-  }
-};
 
 export const getRewardStatus = async (
   req: AuthenticatedRequest,

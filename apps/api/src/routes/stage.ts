@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import { Router, type Router as ExpressRouter } from 'express';
 import { getAllStages, verifyStagePassword } from '../controllers/stages';
 import { authenticateUser } from '../middleware/auth';
 import { validateBody } from '../middleware/validation';
 import { stageVerifySchema } from '../schemas/validation';
 
-const router = Router();
+const router: ExpressRouter = Router();
 
 // 查詢所有關卡資訊
 router.get('/', getAllStages);

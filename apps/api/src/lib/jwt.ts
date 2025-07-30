@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import type { JWTUserPayload, JWTAdminPayload } from '../types';
 
 if (!process.env.JWT_SECRET) {
