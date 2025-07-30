@@ -9,9 +9,8 @@
     "format": "pnpm -r format",
     "format:check": "pnpm -r format:check",
     "db:generate": "prisma generate --schema=prisma/schema.prisma",
-    "db:push": "prisma db push --schema=prisma/schema.prisma",
-    "db:push:dev": "dotenv -e .env.development -- prisma db push --schema=prisma/schema.prisma",
-    "db:push:prod": "dotenv -e .env.production -- prisma db push --schema=prisma/schema.prisma"
+    "db:dev": "prisma migrate dev --schema=prisma/schema.prisma",
+    "db:push": "prisma db push --schema=prisma/schema.prisma"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

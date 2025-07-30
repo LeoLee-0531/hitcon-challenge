@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
+import type { Response, NextFunction } from 'express';
 import { verifyUserToken, verifyAdminToken } from '../lib/jwt';
 import { sendError } from '../utils/response';
 import { ERROR_CODES, ERROR_MESSAGES } from '../constants/errors';
-import { AuthenticatedRequest } from '../types';
+import type { AuthenticatedRequest } from '../types';
 
 export const authenticateUser = (
   req: AuthenticatedRequest,
@@ -25,7 +25,7 @@ export const authenticateUser = (
     const decoded = verifyUserToken(token);
     req.user = decoded;
     next();
-  } catch (error) {
+  } catch {
     sendError(
       res,
       ERROR_CODES.INVALID_TOKEN,
@@ -56,7 +56,7 @@ export const authenticateAdmin = (
     const decoded = verifyAdminToken(token);
     req.admin = decoded;
     next();
-  } catch (error) {
+  } catch {
     sendError(
       res,
       ERROR_CODES.INVALID_TOKEN,

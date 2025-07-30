@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { JWTUserPayload, JWTAdminPayload } from '../types';
+import type { JWTUserPayload, JWTAdminPayload } from '../types';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret';
 const ADMIN_JWT_SECRET =

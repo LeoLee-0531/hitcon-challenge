@@ -1,11 +1,11 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { prisma } from '../lib/prisma';
 import { verifyGoogleToken } from '../lib/google-auth';
 import { generateUserToken, generateAdminToken } from '../lib/jwt';
 import { sendSuccess, sendError } from '../utils/response';
 import { ERROR_CODES, ERROR_MESSAGES } from '../constants/errors';
-import { GoogleTokenPayload, AdminLoginPayload } from '../types';
+import type { GoogleTokenPayload, AdminLoginPayload } from '../types';
 
 export const googleAuth = async (
   req: Request,

@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
-import { Schema } from 'joi';
+import type { Request, Response, NextFunction } from 'express';
+import type { Schema } from 'joi';
 import { sendError } from '../utils/response';
-import { ERROR_CODES, ERROR_MESSAGES } from '../constants/errors';
+import { ERROR_CODES } from '../constants/errors';
 
 export const validateBody = (schema: Schema) => {
   return (req: Request, res: Response, next: NextFunction): void => {
