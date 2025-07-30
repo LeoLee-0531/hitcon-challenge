@@ -10,7 +10,11 @@ export const getUserProfile = async (
 ): Promise<void> => {
   try {
     if (!req.user) {
-      sendError(res, ERROR_CODES.UNAUTHORIZED, ERROR_MESSAGES.UNAUTHORIZED);
+      sendError(
+        res,
+        ERROR_CODES.UNAUTHORIZED,
+        ERROR_MESSAGES[ERROR_CODES.UNAUTHORIZED]
+      );
       return;
     }
 
@@ -63,7 +67,7 @@ export const getUserProfile = async (
       progress,
     });
   } catch (error) {
-    console.error('Get user profile error:', error);
+    console.error('取得使用者個人資料錯誤:', error);
     sendError(
       res,
       ERROR_CODES.INTERNAL_ERROR,
@@ -79,7 +83,11 @@ export const updateUserLanguage = async (
 ): Promise<void> => {
   try {
     if (!req.user) {
-      sendError(res, ERROR_CODES.UNAUTHORIZED, ERROR_MESSAGES.UNAUTHORIZED);
+      sendError(
+        res,
+        ERROR_CODES.UNAUTHORIZED,
+        ERROR_MESSAGES[ERROR_CODES.UNAUTHORIZED]
+      );
       return;
     }
 
@@ -125,7 +133,7 @@ export const updateUserLanguage = async (
       progress,
     });
   } catch (error) {
-    console.error('Update user language error:', error);
+    console.error('更新使用者語言設定錯誤:', error);
     sendError(
       res,
       ERROR_CODES.INTERNAL_ERROR,

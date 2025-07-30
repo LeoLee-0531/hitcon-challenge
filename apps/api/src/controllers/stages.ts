@@ -26,7 +26,7 @@ export const getAllStages = async (
 
     sendSuccess(res, stageData);
   } catch (error) {
-    console.error('Get all stages error:', error);
+    console.error('取得所有關卡錯誤:', error);
     sendError(
       res,
       ERROR_CODES.INTERNAL_ERROR,
@@ -42,7 +42,11 @@ export const verifyStagePassword = async (
 ): Promise<void> => {
   try {
     if (!req.user) {
-      sendError(res, ERROR_CODES.UNAUTHORIZED, ERROR_MESSAGES.UNAUTHORIZED);
+      sendError(
+        res,
+        ERROR_CODES.UNAUTHORIZED,
+        ERROR_MESSAGES[ERROR_CODES.UNAUTHORIZED]
+      );
       return;
     }
 
@@ -117,7 +121,7 @@ export const verifyStagePassword = async (
       passed: true,
     });
   } catch (error) {
-    console.error('Verify stage password error:', error);
+    console.error('驗證關卡密碼錯誤:', error);
     sendError(
       res,
       ERROR_CODES.INTERNAL_ERROR,

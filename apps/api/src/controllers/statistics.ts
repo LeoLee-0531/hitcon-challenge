@@ -38,7 +38,7 @@ export const getOverviewStatistics = async (
       last_updated: new Date().toISOString(),
     });
   } catch (error) {
-    console.error('Get overview statistics error:', error);
+    console.error('取得總覽統計錯誤:', error);
     sendError(
       res,
       ERROR_CODES.INTERNAL_ERROR,
@@ -81,7 +81,7 @@ export const getStageStatistics = async (
       stage_stats: stageStats,
     });
   } catch (error) {
-    console.error('Get stage statistics error:', error);
+    console.error('取得關卡統計錯誤:', error);
     sendError(
       res,
       ERROR_CODES.INTERNAL_ERROR,
@@ -122,7 +122,7 @@ export const getRewardStatistics = async (
       claim_rate: parseFloat(claimRate.toFixed(3)),
     });
   } catch (error) {
-    console.error('Get reward statistics error:', error);
+    console.error('取得獎勵統計錯誤:', error);
     sendError(
       res,
       ERROR_CODES.INTERNAL_ERROR,
