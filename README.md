@@ -46,6 +46,7 @@ pnpm install
 執行 Prisma Migration，建立資料庫 Schema：
 
 ```bash
+pnpm prisma generate
 pnpm prisma migrate dev --name init
 ```
 
