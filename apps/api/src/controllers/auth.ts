@@ -102,7 +102,7 @@ export const adminLogin = async (
     });
 
     if (!admin) {
-      sendError(res, ERROR_CODES.UNAUTHORIZED, '管理員帳戶不存在', 401);
+      sendError(res, ERROR_CODES.UNAUTHORIZED, 'Invalid credentials', 401);
       return;
     }
 
