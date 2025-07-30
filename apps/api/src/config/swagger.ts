@@ -1,8 +1,9 @@
 import swaggerJsdoc from 'swagger-jsdoc';
+import { NODE_ENV } from './env';
 
 // 根據環境動態配置 Swagger
 const getSwaggerConfig = () => {
-  const isProduction = process.env.NODE_ENV === 'production';
+  const isProduction = NODE_ENV === 'production';
 
   // 生產環境完全關閉 Swagger
   if (isProduction) {
