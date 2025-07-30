@@ -79,7 +79,7 @@ export const googleAuth = async (
       language: user.language,
     });
   } catch (error) {
-    console.error('Google auth error:', error);
+    console.error('Google 登入錯誤:', error);
     sendError(
       res,
       ERROR_CODES.GOOGLE_AUTH_FAILED,
@@ -130,7 +130,7 @@ export const adminLogin = async (
       admin_token: token,
     });
   } catch (error) {
-    console.error('Admin login error:', error);
+    console.error('管理員登入錯誤:', error);
     sendError(
       res,
       ERROR_CODES.INTERNAL_ERROR,

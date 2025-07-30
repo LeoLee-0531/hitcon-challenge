@@ -36,7 +36,7 @@ export const verifyGoogleToken = async (
       picture: payload.picture,
     };
   } catch (error) {
-    console.error('Error during Google token verification:', error);
-    throw new Error('Google token verification failed');
+    console.error('Google token 驗證過程發生錯誤:', error);
+    throw new Error('Google token 驗證失敗');
   }
 };

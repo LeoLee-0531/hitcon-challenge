@@ -26,7 +26,7 @@ export const authenticateUser = (
     req.user = decoded;
     next();
   } catch (error) {
-    console.error('Error in authenticateUser:', error);
+    console.error('使用者身份驗證錯誤:', error);
     sendError(
       res,
       ERROR_CODES.INVALID_TOKEN,
@@ -58,7 +58,7 @@ export const authenticateAdmin = (
     req.admin = decoded;
     next();
   } catch (error) {
-    console.error('Error in authenticateAdmin:', error);
+    console.error('管理員身份驗證錯誤:', error);
     sendError(
       res,
       ERROR_CODES.INVALID_TOKEN,
