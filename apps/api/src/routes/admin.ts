@@ -123,13 +123,20 @@ router.post(
  *                   properties:
  *                     user_id:
  *                       type: string
- *                       example: 'user-123'
+ *                       example: '688a0306075d3123e024b696'
+ *                     nickname:
+ *                       type: string
+ *                       example: '測試使用者一'
+ *                     passed_count:
+ *                       type: integer
+ *                       example: 3
  *                     claimed:
  *                       type: boolean
  *                       example: false
- *                     reset_at:
+ *                     claimed_at:
  *                       type: string
- *                       format: date-time
+ *                       nullable: true
+ *                       example: null
  *                 timestamp:
  *                   type: string
  *                   format: date-time

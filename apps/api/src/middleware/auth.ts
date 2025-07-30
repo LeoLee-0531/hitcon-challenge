@@ -65,3 +65,55 @@ export const authenticateAdmin = (
     );
   }
 };
+
+export const authenticateUserOrAdmin = (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+): void => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      sendError(
+        res,
+        ERROR_CODES.UNAUTHORIZED,
+        ERROR_MESSAGES[ERROR_CODES.UNAUTHORIZED],
+        401
+      );
+      return;
+    }
+
+    const token = authHeader.substring(7);
+
+    // 先嘗試驗證管理員 token
+    try {
+      const adminDecoded = verifyAdminToken(token);
+      req.admin = adminDecoded;
+      next();
+      return;
+    } catch {
+      // 如果管理員 token 驗證失敗，嘗試使用者 token
+      try {
+        const userDecoded = verifyUserToken(token);
+        req.user = userDecoded;
+        next();
+        return;
+      } catch {
+        // 兩種 token 都驗證失敗
+        sendError(
+          res,
+          ERROR_CODES.INVALID_TOKEN,
+          ERROR_MESSAGES[ERROR_CODES.INVALID_TOKEN],
+          401
+        );
+      }
+    }
+  } catch {
+    sendError(
+      res,
+      ERROR_CODES.INVALID_TOKEN,
+      ERROR_MESSAGES[ERROR_CODES.INVALID_TOKEN],
+      401
+    );
+  }
+};

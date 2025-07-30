@@ -1,62 +1,8 @@
-import {
-  Router,
-  type Request,
-  type Response,
-  type NextFunction,
-} from 'express';
-import { generateUserQRCode, getRewardStatus } from '../controllers/reward';
-import { authenticateUser, authenticateAdmin } from '../middleware/auth';
-import type { AuthenticatedRequest } from '../types';
+import { Router } from 'express';
+import { getRewardStatus } from '../controllers/reward';
+import { authenticateUserOrAdmin } from '../middleware/auth';
 
 const router: Router = Router();
-
-/**
- * @swagger
- * /api/reward/qrcode:
- *   post:
- *     summary: 生成使用者個人 QR Code
- *     description: 為已完成挑戰的使用者生成領獎用的 QR Code
- *     tags: [Rewards]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: QR Code 生成成功
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 data:
- *                   type: object
- *                   properties:
- *                     qr_code:
- *                       type: string
- *                       description: Base64 編碼的 QR Code 圖片
- *                       example: 'data:image/png;base64,iVBOR...'
- *                     user_id:
- *                       type: string
- *                       example: 'user-123'
- *                 timestamp:
- *                   type: string
- *                   format: date-time
- *       401:
- *         description: 未授權或 token 無效
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- *       403:
- *         description: 使用者尚未完成所有挑戰
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- */
-router.post('/qrcode', authenticateUser, generateUserQRCode);
 
 /**
  * @swagger
@@ -130,19 +76,6 @@ router.post('/qrcode', authenticateUser, generateUserQRCode);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get(
-  '/status',
-  (req: Request, res: Response, next: NextFunction) => {
-    // 嘗試用戶驗證，如果失敗則嘗試管理員驗證
-    authenticateUser(req as AuthenticatedRequest, res, (userErr) => {
-      if (userErr) {
-        authenticateAdmin(req as AuthenticatedRequest, res, next);
-      } else {
-        next();
-      }
-    });
-  },
-  getRewardStatus
-);
+router.get('/status', authenticateUserOrAdmin, getRewardStatus);
 
 export default router;
