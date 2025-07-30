@@ -13,6 +13,7 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
 import { specs } from './config/swagger';
+import { ERROR_CODES, ERROR_MESSAGES } from './constants/errors';
 import { PORT as ENV_PORT, ALLOWED_ORIGINS, NODE_ENV } from './config/env';
 
 // 導入路由
@@ -145,8 +146,8 @@ app.use('*', (req, res) => {
   res.status(404).json({
     success: false,
     error: {
-      code: 'NOT_FOUND',
-      message: `路由 ${req.originalUrl} 不存在`,
+      code: ERROR_CODES.ROUTE_NOT_FOUND,
+      message: `${ERROR_MESSAGES[ERROR_CODES.ROUTE_NOT_FOUND]}: ${req.originalUrl}`,
       timestamp: new Date().toISOString(),
     },
   });
@@ -165,8 +166,8 @@ app.use(
     res.status(500).json({
       success: false,
       error: {
-        code: 'INTERNAL_ERROR',
-        message: '伺服器內部錯誤',
+        code: ERROR_CODES.INTERNAL_ERROR,
+        message: ERROR_MESSAGES[ERROR_CODES.INTERNAL_ERROR],
         timestamp: new Date().toISOString(),
       },
     });
