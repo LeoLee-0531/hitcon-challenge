@@ -19,17 +19,19 @@ const eslintConfig = [
       'coverage/**',
       '*.config.js',
       '*.config.mjs',
+      'apps/**', // 忽略 apps 目錄，讓各專案使用自己的配置
     ],
   },
 
-  // TypeScript files configuration (通用配置)
+  // Root level TypeScript files (packages, prisma, etc.)
   {
-    files: ['**/*.ts', '**/*.tsx'],
+    files: ['packages/**/*.ts', 'prisma/**/*.ts'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
         ecmaVersion: 2022,
         sourceType: 'module',
+        project: './tsconfig.json',
       },
       globals: {
         // Node.js environment
@@ -41,14 +43,6 @@ const eslintConfig = [
         require: 'readonly',
         global: 'readonly',
         console: 'readonly',
-        // ES2022 globals
-        Set: 'readonly',
-        Map: 'readonly',
-        Promise: 'readonly',
-        setTimeout: 'readonly',
-        setInterval: 'readonly',
-        clearTimeout: 'readonly',
-        clearInterval: 'readonly',
       },
     },
     plugins: {
