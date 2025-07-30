@@ -1,13 +1,30 @@
 {
   "name": "types",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "Shared TypeScript type definitions for the HITCON challenge project",
+  "main": "index.ts",
+  "types": "index.ts",
+  "exports": {
+    ".": {
+      "types": "./index.ts",
+      "import": "./index.ts",
+      "require": "./index.ts"
+    }
   },
-  "keywords": [],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "keywords": [
+    "typescript",
+    "types",
+    "shared"
+  ],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.13.1"
+  "packageManager": "pnpm@10.13.1",
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
 }
