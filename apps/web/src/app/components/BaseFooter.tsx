@@ -1,22 +1,23 @@
 // components/BaseFooter.tsx
-import Link from 'next/link'
-import FacebookLogo from './logos/facebook'
-import FlickrLogo from './logos/flickr'
-import InstagramLogo from './logos/instagram'
-import TelegramLogo from './logos/telegram'
-import ThreadsLogo from './logos/threads'
-import YoutubeLogo from './logos/youtube'
-import SitconLogo from './logos/sitcon'
+import Link from 'next/link';
+import FacebookLogo from './logos/facebook';
+import FlickrLogo from './logos/flickr';
+import InstagramLogo from './logos/instagram';
+import TelegramLogo from './logos/telegram';
+import ThreadsLogo from './logos/threads';
+import YoutubeLogo from './logos/youtube';
+import SitconLogo from './logos/sitcon';
 
 export interface NavigationLink {
-  text: string
-  href: string
+  text: string;
+  href: string;
 }
 
 export default function BaseFooter({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   navigationLinks,
 }: {
-  navigationLinks: NavigationLink[]
+  navigationLinks: NavigationLink[];
 }) {
   return (
     <footer className="space-y-7 bg-[#121712] px-5 pb-7 pt-4 text-white mobile:px-10 mobile:py-16 mobile:pt-16">
@@ -27,14 +28,20 @@ export default function BaseFooter({
       <div className="grid grid-cols-12 gap-2">
         <div className="col-span-2" />
         {/* 桌機/平板：flex-row + justify-between，手機：block */}
-        <div className={`
+        <div
+          className={`
           col-span-8
           ${'flex justify-between'} max-[700px]:block
-        `}>
+        `}
+        >
           {/* 桌機/平板顯示 PastEvents + Contact，手機顯示 Contact + PastEvents */}
           <div className="max-[700px]:hidden flex justify-between w-full">
-            <span><PastEvents /></span>
-            <span><Contact /></span>
+            <span>
+              <PastEvents />
+            </span>
+            <span>
+              <Contact />
+            </span>
           </div>
           <div className="min-[701px]:hidden">
             <Contact />
@@ -48,7 +55,7 @@ export default function BaseFooter({
       {/* Social Media Links */}
       <SocialMediasSection />
     </footer>
-  )
+  );
 }
 
 function PastEvents() {
@@ -70,30 +77,32 @@ function PastEvents() {
         { text: '2025', href: 'https://sitcon.org/2025' },
       ]}
     />
-  )
+  );
 }
 
 function Contact() {
   return (
     <FooterSubMenu
       title="聯絡我們"
-      links={[{ text: 'contact@sitcon.org', href: 'mailto:contact@sitcon.org' }]}
+      links={[
+        { text: 'contact@sitcon.org', href: 'mailto:contact@sitcon.org' },
+      ]}
       internal={false}
     />
-  )
+  );
 }
 
 function Brand() {
   return (
     <div className="flex flex-row gap-6 max-mobile:flex-col mobile:items-end">
-    {/* <div className="flex flex-col justify-end h-[60px] min-w-[210px]"> */}
+      {/* <div className="flex flex-col justify-end h-[60px] min-w-[210px]"> */}
       <SitconLogo height={60} width={200} />
       {/* <p className="max-[1060px]:hidden">
         學生計算機年會 <br />
         Students&#39; Information Technology Conference
       </p> */}
     </div>
-  )
+  );
 }
 
 function SocialLinks() {
@@ -101,13 +110,19 @@ function SocialLinks() {
     // <div className="items-end gap-2 max-[710px]:w-full max-[710px]:justify-between min-[490px]:gap-3">
     <div className="flex items-end gap-2 max-[700px]:w-full max-[700px]:justify-between">
       <RadioLinkButton href="https://sitcon.org/fb" logo={<FacebookLogo />} />
-      <RadioLinkButton href="https://sitcon.org/threads" logo={<ThreadsLogo />} />
+      <RadioLinkButton
+        href="https://sitcon.org/threads"
+        logo={<ThreadsLogo />}
+      />
       <RadioLinkButton href="https://sitcon.org/yt" logo={<YoutubeLogo />} />
-      <RadioLinkButton href="https://sitcon.org/instagram" logo={<InstagramLogo />} />
+      <RadioLinkButton
+        href="https://sitcon.org/instagram"
+        logo={<InstagramLogo />}
+      />
       <RadioLinkButton href="https://sitcon.org/flickr" logo={<FlickrLogo />} />
       <RadioLinkButton href="https://sitcon.org/tg" logo={<TelegramLogo />} />
     </div>
-  )
+  );
 }
 
 function SocialMediasSection() {
@@ -116,18 +131,18 @@ function SocialMediasSection() {
       <div className="col-span-2" />
       <div className="col-span-8 flex justify-between items-end">
         <div className="max-[700px]:hidden">
-            <Brand />
+          <Brand />
         </div>
         <SocialLinks />
       </div>
       <div className="col-span-2" />
     </div>
-  )
+  );
 }
 
 interface LinkText {
-  text: string
-  href: string
+  text: string;
+  href: string;
 }
 
 function FooterSubMenu({
@@ -135,9 +150,9 @@ function FooterSubMenu({
   links,
   internal,
 }: {
-  title: string
-  links: LinkText[]
-  internal: boolean
+  title: string;
+  links: LinkText[];
+  internal: boolean;
 }) {
   return (
     <ul className="flex flex-col gap-2">
@@ -154,15 +169,15 @@ function FooterSubMenu({
         </li>
       ))}
     </ul>
-  )
+  );
 }
 
 function FooterSubMenuGrid({
   title,
   links,
 }: {
-  title: string
-  links: LinkText[]
+  title: string;
+  links: LinkText[];
 }) {
   // 將 links 分成兩行
   const half = Math.ceil(links.length / 2);
@@ -206,15 +221,15 @@ function FooterSubMenuGrid({
         </li>
       </ul>
     </ul>
-  )
+  );
 }
 
 function RadioLinkButton({
   logo,
   href,
 }: {
-  logo: React.ReactNode
-  href: string
+  logo: React.ReactNode;
+  href: string;
 }) {
   return (
     <Link
@@ -223,5 +238,5 @@ function RadioLinkButton({
     >
       {logo}
     </Link>
-  )
+  );
 }
