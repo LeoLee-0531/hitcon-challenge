@@ -320,7 +320,7 @@ async function main() {
   console.log('✅ 領獎記錄已建立');
 
   console.log('\n🎉 假資料建立完成！');
-  console.log('管理員帳戶:', { username: 'admin', password: defaultPassword });
+  console.log('管理員帳戶:', { username: 'admin', password: process.env.ADMIN_DEFAULT_PASSWORD });
   console.log('測試使用者:');
   testUsers.forEach((user, index) => {
     const progressCount =
