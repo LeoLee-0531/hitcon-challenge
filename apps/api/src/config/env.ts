@@ -39,14 +39,10 @@ export function validateEnvironmentVariables(): RequiredEnvVars &
   }
 
   if (missingVars.length > 0) {
-    const errorMessage = `
-應用程式啟動失敗！缺少以下必要的環境變數：
-${missingVars.map((v) => `  - ${v}`).join('\n')}
-
-請在 .env 文件中設定這些環境變數後重新啟動應用程式。
-    `.trim();
-
-    console.error(errorMessage);
+    console.error(`
+應用程式啟動失敗！缺少必要的環境變數。
+請檢查您的環境配置並在 .env 文件中設定所有必要的變數後重新啟動應用程式。
+    `.trim());
     process.exit(1);
   }
 

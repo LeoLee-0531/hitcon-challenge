@@ -57,7 +57,8 @@ export const authenticateAdmin = (
     const decoded = verifyAdminToken(token);
     req.admin = decoded;
     next();
-  } catch {
+  } catch (error) {
+    console.error('Error in authenticateAdmin:', error);
     sendError(
       res,
       ERROR_CODES.INVALID_TOKEN,

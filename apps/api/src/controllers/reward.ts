@@ -4,6 +4,9 @@ import { sendSuccess, sendError } from '../utils/response';
 import { ERROR_CODES, ERROR_MESSAGES } from '../constants/errors';
 import type { AuthenticatedRequest, RewardClaimPayload } from '../types';
 
+// 領獎所需的最少通關數
+const MIN_STAGES_FOR_REWARD = 3;
+
 export const getRewardStatus = async (
   req: AuthenticatedRequest,
   res: Response
@@ -117,7 +120,7 @@ export const claimReward = async (
     const passedCount = user.progress.length;
 
     // 檢查是否符合領獎資格 (至少通過 3 關)
-    if (passedCount < 3) {
+    if (passedCount < MIN_STAGES_FOR_REWARD) {
       sendError(
         res,
         ERROR_CODES.NOT_ELIGIBLE,
