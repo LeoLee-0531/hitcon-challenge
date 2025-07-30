@@ -1,13 +1,19 @@
+import { config } from 'dotenv';
+import path from 'path';
+
+// 載入根目錄的環境變數
+config({ path: path.resolve(__dirname, '../../../.env') });
+
+// 在應用程式啟動的最早期驗證所有必要的環境變數
+import './config/env';
+
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
-import { config } from 'dotenv';
 import { specs } from './config/swagger';
-
-// 載入環境變數
-config();
+import { PORT as ENV_PORT, ALLOWED_ORIGINS, NODE_ENV } from './config/env';
 
 // 導入路由
 import authRoutes from './routes/auth';
@@ -17,15 +23,13 @@ import rewardRoutes from './routes/reward';
 import adminRoutes from './routes/admin';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = ENV_PORT || '3001';
 
 // 中間件設定
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.ALLOWED_ORIGINS?.split(',') || [
-      'http://localhost:3000',
-    ],
+    origin: ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000'],
     credentials: true,
   })
 );
@@ -49,7 +53,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Swagger API 文件 - 生產環境禁用
-if (process.env.NODE_ENV !== 'production' && specs) {
+if (NODE_ENV !== 'production' && specs) {
   app.use(
     '/api-docs',
     swaggerUi.serve,
@@ -171,5 +175,5 @@ app.use(
 
 app.listen(PORT, () => {
   console.log(`🚀 API 服務器運行在 http://localhost:${PORT}`);
-  console.log(`🔧 環境: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🔧 環境: ${NODE_ENV || 'development'}`);
 });
