@@ -5,5 +5,7 @@ packages:
   - docs
 
 ignoredBuiltDependencies:
+  - '@prisma/client'
+  - '@scarf/scarf'
   - bcrypt
   - esbuild

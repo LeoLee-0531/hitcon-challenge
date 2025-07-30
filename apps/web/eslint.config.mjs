@@ -19,7 +19,7 @@ const eslintConfig = [
 
   // TypeScript 專用配置
   {
-    files: ['**/*.ts', '**/*.tsx'],
+    files: ['**/*.{ts,tsx}'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
@@ -36,6 +36,7 @@ const eslintConfig = [
     },
     rules: {
       // TypeScript 專用規則
+      ...tsPlugin.configs.recommended.rules,
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {
@@ -55,16 +56,6 @@ const eslintConfig = [
         {
           prefer: 'type-imports',
           disallowTypeAnnotations: false,
-        },
-      ],
-
-      // React/Next.js 專用 TypeScript 規則
-      '@typescript-eslint/no-misused-promises': [
-        'error',
-        {
-          checksVoidReturn: {
-            attributes: false,
-          },
         },
       ],
     },
