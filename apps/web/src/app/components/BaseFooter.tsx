@@ -24,8 +24,8 @@ export default function BaseFooter({
       <hr className="border-gray-300 pb-7 max-mobile:hidden" />
 
         {/* 應該調整成切在1050 待調整 */}
-      {/* Desktop Layout ≥820px */}
-      <div className="grid grid-cols-12 gap-2 max-[820px]:hidden">
+      {/* Desktop Layout ≥1050px */}
+      <div className="grid grid-cols-12 gap-2 max-[1050px]:hidden">
         <div className="col-span-2" />
         <div className="col-span-8 flex justify-between">
             <span><PastEvents /></span>
@@ -34,26 +34,26 @@ export default function BaseFooter({
         <div className="col-span-2" />
       </div>
 
-      {/* Tablet Layout 550px–819px */}
-      <div className="block space-y-6 max-[550px]:hidden min-[820px]:hidden">
-        <div className="min-[710px]:hidden">
-          <Brand />
+      {/* Tablet Layout 700px–1050px */}
+      <div className="grid grid-cols-12 gap-2 max-[700px]:hidden min-[1050px]:hidden">
+        <div className="col-span-2" />
+        <div className="col-span-8 flex justify-between">
+            <span><PastEvents /></span>
+            <span><Contact /> </span>
         </div>
-        <div className="flex justify-between">
-          <Contact />
-        </div>
-        <PastEvents />
+        <div className="col-span-2" />
       </div>
 
-      {/* Mobile Layout <550px */}
-      <div className="space-y-6 min-[550px]:hidden">
-        <Brand />
-        <div className="flex justify-between">
-          <div className="flex flex-col gap-6">
-            <Contact />
-          </div>
+      {/* Mobile Layout <700px */}
+      <div className="grid grid-cols-12 gap-2 min-[700px]:hidden">
+        <div className="col-span-2" />
+        <div className="col-span-8">
+          {/* <Brand /> */}
+          <Contact />
+          <div className='py-3'></div>
+          <PastEvents />
         </div>
-        <PastEvents />
+        <div className="col-span-2" />
       </div>
 
       {/* Social Media Links */}
@@ -110,7 +110,7 @@ function Brand() {
 function SocialLinks() {
   return (
     // <div className="items-end gap-2 max-[710px]:w-full max-[710px]:justify-between min-[490px]:gap-3">
-    <div className="flex items-end gap-2 md:gap-3 max-[710px]:w-full max-[710px]:justify-between">
+    <div className="flex items-end gap-2 max-[700px]:w-full max-[700px]:justify-between">
       <RadioLinkButton href="https://sitcon.org/fb" logo={<FacebookLogo />} />
       <RadioLinkButton href="https://sitcon.org/threads" logo={<ThreadsLogo />} />
       <RadioLinkButton href="https://sitcon.org/yt" logo={<YoutubeLogo />} />
@@ -126,7 +126,7 @@ function SocialMediasSection() {
     <div className="grid grid-cols-12 gap-4">
       <div className="col-span-2" />
       <div className="col-span-8 flex justify-between items-end">
-        <div className="max-[710px]:hidden">
+        <div className="max-[700px]:hidden">
             <Brand />
         </div>
         <SocialLinks />
@@ -175,21 +175,46 @@ function FooterSubMenuGrid({
   title: string
   links: LinkText[]
 }) {
+  // 將 links 分成兩行
+  const half = Math.ceil(links.length / 2);
+  const firstRow = links.slice(0, half);
+  const secondRow = links.slice(half);
+
   return (
     <ul>
       <p className="mb-4 font-bold">{title}</p>
-      <ul className="flex flex-row flex-nowrap gap-3 text-center">
-        {links.map((link) => (
-          <li key={link.href}>
-            <a
-              href={link.href}
-              target="_blank"
-              className="inline-block hover:opacity-70 text-[14px]"
-            >
-              {link.text}
-            </a>
-          </li>
-        ))}
+      {/* 桌面版一行，平板/手機版兩行 */}
+      <ul className="flex flex-row flex-nowrap gap-3 text-center max-[1050px]:flex-col max-[1050px]:gap-1">
+        <li>
+          <ul className="flex flex-row flex-nowrap gap-3 text-center text-[14px] max-[1050px]:justify-between">
+            {firstRow.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  className="inline-block hover:opacity-70 text-[14px]"
+                >
+                  {link.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </li>
+        <li>
+          <ul className="flex flex-row flex-nowrap gap-3 text-center text-[14px] max-[1050px]:justify-between">
+            {secondRow.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  className="inline-block hover:opacity-70 text-[14px]"
+                >
+                  {link.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </li>
       </ul>
     </ul>
   )
