@@ -1,8 +1,8 @@
-import { Response } from 'express';
+import type { Response } from 'express';
 import { prisma } from '../lib/prisma';
 import { sendSuccess, sendError } from '../utils/response';
 import { ERROR_CODES, ERROR_MESSAGES } from '../constants/errors';
-import { AuthenticatedRequest } from '../types';
+import type { AuthenticatedRequest } from '../types';
 
 export const getOverviewStatistics = async (
   req: AuthenticatedRequest,
@@ -15,16 +15,6 @@ export const getOverviewStatistics = async (
     // 完成所有關卡的使用者數 (通過 7 關)
     const totalStages = await prisma.stage.count({ where: { isActive: true } });
 
-    const completedUsers = await prisma.user.count({
-      where: {
-        progress: {
-          some: {
-            passed: true,
-          },
-        },
-      },
-    });
-
     // 實際完成所有關卡的使用者
     const usersWithAllStagesPassed = await prisma.user.findMany({
       include: {
@@ -35,7 +25,7 @@ export const getOverviewStatistics = async (
     });
 
     const fullyCompletedUsers = usersWithAllStagesPassed.filter(
-      (user: any) => user.progress.length === totalStages
+      (user) => user.progress.length === totalStages
     ).length;
 
     const completionRate =
@@ -75,7 +65,7 @@ export const getStageStatistics = async (
 
     const totalUsers = await prisma.user.count();
 
-    const stageStats = stages.map((stage: any) => {
+    const stageStats = stages.map((stage) => {
       const passedCount = stage.userProgress.length;
       const passRate = totalUsers > 0 ? passedCount / totalUsers : 0;
 
@@ -116,7 +106,7 @@ export const getRewardStatistics = async (
     });
 
     const eligibleUsers = usersWithProgress.filter(
-      (user: any) => user.progress.length >= 3
+      (user) => user.progress.length >= 3
     );
     const totalEligibleUsers = eligibleUsers.length;
 

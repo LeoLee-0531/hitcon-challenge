@@ -23,13 +23,17 @@ export const verifyGoogleToken = async (
       throw new Error('Invalid token payload');
     }
 
+    if (!payload.email || !payload.name) {
+      throw new Error('Invalid Google token payload');
+    }
+
     return {
       sub: payload.sub,
-      email: payload.email!,
-      name: payload.name!,
+      email: payload.email,
+      name: payload.name,
       picture: payload.picture,
     };
-  } catch (error) {
+  } catch {
     throw new Error('Google token verification failed');
   }
 };

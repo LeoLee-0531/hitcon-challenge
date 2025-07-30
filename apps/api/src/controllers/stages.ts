@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { prisma } from '../lib/prisma';
 import { sendSuccess, sendError } from '../utils/response';
 import { ERROR_CODES, ERROR_MESSAGES } from '../constants/errors';
-import { AuthenticatedRequest, StageVerifyPayload } from '../types';
+import type { AuthenticatedRequest, StageVerifyPayload } from '../types';
 
 export const getAllStages = async (
   req: Request,
@@ -16,7 +16,7 @@ export const getAllStages = async (
       orderBy: { stageNumber: 'asc' },
     });
 
-    const stageData = stages.map((stage: any) => ({
+    const stageData = stages.map((stage) => ({
       stage_id: stage.id,
       stage_title: language === 'zh' ? stage.titleZh : stage.titleEn,
       description:
@@ -41,7 +41,12 @@ export const verifyStagePassword = async (
   res: Response
 ): Promise<void> => {
   try {
-    const userId = req.user!.id;
+    if (!req.user) {
+      sendError(res, ERROR_CODES.UNAUTHORIZED, ERROR_MESSAGES.UNAUTHORIZED);
+      return;
+    }
+
+    const userId = req.user.id;
     const { stage_id, password }: StageVerifyPayload = req.body;
 
     // 查找關卡

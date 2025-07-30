@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import { authenticateAdmin } from './auth';
-import { AuthenticatedRequest } from '../types';
+import type { AuthenticatedRequest } from '../types';
 
 // 環境檢查中間件
 export const environmentCheck = (

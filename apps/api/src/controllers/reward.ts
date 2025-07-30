@@ -1,16 +1,21 @@
-import { Request, Response } from 'express';
+import type { Response } from 'express';
 import { prisma } from '../lib/prisma';
 import { generateQRCodeUrl } from '../lib/qrcode';
 import { sendSuccess, sendError } from '../utils/response';
 import { ERROR_CODES, ERROR_MESSAGES } from '../constants/errors';
-import { AuthenticatedRequest, RewardClaimPayload } from '../types';
+import type { AuthenticatedRequest, RewardClaimPayload } from '../types';
 
 export const generateUserQRCode = async (
   req: AuthenticatedRequest,
   res: Response
 ): Promise<void> => {
   try {
-    const userId = req.user!.id;
+    if (!req.user) {
+      sendError(res, ERROR_CODES.UNAUTHORIZED, ERROR_MESSAGES.UNAUTHORIZED);
+      return;
+    }
+
+    const userId = req.user.id;
 
     // 生成 QR Code URL
     const qrcodeUrl = generateQRCodeUrl(userId);
@@ -101,7 +106,13 @@ export const claimReward = async (
 ): Promise<void> => {
   try {
     const { user_id }: RewardClaimPayload = req.body;
-    const adminId = req.admin!.id;
+
+    if (!req.admin) {
+      sendError(res, ERROR_CODES.UNAUTHORIZED, ERROR_MESSAGES.UNAUTHORIZED);
+      return;
+    }
+
+    const adminId = req.admin.id;
 
     // 查找使用者及其進度
     const user = await prisma.user.findUnique({

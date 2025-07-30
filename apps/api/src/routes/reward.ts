@@ -1,7 +1,12 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import {
+  Router,
+  type Request,
+  type Response,
+  type NextFunction,
+} from 'express';
 import { generateUserQRCode, getRewardStatus } from '../controllers/reward';
 import { authenticateUser, authenticateAdmin } from '../middleware/auth';
-import { AuthenticatedRequest } from '../types';
+import type { AuthenticatedRequest } from '../types';
 
 const router: Router = Router();
 

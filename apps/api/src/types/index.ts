@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import type { Request } from 'express';
 
 // 重新導出共用類型，方便後端使用
 export * from 'types';

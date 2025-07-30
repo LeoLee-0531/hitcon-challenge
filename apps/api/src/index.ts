@@ -49,7 +49,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Swagger API 文件 - 生產環境禁用
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production' && specs) {
   app.use(
     '/api-docs',
     swaggerUi.serve,

@@ -1,15 +1,20 @@
-import { Response } from 'express';
+import type { Response } from 'express';
 import { prisma } from '../lib/prisma';
 import { sendSuccess, sendError } from '../utils/response';
 import { ERROR_CODES, ERROR_MESSAGES } from '../constants/errors';
-import { AuthenticatedRequest, UserLanguagePayload } from '../types';
+import type { AuthenticatedRequest, UserLanguagePayload } from '../types';
 
 export const getUserProfile = async (
   req: AuthenticatedRequest,
   res: Response
 ): Promise<void> => {
   try {
-    const userId = req.user!.id;
+    if (!req.user) {
+      sendError(res, ERROR_CODES.UNAUTHORIZED, ERROR_MESSAGES.UNAUTHORIZED);
+      return;
+    }
+
+    const userId = req.user.id;
 
     // 獲取使用者資料和進度
     const user = await prisma.user.findUnique({
@@ -40,10 +45,8 @@ export const getUserProfile = async (
     });
 
     // 構建進度資料
-    const progress = allStages.map((stage: any) => {
-      const userProgress = user.progress.find(
-        (p: any) => p.stageId === stage.id
-      );
+    const progress = allStages.map((stage) => {
+      const userProgress = user.progress.find((p) => p.stageId === stage.id);
       const language = user.language as 'zh' | 'en';
 
       return {
@@ -75,7 +78,12 @@ export const updateUserLanguage = async (
   res: Response
 ): Promise<void> => {
   try {
-    const userId = req.user!.id;
+    if (!req.user) {
+      sendError(res, ERROR_CODES.UNAUTHORIZED, ERROR_MESSAGES.UNAUTHORIZED);
+      return;
+    }
+
+    const userId = req.user.id;
     const { language }: UserLanguagePayload = req.body;
 
     // 更新使用者語言
@@ -98,9 +106,9 @@ export const updateUserLanguage = async (
     });
 
     // 構建進度資料
-    const progress = allStages.map((stage: any) => {
+    const progress = allStages.map((stage) => {
       const userProgress = updatedUser.progress.find(
-        (p: any) => p.stageId === stage.id
+        (p) => p.stageId === stage.id
       );
 
       return {
