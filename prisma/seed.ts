@@ -21,8 +21,10 @@ async function main() {
   await prisma.statisticsSnapshot.deleteMany();
 
   // 建立管理員帳戶
-  const defaultPassword = process.env.ADMIN_DEFAULT_PASSWORD || 'SITCON2025';
-  const hashedPassword = await bcrypt.hash(defaultPassword, 10);
+  if (!process.env.ADMIN_DEFAULT_PASSWORD) {
+    throw new Error('❌ 環境變數 ADMIN_DEFAULT_PASSWORD 未設定，無法建立管理員帳戶。');
+  }
+  const hashedPassword = await bcrypt.hash(process.env.ADMIN_DEFAULT_PASSWORD, 10);
 
   const admin = await prisma.admin.create({
     data: {
