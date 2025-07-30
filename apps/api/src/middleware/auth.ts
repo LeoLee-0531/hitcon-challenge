@@ -25,7 +25,8 @@ export const authenticateUser = (
     const decoded = verifyUserToken(token);
     req.user = decoded;
     next();
-  } catch {
+  } catch (error) {
+    console.error('Error in authenticateUser:', error);
     sendError(
       res,
       ERROR_CODES.INVALID_TOKEN,
