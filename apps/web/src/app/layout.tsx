@@ -25,7 +25,7 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen">
         
         {/* NavBar */}
-        <nav className="bg-blue-600 text-white px-6 py-4 shadow">
+        <nav className="bg-[#77B55A] text-white px-6 py-4 shadow">
           <div className="container mx-auto flex justify-between items-center">
             <Link href="/" className="text-xl font-bold">
               TempNavbar

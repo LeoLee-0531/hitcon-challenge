@@ -19,39 +19,28 @@ export default function BaseFooter({
   navigationLinks: NavigationLink[]
 }) {
   return (
-    <footer className="space-y-7 bg-gray-100 px-5 pb-7 pt-4 text-gray-800 mobile:px-10 mobile:py-16 mobile:pt-16">
+    <footer className="space-y-7 bg-[#121712] px-5 pb-7 pt-4 text-white mobile:px-10 mobile:py-16 mobile:pt-16">
       {/* Divider */}
-      <hr className="border-gray-300 pb-7 max-mobile:hidden" />
+      <hr className="border-white pb-7 max-mobile:hidden" />
 
-        {/* 應該調整成切在1050 待調整 */}
-      {/* Desktop Layout ≥1050px */}
-      <div className="grid grid-cols-12 gap-2 max-[1050px]:hidden">
+      {/* Responsive Layout */}
+      <div className="grid grid-cols-12 gap-2">
         <div className="col-span-2" />
-        <div className="col-span-8 flex justify-between">
+        {/* 桌機/平板：flex-row + justify-between，手機：block */}
+        <div className={`
+          col-span-8
+          ${'flex justify-between'} max-[700px]:block
+        `}>
+          {/* 桌機/平板顯示 PastEvents + Contact，手機顯示 Contact + PastEvents */}
+          <div className="max-[700px]:hidden flex justify-between w-full">
             <span><PastEvents /></span>
-            <span><Contact /> </span>
-        </div>
-        <div className="col-span-2" />
-      </div>
-
-      {/* Tablet Layout 700px–1050px */}
-      <div className="grid grid-cols-12 gap-2 max-[700px]:hidden min-[1050px]:hidden">
-        <div className="col-span-2" />
-        <div className="col-span-8 flex justify-between">
-            <span><PastEvents /></span>
-            <span><Contact /> </span>
-        </div>
-        <div className="col-span-2" />
-      </div>
-
-      {/* Mobile Layout <700px */}
-      <div className="grid grid-cols-12 gap-2 min-[700px]:hidden">
-        <div className="col-span-2" />
-        <div className="col-span-8">
-          {/* <Brand /> */}
-          <Contact />
-          <div className='py-3'></div>
-          <PastEvents />
+            <span><Contact /></span>
+          </div>
+          <div className="min-[701px]:hidden">
+            <Contact />
+            <div className="py-3"></div>
+            <PastEvents />
+          </div>
         </div>
         <div className="col-span-2" />
       </div>
@@ -230,7 +219,7 @@ function RadioLinkButton({
   return (
     <Link
       href={href}
-      className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-800 px-2 py-1 text-gray-800 hover:bg-blue-600 hover:text-white mobile:h-12 mobile:w-12 mobile:px-3"
+      className="flex h-8 w-8 items-center justify-center rounded-full border border-white px-2 py-1 text-white hover:bg-blue-600 hover:text-white mobile:h-12 mobile:w-12 mobile:px-3"
     >
       {logo}
     </Link>
