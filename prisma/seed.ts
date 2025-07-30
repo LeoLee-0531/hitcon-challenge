@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { config } from 'dotenv';
 import { resolve } from 'path';
-// import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs';
 
 // 載入 .env
 config({ path: resolve(__dirname, '../.env') });
@@ -20,248 +20,318 @@ async function main() {
   await prisma.admin.deleteMany();
   await prisma.statisticsSnapshot.deleteMany();
 
+  // 建立管理員帳戶
+  const defaultPassword = process.env.ADMIN_DEFAULT_PASSWORD || 'SITCON2025';
+  const hashedPassword = await bcrypt.hash(defaultPassword, 10);
+
+  const admin = await prisma.admin.create({
+    data: {
+      username: 'admin',
+      password: hashedPassword,
+      isActive: true,
+    },
+  });
+
+  console.log('✅ 管理員帳戶已建立:', { username: admin.username });
+
   // 建立關卡資料
   const stages = await Promise.all([
     prisma.stage.create({
       data: {
         stageNumber: 1,
-        password: 'stage1pass',
-        titleZh: '第一關：實體 Flag',
-        descriptionZh: '這是第一關的描述',
-        titleEn: 'Stage 1: The Real Flag',
-        descriptionEn: 'This is the description for stage 1',
-        externalUrl: 'https://example.com/stage1',
+        password: 'flag{hitcon_physical_flag}',
+        titleZh: '實體 Flag 蒐集',
+        descriptionZh: '在會場中找到隱藏的實體 Flag，並輸入正確的密碼來通關。',
+        titleEn: 'Physical Flag Collection',
+        descriptionEn:
+          'Find the hidden physical flags in the venue and enter the correct password to pass.',
+        externalUrl: null,
         isActive: true,
       },
     }),
     prisma.stage.create({
       data: {
         stageNumber: 2,
-        password: 'stage2pass',
-        titleZh: '第二關：Prompt Injection',
-        descriptionZh: '這是第二關的描述',
-        titleEn: 'Stage 2: Prompt Injection',
-        descriptionEn: 'This is the description for stage 2',
-        externalUrl: 'https://example.com/stage2',
+        password: 'flag{prompt_injection_master}',
+        titleZh: 'Prompt Injection 挑戰',
+        descriptionZh: '嘗試通過 Prompt Injection 技術來突破 AI 系統的防護。',
+        titleEn: 'Prompt Injection Challenge',
+        descriptionEn:
+          'Try to use Prompt Injection techniques to break through AI system defenses.',
+        externalUrl: 'https://prompt-injection.example.com',
         isActive: true,
       },
     }),
     prisma.stage.create({
       data: {
         stageNumber: 3,
-        password: 'stage3pass',
-        titleZh: '第三關：Web Security',
-        descriptionZh: '這是第三關的描述',
-        titleEn: 'Stage 3: Web Security',
-        descriptionEn: 'This is the description for stage 3',
-        externalUrl: 'https://example.com/stage3',
+        password: 'flag{web_security_ninja}',
+        titleZh: 'Web 安全挑戰',
+        descriptionZh: '發現並利用 Web 應用程式中的安全漏洞。',
+        titleEn: 'Web Security Challenge',
+        descriptionEn:
+          'Discover and exploit security vulnerabilities in web applications.',
+        externalUrl: 'https://web-challenge.example.com',
         isActive: true,
       },
     }),
     prisma.stage.create({
       data: {
         stageNumber: 4,
-        password: 'stage4pass',
-        titleZh: '第四關：Cryptography',
-        descriptionZh: '這是第四關的描述',
-        titleEn: 'Stage 4: Cryptography',
-        descriptionEn: 'This is the description for stage 4',
-        externalUrl: 'https://example.com/stage4',
+        password: 'flag{reverse_engineering_pro}',
+        titleZh: '逆向工程',
+        descriptionZh: '分析並逆向工程二進位檔案以找到隱藏的秘密。',
+        titleEn: 'Reverse Engineering',
+        descriptionEn:
+          'Analyze and reverse engineer binary files to find hidden secrets.',
+        externalUrl: 'https://reverse.example.com',
         isActive: true,
       },
     }),
     prisma.stage.create({
       data: {
         stageNumber: 5,
-        password: 'stage5pass',
-        titleZh: '第五關：Reverse Engineering',
-        descriptionZh: '這是第五關的描述',
-        titleEn: 'Stage 5: Reverse Engineering',
-        descriptionEn: 'This is the description for stage 5',
-        externalUrl: 'https://example.com/stage5',
+        password: 'flag{crypto_wizard}',
+        titleZh: '密碼學挑戰',
+        descriptionZh: '破解各種加密演算法和密碼學難題。',
+        titleEn: 'Cryptography Challenge',
+        descriptionEn:
+          'Break various encryption algorithms and cryptographic puzzles.',
+        externalUrl: 'https://crypto.example.com',
         isActive: true,
       },
     }),
     prisma.stage.create({
       data: {
         stageNumber: 6,
-        password: 'stage6pass',
-        titleZh: '第六關：Network Security',
-        descriptionZh: '這是第六關的描述',
-        titleEn: 'Stage 6: Network Security',
-        descriptionEn: 'This is the description for stage 6',
-        externalUrl: 'https://example.com/stage6',
+        password: 'flag{forensics_detective}',
+        titleZh: '數位鑑識',
+        descriptionZh: '從數位證據中找出隱藏的線索和訊息。',
+        titleEn: 'Digital Forensics',
+        descriptionEn: 'Find hidden clues and messages from digital evidence.',
+        externalUrl: 'https://forensics.example.com',
         isActive: true,
       },
     }),
     prisma.stage.create({
       data: {
         stageNumber: 7,
-        password: 'stage7pass',
-        titleZh: '第七關：Final Challenge',
-        descriptionZh: '這是第七關的描述',
-        titleEn: 'Stage 7: Final Challenge',
-        descriptionEn: 'This is the description for stage 7',
-        externalUrl: 'https://example.com/stage7',
+        password: 'flag{pwn_master_supreme}',
+        titleZh: 'Binary Exploitation',
+        descriptionZh: '利用二進位程式的漏洞來獲得系統控制權。',
+        titleEn: 'Binary Exploitation',
+        descriptionEn:
+          'Exploit binary program vulnerabilities to gain system control.',
+        externalUrl: 'https://pwn.example.com',
         isActive: true,
       },
     }),
   ]);
 
-  // 建立獎勵等級
+  console.log('✅ 關卡資料已建立:', stages.length, '個關卡');
+
+  // 建立獎勵等級設定
   const rewardLevels = await Promise.all([
     prisma.rewardLevel.create({
       data: {
         level: 1,
         requiredPassed: 3,
-        titleZh: '第一級獎勵',
-        descriptionZh: '通過 3 個關卡可獲得第一級獎勵',
-        titleEn: 'First Level Reward',
-        descriptionEn: 'Pass 3 stages to get first level reward',
+        titleZh: '銅級獎勵',
+        descriptionZh: '完成 3 個關卡即可獲得銅級獎勵',
+        titleEn: 'Bronze Reward',
+        descriptionEn: 'Complete 3 challenges to get bronze reward',
+        isActive: true,
       },
     }),
     prisma.rewardLevel.create({
       data: {
         level: 2,
         requiredPassed: 5,
-        titleZh: '第二級獎勵',
-        descriptionZh: '通過 5 個關卡可獲得第二級獎勵',
-        titleEn: 'Second Level Reward',
-        descriptionEn: 'Pass 5 stages to get second level reward',
+        titleZh: '銀級獎勵',
+        descriptionZh: '完成 5 個關卡即可獲得銀級獎勵',
+        titleEn: 'Silver Reward',
+        descriptionEn: 'Complete 5 challenges to get silver reward',
+        isActive: true,
       },
     }),
     prisma.rewardLevel.create({
       data: {
         level: 3,
         requiredPassed: 7,
-        titleZh: '第三級獎勵',
-        descriptionZh: '通過 7 個關卡可獲得第三級獎勵',
-        titleEn: 'Third Level Reward',
-        descriptionEn: 'Pass 7 stages to get third level reward',
+        titleZh: '金級獎勵',
+        descriptionZh: '完成所有 7 個關卡即可獲得金級獎勵',
+        titleEn: 'Gold Reward',
+        descriptionEn: 'Complete all 7 challenges to get gold reward',
+        isActive: true,
       },
     }),
   ]);
 
-  // 建立測試用戶
-  const users = await Promise.all([
+  console.log('✅ 獎勵等級已建立:', rewardLevels.length, '個等級');
+
+  // 建立測試使用者
+  const testUsers = await Promise.all([
     prisma.user.create({
       data: {
-        googleId: 'google_123456',
+        googleId: 'test_google_id_1',
         email: 'user1@example.com',
-        nickname: '測試用戶1',
-        profileImage: 'https://example.com/avatar1.jpg',
+        nickname: '測試使用者一',
         language: 'zh',
       },
     }),
     prisma.user.create({
       data: {
-        googleId: 'google_789012',
+        googleId: 'test_google_id_2',
         email: 'user2@example.com',
-        nickname: 'Test User 2',
-        profileImage: 'https://example.com/avatar2.jpg',
+        nickname: 'Test User Two',
         language: 'en',
       },
     }),
     prisma.user.create({
       data: {
-        googleId: 'google_345678',
+        googleId: 'test_google_id_3',
         email: 'user3@example.com',
-        nickname: '獎勵測試用戶',
-        profileImage: 'https://example.com/avatar3.jpg',
+        nickname: '測試使用者三',
         language: 'zh',
       },
     }),
-    // 更多測試用戶...
+    prisma.user.create({
+      data: {
+        googleId: 'test_google_id_4',
+        email: 'user4@example.com',
+        nickname: 'Advanced User',
+        language: 'en',
+      },
+    }),
   ]);
 
-  // 建立用戶進度
+  console.log('✅ 測試使用者已建立:', testUsers.length, '個使用者');
+
+  // 為測試使用者建立一些進度記錄
+  // 使用者1: 通過 5 關 (銀級獎勵資格)
   await Promise.all([
-    // 第一位用戶進度（只完成前兩關）
     prisma.userProgress.create({
       data: {
-        userId: users[0].id,
+        userId: testUsers[0].id,
         stageId: stages[0].id,
         passed: true,
-        passedAt: new Date(),
+        passedAt: new Date('2024-07-01T10:00:00Z'),
       },
     }),
     prisma.userProgress.create({
       data: {
-        userId: users[0].id,
+        userId: testUsers[0].id,
         stageId: stages[1].id,
         passed: true,
-        passedAt: new Date(),
-      },
-    }),
-    // 第三位用戶進度（完成前五關，符合等級二獎勵條件）
-    prisma.userProgress.create({
-      data: {
-        userId: users[2].id,
-        stageId: stages[0].id,
-        passed: true,
-        passedAt: new Date(),
+        passedAt: new Date('2024-07-01T11:00:00Z'),
       },
     }),
     prisma.userProgress.create({
       data: {
-        userId: users[2].id,
-        stageId: stages[1].id,
-        passed: true,
-        passedAt: new Date(),
-      },
-    }),
-    prisma.userProgress.create({
-      data: {
-        userId: users[2].id,
+        userId: testUsers[0].id,
         stageId: stages[2].id,
         passed: true,
-        passedAt: new Date(),
+        passedAt: new Date('2024-07-01T12:00:00Z'),
       },
     }),
     prisma.userProgress.create({
       data: {
-        userId: users[2].id,
+        userId: testUsers[0].id,
         stageId: stages[3].id,
         passed: true,
-        passedAt: new Date(),
+        passedAt: new Date('2024-07-01T13:00:00Z'),
       },
     }),
     prisma.userProgress.create({
       data: {
-        userId: users[2].id,
+        userId: testUsers[0].id,
         stageId: stages[4].id,
         passed: true,
-        passedAt: new Date(),
+        passedAt: new Date('2024-07-01T14:00:00Z'),
       },
     }),
-    // 更多進度記錄...
   ]);
 
-  // 建立獎勵領取記錄
+  // 使用者2: 通過 3 關 (銅級獎勵資格)
+  await Promise.all([
+    prisma.userProgress.create({
+      data: {
+        userId: testUsers[1].id,
+        stageId: stages[0].id,
+        passed: true,
+        passedAt: new Date('2024-07-01T15:00:00Z'),
+      },
+    }),
+    prisma.userProgress.create({
+      data: {
+        userId: testUsers[1].id,
+        stageId: stages[1].id,
+        passed: true,
+        passedAt: new Date('2024-07-01T16:00:00Z'),
+      },
+    }),
+    prisma.userProgress.create({
+      data: {
+        userId: testUsers[1].id,
+        stageId: stages[2].id,
+        passed: true,
+        passedAt: new Date('2024-07-01T17:00:00Z'),
+      },
+    }),
+  ]);
+
+  // 使用者3: 通過所有 7 關 (金級獎勵資格)
+  await Promise.all(
+    stages.map((stage, index) =>
+      prisma.userProgress.create({
+        data: {
+          userId: testUsers[2].id,
+          stageId: stage.id,
+          passed: true,
+          passedAt: new Date(`2024-07-02T${10 + index}:00:00Z`),
+        },
+      })
+    )
+  );
+
+  // 使用者4: 只通過 1 關 (不符合獎勵資格)
+  await prisma.userProgress.create({
+    data: {
+      userId: testUsers[3].id,
+      stageId: stages[0].id,
+      passed: true,
+      passedAt: new Date('2024-07-03T10:00:00Z'),
+    },
+  });
+
+  console.log('✅ 使用者進度已建立');
+
+  // 為使用者1建立領獎記錄 (已領取銀級獎勵)
   await prisma.rewardClaim.create({
     data: {
-      userId: users[2].id, // 第三個用戶（獎勵測試用戶）
-      claimedAt: new Date(), // 明確設定領取時間
-      claimedBy: 'admin', // 管理員發放
+      userId: testUsers[0].id,
+      claimedBy: admin.id,
+      claimedAt: new Date('2024-07-01T15:00:00Z'),
     },
   });
 
-  // 建立管理員
-  // const hashedPassword = await bcrypt.hash('SITCON2025', 10)
-  await prisma.admin.create({
-    data: {
-      username: 'admin',
-      password: 'SITCON2025', // 暫時使用明文密碼進行測試
-      isActive: true,
-    },
-  });
+  console.log('✅ 領獎記錄已建立');
 
-  console.log('假資料建立完成！');
+  console.log('\n🎉 假資料建立完成！');
+  console.log('管理員帳戶:', { username: 'admin', password: defaultPassword });
+  console.log('測試使用者:');
+  testUsers.forEach((user, index) => {
+    const progressCount =
+      index === 0 ? 5 : index === 1 ? 3 : index === 2 ? 7 : 1;
+    console.log(
+      `  - ${user.nickname} (${user.email}): ${progressCount} 關卡完成`
+    );
+  });
 }
 
 main()
   .catch((e) => {
-    console.error(e);
+    console.error('❌ 建立假資料時發生錯誤:', e);
     process.exit(1);
   })
   .finally(async () => {
