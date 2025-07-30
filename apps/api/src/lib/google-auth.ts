@@ -1,5 +1,6 @@
 import { OAuth2Client } from 'google-auth-library';
 import { GOOGLE_CLIENT_ID } from '../config/env';
+import { ERROR_CODES, ERROR_MESSAGES } from '../constants/errors';
 
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
@@ -21,11 +22,11 @@ export const verifyGoogleToken = async (
 
     const payload = ticket.getPayload();
     if (!payload) {
-      throw new Error('Invalid token payload');
+      throw new Error(ERROR_MESSAGES[ERROR_CODES.INVALID_TOKEN_PAYLOAD]);
     }
 
     if (!payload.email || !payload.name) {
-      throw new Error('Invalid Google token payload');
+      throw new Error(ERROR_MESSAGES[ERROR_CODES.INVALID_GOOGLE_TOKEN]);
     }
 
     return {

@@ -102,10 +102,16 @@ export const adminLogin = async (
     });
 
     // 驗證管理員是否存在以及密碼是否正確
-    const isValidAdmin = admin && (await bcrypt.compare(password, admin.password));
+    const isValidAdmin =
+      admin && (await bcrypt.compare(password, admin.password));
 
     if (!isValidAdmin) {
-      sendError(res, ERROR_CODES.UNAUTHORIZED, 'Invalid credentials', 401);
+      sendError(
+        res,
+        ERROR_CODES.INVALID_CREDENTIALS,
+        ERROR_MESSAGES[ERROR_CODES.INVALID_CREDENTIALS],
+        401
+      );
       return;
     }
     // 更新最後登入時間
