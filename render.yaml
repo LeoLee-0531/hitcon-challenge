@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: hitcon-challenge-api
+    env: node
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: cd apps/api && node dist/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+    autoDeploy: false
+    repo: https://github.com/LeoLee-0531/hitcon-challenge
+    branch: feature/backend-api
