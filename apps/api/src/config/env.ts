@@ -14,6 +14,7 @@ interface OptionalEnvVars {
   PORT?: string;
   NODE_ENV?: string;
   ALLOWED_ORIGINS?: string;
+  API_BASE_URL?: string;
 }
 
 /**
@@ -57,6 +58,7 @@ export function validateEnvironmentVariables(): RequiredEnvVars &
     PORT: process.env.PORT,
     NODE_ENV: process.env.NODE_ENV,
     ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS,
+    API_BASE_URL: process.env.API_BASE_URL,
   };
 }
 
@@ -72,4 +74,5 @@ export const {
   PORT,
   NODE_ENV,
   ALLOWED_ORIGINS,
+  API_BASE_URL
 } = env;

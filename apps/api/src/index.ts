@@ -14,7 +14,12 @@ import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
 import { specs } from './config/swagger';
 import { ERROR_CODES, ERROR_MESSAGES } from './constants/errors';
-import { PORT as ENV_PORT, ALLOWED_ORIGINS, NODE_ENV } from './config/env';
+import {
+  PORT as ENV_PORT,
+  ALLOWED_ORIGINS,
+  NODE_ENV,
+  API_BASE_URL,
+} from './config/env';
 
 // 導入路由
 import authRoutes from './routes/auth';
@@ -26,6 +31,15 @@ import adminRoutes from './routes/admin';
 const app = express();
 const PORT = ENV_PORT || '3001';
 
+// 如果設定 API_BASE_URL，直接使用
+// 本地開發時，自動使用 localhost
+let BASE_URL = API_BASE_URL;
+if (!BASE_URL) {
+  if (NODE_ENV === 'production') {
+    console.error('環境變數錯誤：缺少 API_BASE_URL');
+  }
+  BASE_URL = `http://localhost:${PORT}`;
+}
 // 中間件設定
 app.use(helmet());
 app.use(
@@ -175,6 +189,6 @@ app.use(
 );
 
 app.listen(PORT, () => {
-  console.log(`🚀 API 服務器運行在 http://localhost:${PORT}`);
+  console.log(`🚀 API 服務器運行在 ${BASE_URL}`);
   console.log(`🔧 環境: ${NODE_ENV || 'development'}`);
 });
