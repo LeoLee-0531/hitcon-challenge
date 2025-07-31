@@ -1,5 +1,5 @@
 import swaggerJsdoc from 'swagger-jsdoc';
-import { NODE_ENV } from './env';
+import { NODE_ENV, NEXT_PUBLIC_API_BASE_URL } from './env';
 
 // 根據環境動態配置 Swagger
 const getSwaggerConfig = () => {
@@ -26,10 +26,11 @@ const getSwaggerConfig = () => {
       servers: [
         {
           url: 'http://localhost:3001',
-          description: '開發環境',
+          description: '本地開發環境',
         },
         {
-          url: 'https://api.hitcon-challenge.com',
+          url:
+            NEXT_PUBLIC_API_BASE_URL,
           description: '生產環境',
         },
       ],

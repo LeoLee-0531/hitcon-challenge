@@ -14,7 +14,12 @@ import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
 import { specs } from './config/swagger';
 import { ERROR_CODES, ERROR_MESSAGES } from './constants/errors';
-import { PORT as ENV_PORT, ALLOWED_ORIGINS, NODE_ENV } from './config/env';
+import {
+  PORT as ENV_PORT,
+  ALLOWED_ORIGINS,
+  NODE_ENV,
+  NEXT_PUBLIC_API_BASE_URL
+} from './config/env';
 
 // 導入路由
 import authRoutes from './routes/auth';
@@ -25,6 +30,7 @@ import adminRoutes from './routes/admin';
 
 const app = express();
 const PORT = ENV_PORT || '3001';
+const BASE_URL = NEXT_PUBLIC_API_BASE_URL;
 
 // 中間件設定
 app.use(helmet());
@@ -175,6 +181,6 @@ app.use(
 );
 
 app.listen(PORT, () => {
-  console.log(`🚀 API 服務器運行在 http://localhost:${PORT}`);
+  console.log(`🚀 API 服務器運行在 http://${BASE_URL}:${PORT}`);
   console.log(`🔧 環境: ${NODE_ENV || 'development'}`);
 });
