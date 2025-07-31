@@ -31,18 +31,15 @@ import adminRoutes from './routes/admin';
 const app = express();
 const PORT = ENV_PORT || '3001';
 
-// 智能構建 Base URL
-// 1. 如果設定了 API_BASE_URL，直接使用
-// 2. 在生產環境但沒設定時，警告用戶
-// 3. 本地開發時，自動使用 localhost
+// 如果設定 API_BASE_URL，直接使用
+// 本地開發時，自動使用 localhost
 let BASE_URL = API_BASE_URL;
 if (!BASE_URL) {
   if (NODE_ENV === 'production') {
-    console.warn('⚠️  警告: 生產環境建議設定 API_BASE_URL');
+    console.error('環境變數錯誤：缺少 API_BASE_URL');
   }
   BASE_URL = `http://localhost:${PORT}`;
 }
-
 // 中間件設定
 app.use(helmet());
 app.use(

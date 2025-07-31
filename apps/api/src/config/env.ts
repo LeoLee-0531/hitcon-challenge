@@ -74,5 +74,5 @@ export const {
   PORT,
   NODE_ENV,
   ALLOWED_ORIGINS,
-  API_BASE_URL,
+  API_BASE_URL
 } = env;
