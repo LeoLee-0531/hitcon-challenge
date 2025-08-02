@@ -1,0 +1,155 @@
+@import 'tailwindcss';
+@import '../../styles/typography.css';
+@import '../../styles/layout.css';
+
+:root {
+  /* Colors */
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --secondary: #6b7280;
+  --accent: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --success: #10b981;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --primary: #60a5fa;
+    --primary-hover: #3b82f6;
+    --secondary: #9ca3af;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), var(--font-noto-sans-tc), sans-serif;
+}
+
+/* Color Utilities */
+.text-primary {
+  color: var(--primary);
+}
+.text-secondary {
+  color: var(--secondary);
+}
+.text-accent {
+  color: var(--accent);
+}
+.text-danger {
+  color: var(--danger);
+}
+.text-warning {
+  color: var(--warning);
+}
+.text-success {
+  color: var(--success);
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+.bg-secondary {
+  background-color: var(--secondary);
+}
+.bg-accent {
+  background-color: var(--accent);
+}
+.bg-danger {
+  background-color: var(--danger);
+}
+.bg-warning {
+  background-color: var(--warning);
+}
+.bg-success {
+  background-color: var(--success);
+}
+
+/* Spacing Utilities (only custom ones not in Tailwind) */
+.p-xs {
+  padding: var(--space-xs);
+}
+.p-2xl {
+  padding: var(--space-2xl);
+}
+
+.m-xs {
+  margin: var(--space-xs);
+}
+.m-2xl {
+  margin: var(--space-2xl);
+}
+
+/* Border Radius Utilities (only custom ones not in Tailwind) */
+.rounded-xs {
+  border-radius: var(--radius-sm);
+}
+
+/* Shadow Utilities (only custom ones not in Tailwind) */
+.shadow-xs {
+  box-shadow: var(--shadow-sm);
+}
+
+/* Custom Components */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: white;
+}
+
+.card {
+  background-color: var(--background);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-lg);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}

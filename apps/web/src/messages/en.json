@@ -1,0 +1,82 @@
+{
+  "common": {
+    "title": "HITCON Challenge",
+    "subtitle": "Security Challenge Platform",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "submit": "Submit"
+  },
+  "nav": {
+    "home": "Home",
+    "challenges": "Challenges",
+    "scoreboard": "Scoreboard",
+    "profile": "Profile",
+    "admin": "Admin",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register"
+  },
+  "home": {
+    "welcome": "Welcome to HITCON Challenge",
+    "description": "Test your cybersecurity skills with our challenging problems",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "featuredChallenges": "Featured Challenges",
+    "recentActivity": "Recent Activity"
+  },
+  "auth": {
+    "loginTitle": "Login to Your Account",
+    "registerTitle": "Create New Account",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot your password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "signInWithGoogle": "Sign in with Google"
+  },
+  "challenges": {
+    "title": "Challenges",
+    "category": "Category",
+    "difficulty": "Difficulty",
+    "points": "Points",
+    "solved": "Solved",
+    "unsolved": "Unsolved",
+    "submitFlag": "Submit Flag",
+    "flag": "Flag",
+    "hint": "Hint",
+    "description": "Description",
+    "downloadFiles": "Download Files",
+    "solvedBy": "Solved by {count} teams"
+  },
+  "profile": {
+    "title": "Profile",
+    "username": "Username",
+    "email": "Email",
+    "rank": "Rank",
+    "score": "Score",
+    "solvedChallenges": "Solved Challenges",
+    "joinDate": "Join Date",
+    "editProfile": "Edit Profile",
+    "changePassword": "Change Password"
+  },
+  "errors": {
+    "notFound": "Page not found",
+    "serverError": "Internal server error",
+    "unauthorized": "Unauthorized access",
+    "validationError": "Validation error",
+    "networkError": "Network error",
+    "tryAgain": "Please try again later"
+  }
+}
