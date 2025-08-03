@@ -1,0 +1,65 @@
+/* Utility Classes */
+
+/* Color Utilities */
+.text-primary {
+  color: var(--primary);
+}
+.text-secondary {
+  color: var(--secondary);
+}
+.text-accent {
+  color: var(--accent);
+}
+.text-danger {
+  color: var(--danger);
+}
+.text-warning {
+  color: var(--warning);
+}
+.text-success {
+  color: var(--success);
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+.bg-secondary {
+  background-color: var(--secondary);
+}
+.bg-accent {
+  background-color: var(--accent);
+}
+.bg-danger {
+  background-color: var(--danger);
+}
+.bg-warning {
+  background-color: var(--warning);
+}
+.bg-success {
+  background-color: var(--success);
+}
+
+/* Spacing Utilities (only custom ones not in Tailwind) */
+.p-xs {
+  padding: var(--space-xs);
+}
+.p-2xl {
+  padding: var(--space-2xl);
+}
+
+.m-xs {
+  margin: var(--space-xs);
+}
+.m-2xl {
+  margin: var(--space-2xl);
+}
+
+/* Border Radius Utilities (only custom ones not in Tailwind) */
+.rounded-xs {
+  border-radius: var(--radius-sm);
+}
+
+/* Shadow Utilities (only custom ones not in Tailwind) */
+.shadow-xs {
+  box-shadow: var(--shadow-sm);
+}

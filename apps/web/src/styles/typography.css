@@ -1,30 +1,35 @@
 /* Typography System - Semantic heading and text utilities */
 
+/* Global line-height reset */
+* {
+  line-height: 150%;
+}
+
 /* Heading Utilities */
+.D-1 {
+  font-size: 3rem;
+}
+
 .h-1 {
   font-size: 2.25rem;
-  font-weight: 700;
   line-height: 1.25;
   margin-bottom: 1.5rem;
 }
 
 .h-2 {
   font-size: 1.875rem;
-  font-weight: 600;
   line-height: 1.25;
   margin-bottom: 1rem;
 }
 
 .h-3 {
   font-size: 1.5rem;
-  font-weight: 600;
   line-height: 1.25;
   margin-bottom: 1rem;
 }
 
 .h-4 {
   font-size: 1.25rem;
-  font-weight: 500;
   line-height: 1.25;
   margin-bottom: 0.5rem;
 }
