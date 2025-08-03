@@ -68,7 +68,9 @@ function Contact() {
   return (
     <FooterSubMenu
       title="聯絡我們"
-      links={[{ text: 'contact@sitcon.org', href: 'mailto:contact@sitcon.org' }]}
+      links={[
+        { text: 'contact@sitcon.org', href: 'mailto:contact@sitcon.org' },
+      ]}
       internal={false}
     />
   );
@@ -86,9 +88,15 @@ function SocialLinks() {
   return (
     <div className="flex items-end gap-2 max-[700px]:w-full max-[700px]:justify-between">
       <RadioLinkButton href="https://sitcon.org/fb" logo={<FacebookLogo />} />
-      <RadioLinkButton href="https://sitcon.org/threads" logo={<ThreadsLogo />} />
+      <RadioLinkButton
+        href="https://sitcon.org/threads"
+        logo={<ThreadsLogo />}
+      />
       <RadioLinkButton href="https://sitcon.org/yt" logo={<YoutubeLogo />} />
-      <RadioLinkButton href="https://sitcon.org/instagram" logo={<InstagramLogo />} />
+      <RadioLinkButton
+        href="https://sitcon.org/instagram"
+        logo={<InstagramLogo />}
+      />
       <RadioLinkButton href="https://sitcon.org/flickr" logo={<FlickrLogo />} />
       <RadioLinkButton href="https://sitcon.org/tg" logo={<TelegramLogo />} />
     </div>
