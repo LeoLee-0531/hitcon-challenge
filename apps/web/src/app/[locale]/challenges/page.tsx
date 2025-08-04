@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { validateFlag } from '@/data/flags';
 
 interface Challenge {
   id: string;
@@ -71,11 +72,16 @@ const challenges: Challenge[] = [
 ];
 
 export default function ChallengesPage() {
+  const [challengesList, setChallengesList] = useState<Challenge[]>(challenges);
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge>(
     challenges[0]
   );
   const [password, setPassword] = useState('');
   const [isMobile, setIsMobile] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
+  const [submitStatus, setSubmitStatus] = useState<
+    'idle' | 'success' | 'error'
+  >('idle');
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -88,6 +94,41 @@ export default function ChallengesPage() {
 
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
+
+  const handleSubmit = () => {
+    const trimmedPassword = password.trim();
+
+    if (validateFlag(selectedChallenge.id, trimmedPassword)) {
+      setSubmitStatus('success');
+      setSubmitMessage('恭喜！Flag 正確！');
+
+      // 更新 challenges 陣列
+      const updatedChallenges = challengesList.map((challenge) =>
+        challenge.id === selectedChallenge.id
+          ? { ...challenge, completed: true }
+          : challenge
+      );
+      setChallengesList(updatedChallenges);
+
+      // 更新 selectedChallenge
+      setSelectedChallenge((prev) => ({ ...prev, completed: true }));
+
+      // 清空輸入框
+      setPassword('');
+    } else {
+      setSubmitStatus('error');
+      setSubmitMessage('Flag 錯誤，請再試一次！');
+
+      // 清空輸入框
+      setPassword('');
+    }
+
+    // 5秒後清除訊息
+    setTimeout(() => {
+      setSubmitMessage('');
+      setSubmitStatus('idle');
+    }, 5000);
+  };
 
   return (
     <div
@@ -119,7 +160,7 @@ export default function ChallengesPage() {
           }}
         >
           <div className="relative">
-            {challenges.map((challenge, index) => (
+            {challengesList.map((challenge, index) => (
               <div
                 key={challenge.id}
                 className="relative flex items-start cursor-pointer"
@@ -214,8 +255,8 @@ export default function ChallengesPage() {
             className="p-8 flex flex-col justify-center"
             style={{
               width: isMobile ? 'calc(100% - 32px)' : '520px',
-              height: isMobile ? 'auto' : '395px',
-              minHeight: isMobile ? '350px' : '395px',
+              height: isMobile ? 'auto' : '400px',
+              minHeight: isMobile ? '400px' : '400px',
               borderRadius: isMobile ? '16px' : '20px',
               background:
                 'linear-gradient(135deg, rgba(143, 204, 143, 0.3) 0%, rgba(71, 102, 71, 0.3) 100%)',
@@ -299,12 +340,17 @@ export default function ChallengesPage() {
                 </a>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <input
                   type="text"
                   placeholder="輸入 Flag : SITCON{...}"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      handleSubmit();
+                    }
+                  }}
                   className="rounded-lg transition-colors custom-input"
                   style={{
                     width: isMobile ? 'calc(100% - 32px)' : '448px',
@@ -313,7 +359,7 @@ export default function ChallengesPage() {
                     border: '1px solid #306930',
                     color: '#ffffff',
                     outline: 'none',
-                    margin: '12px 16px',
+                    margin: '8px 16px',
                     padding: '0 16px',
                     borderRadius: '8px',
                     backdropFilter: 'blur(30px) brightness(90%)',
@@ -325,28 +371,51 @@ export default function ChallengesPage() {
                   onFocus={(e) => (e.target.style.borderColor = '#22c55e')}
                   onBlur={(e) => (e.target.style.borderColor = '#444444')}
                 />
+
+                <button
+                  className="font-medium rounded-lg transition-colors"
+                  style={{
+                    width: isMobile ? 'calc(100% - 32px)' : '448px',
+                    height: isMobile ? '36px' : '40px',
+                    backgroundColor: '#0DF20D',
+                    color: '#000000',
+                    border: 'none',
+                    margin: '8px 16px',
+                    fontSize: isMobile ? '14px' : '16px',
+                  }}
+                  onClick={handleSubmit}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#0BE00B';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#0DF20D';
+                  }}
+                >
+                  送出
+                </button>
               </div>
 
-              <button
-                className="font-medium rounded-lg transition-colors"
-                style={{
-                  width: isMobile ? 'calc(100% - 32px)' : '448px',
-                  height: isMobile ? '36px' : '40px',
-                  backgroundColor: '#0DF20D',
-                  color: '#000000',
-                  border: 'none',
-                  margin: '12px 16px',
-                  fontSize: isMobile ? '14px' : '16px',
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.backgroundColor = '#0BE00B')
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.backgroundColor = '#0DF20D')
-                }
-              >
-                送出
-              </button>
+              {submitMessage && (
+                <div
+                  style={{
+                    textAlign: 'center',
+                    margin: '4px 16px',
+                    padding: '8px',
+                    borderRadius: '8px',
+                    width: isMobile ? 'calc(100% - 32px)' : '448px',
+                    backgroundColor:
+                      submitStatus === 'success'
+                        ? 'rgba(34, 197, 94, 0.25)'
+                        : 'rgba(239, 68, 68, 0.25)',
+                    color: submitStatus === 'success' ? '#22c55e' : '#ef4444',
+                    fontSize: isMobile ? '12px' : '14px',
+                    border: `1px solid ${submitStatus === 'success' ? 'rgba(34, 197, 94, 0.4)' : 'rgba(239, 68, 68, 0.4)'}`,
+                    backdropFilter: 'blur(10px)',
+                  }}
+                >
+                  {submitMessage}
+                </div>
+              )}
             </div>
           </div>
         </div>
