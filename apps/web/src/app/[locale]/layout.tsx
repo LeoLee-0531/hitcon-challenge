@@ -7,7 +7,7 @@ import { locales } from '@/i18n/config';
 import Navigation from '@/components/Navigation';
 import './globals.css';
 import Link from 'next/link';
-import BaseFooter from './components/BaseFooter';
+import BaseFooter from '@/components/BaseFooter';
 
 const notoSansTC = Noto_Sans_TC({
   variable: '--font-noto-sans-tc',
