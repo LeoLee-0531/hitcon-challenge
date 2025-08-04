@@ -19,8 +19,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-TW">
-      <body className={`${notoSansTC.variable} antialiased`}>{children}</body>
+    <html lang="zh-TW" style={{ backgroundColor: '#121712' }}>
+      <body 
+        className={`${notoSansTC.variable} antialiased`}
+        style={{ backgroundColor: '#121712' }}
+      >
+        {children}
+      </body>
     </html>
   );
-}
+} 

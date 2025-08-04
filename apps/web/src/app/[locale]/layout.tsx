@@ -65,15 +65,21 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} dir="ltr" suppressHydrationWarning>
+    <html lang={locale} dir="ltr" suppressHydrationWarning style={{ backgroundColor: '#121712' }}>
       <body
         className={`${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased flex flex-col min-h-screen`}
+        style={{ backgroundColor: '#121712' }}
       >
         <NextIntlClientProvider messages={messages}>
           <Navigation />
 
           {/* temp Main Content (include navBar) */}
-          <main className="flex-1 container mx-auto px-6 py-8">{children}</main>
+          <main 
+            className="flex-1 container mx-auto px-6 py-8"
+            style={{ backgroundColor: '#121712' }}
+          >
+            {children}
+          </main>
 
           {/* Footer */}
           <BaseFooter />
