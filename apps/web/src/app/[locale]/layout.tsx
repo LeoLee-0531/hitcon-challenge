@@ -66,7 +66,6 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir="ltr" suppressHydrationWarning>
-    <html lang={locale} dir="ltr" suppressHydrationWarning>
       <body
         className={`${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased pt-[100px] bg-primary`}
       >

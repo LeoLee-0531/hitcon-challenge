@@ -39,13 +39,13 @@ export default function Navigation() {
           </Link>
         </div>
         <div className="nav-links flex gap-[50px]">
-          <Link href="/about" className="nav-link">
+          <Link href="/challenges" className="nav-link">
             {t('challenges')}
           </Link>
           <Link href="/about" className="nav-link">
             {t('about')}
           </Link>
-          <Link href="/about" className="nav-link">
+          <Link href="/recruitment" className="nav-link">
             {t('recruitment')}
           </Link>
         </div>
