@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-TW" style={{ backgroundColor: '#121712' }}>
-      <body 
+      <body
         className={`${notoSansTC.variable} antialiased`}
         style={{ backgroundColor: '#121712' }}
       >
@@ -28,4 +28,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-} 
+}

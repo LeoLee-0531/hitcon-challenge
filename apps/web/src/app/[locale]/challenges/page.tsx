@@ -78,14 +78,14 @@ export default function ChallengesPage() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-          const checkScreenSize = () => {
-        const width = window.innerWidth;
-        setIsMobile(width < 1075);
-      };
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 1075);
+    };
 
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
-    
+
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
@@ -100,12 +100,11 @@ export default function ChallengesPage() {
         minHeight: '100vh',
       }}
     >
-
-      <div 
-        className={isMobile ? "flex flex-col" : "flex"} 
+      <div
+        className={isMobile ? 'flex flex-col' : 'flex'}
         style={{ height: isMobile ? 'auto' : 'calc(100vh - 80px)' }}
       >
-                {/* Left Sidebar */}
+        {/* Left Sidebar */}
         <div
           className="py-6"
           style={{
@@ -206,7 +205,11 @@ export default function ChallengesPage() {
         </div>
 
         {/* Main Content Area */}
-        <div className={isMobile ? "w-full" : "flex-1 flex items-center justify-center"}>
+        <div
+          className={
+            isMobile ? 'w-full' : 'flex-1 flex items-center justify-center'
+          }
+        >
           <div
             className="p-8 flex flex-col justify-center"
             style={{
@@ -286,10 +289,10 @@ export default function ChallengesPage() {
                   <img
                     src="go-to-challenge.png"
                     alt="check"
-                    style={{ 
-                      width: isMobile ? '14px' : '18px', 
-                      height: isMobile ? '14px' : '18px', 
-                      margin: isMobile ? '4px' : '6px' 
+                    style={{
+                      width: isMobile ? '14px' : '18px',
+                      height: isMobile ? '14px' : '18px',
+                      margin: isMobile ? '4px' : '6px',
                     }}
                   />
                   <span>前往關卡</span>
