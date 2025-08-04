@@ -6,6 +6,8 @@ import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/config';
 import Navigation from '@/components/Navigation';
 import './globals.css';
+import Link from 'next/link';
+import BaseFooter from '@/components/BaseFooter';
 
 const notoSansTC = Noto_Sans_TC({
   variable: '--font-noto-sans-tc',
@@ -64,12 +66,18 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir="ltr" suppressHydrationWarning>
+    <html lang={locale} dir="ltr" suppressHydrationWarning>
       <body
         className={`${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased pt-[100px] bg-primary`}
       >
         <NextIntlClientProvider messages={messages}>
           <Navigation />
-          <main className="min-h-screen">{children}</main>
+
+          {/* temp Main Content (include navBar) */}
+          <main className="flex-1 container mx-auto px-6 py-8">{children}</main>
+
+          {/* Footer */}
+          <BaseFooter />
         </NextIntlClientProvider>
       </body>
     </html>
