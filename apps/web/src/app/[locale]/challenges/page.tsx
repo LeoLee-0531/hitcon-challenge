@@ -138,6 +138,7 @@ export default function ChallengesPage() {
         fontFamily: '"Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif',
         paddingLeft: isMobile ? '20px' : '65px',
         paddingRight: isMobile ? '20px' : '65px',
+        paddingTop: isMobile ? '70px' : '65px',
         minHeight: '100vh',
       }}
     >
