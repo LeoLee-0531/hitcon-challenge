@@ -2,63 +2,54 @@
 
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import Image from 'next/image';
 import LanguageSwitcher from './LanguageSwitcher';
+
+interface SitconLogoProps {
+  className?: string;
+  height?: number;
+  width?: number;
+}
+
+export function SitconLogo({ className, height = 30, width = 100 }: SitconLogoProps) {
+  return (
+    <Image
+      src="/logo/sitcon-white.svg"
+      alt="Sitcon Logo"
+      className={className}
+      height={height}
+      width={width}
+    />
+  );
+}
 
 export default function Navigation() {
   const t = useTranslations('nav');
 
   return (
-    <nav className="bg-white dark:bg-gray-900 shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center space-x-8">
-            <Link
-              href="/"
-              className="text-xl font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
-            >
-              HITCON
-            </Link>
-
-            <div className="hidden md:flex space-x-4">
-              <Link
-                href="/"
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                {t('home')}
-              </Link>
-              <Link
-                href="/challenges"
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                {t('challenges')}
-              </Link>
-              <Link
-                href="/scoreboard"
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                {t('scoreboard')}
-              </Link>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <LanguageSwitcher />
-
-            <div className="hidden md:flex space-x-2">
-              <Link
-                href="/login"
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                {t('login')}
-              </Link>
-              <Link
-                href="/register"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
-              >
-                {t('register')}
-              </Link>
-            </div>
-          </div>
+    <nav className='nav p-10'>
+      <div className="nav-content glass-box mx-auto flex justify-between items-center">
+        <div className="nav-side">
+          <Link href="/" className="flex items-center">
+            <SitconLogo />
+          </Link>
+        </div>
+        <div className="nav-links flex gap-[50px]">
+          <Link href="/about" className="nav-link">
+            {t('challenges')}
+          </Link>
+          <Link href="/about" className="nav-link">
+            {t('about')}
+          </Link>
+          <Link href="/about" className="nav-link">
+            {t('recruitment')}
+          </Link>
+        </div>
+        <div className="nav-side flex items-center gap-4">
+          <LanguageSwitcher className="language-switcher side-box" />
+          <Link href="/login" className="login side-box nav-link flex items-center justify-center">
+            {t('login')}
+          </Link>
         </div>
       </div>
     </nav>

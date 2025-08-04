@@ -69,7 +69,7 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body
-        className={`${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased`}
+        className={`${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased pt-[100px] bg-primary`}
       >
         <NextIntlClientProvider messages={messages}>
           <Navigation />

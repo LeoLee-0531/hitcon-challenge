@@ -1,11 +1,5 @@
 /* CSS Custom Properties (Variables) */
 :root {
-  /* Light theme (default) */
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #3b82f6;
-  --primary-hover: #2563eb;
-  --secondary: #6b7280;
   --accent: #10b981;
   --danger: #ef4444;
   --warning: #f59e0b;
@@ -29,32 +23,12 @@
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Dark theme overrides */
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --primary: #60a5fa;
-    --primary-hover: #3b82f6;
-    --secondary: #9ca3af;
-  }
-}
-
-/* 或者可以用 data attribute 來手動控制主題 */
-[data-theme='dark'] {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --primary: #60a5fa;
-  --primary-hover: #3b82f6;
-  --secondary: #9ca3af;
-}
-
-[data-theme='light'] {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #3b82f6;
-  --primary-hover: #2563eb;
-  --secondary: #6b7280;
+  --nature-10: #121717;
+  --nature-99: #FFFFFF;
+  --primary-10: #0DF20D;
+  --primary-20: #77B55A;
+  --primary-30: #8FCC8F;
+  --primary-40: #D4E1DB;
+  --primary-50: #214A21;
 }

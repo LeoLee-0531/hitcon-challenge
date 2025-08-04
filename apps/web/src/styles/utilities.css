@@ -2,10 +2,7 @@
 
 /* Color Utilities */
 .text-primary {
-  color: var(--primary);
-}
-.text-secondary {
-  color: var(--secondary);
+  color: var(--primary-10);
 }
 .text-accent {
   color: var(--accent);
@@ -21,10 +18,7 @@
 }
 
 .bg-primary {
-  background-color: var(--primary);
-}
-.bg-secondary {
-  background-color: var(--secondary);
+  background-color: var(--nature-10);
 }
 .bg-accent {
   background-color: var(--accent);
