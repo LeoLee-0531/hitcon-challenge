@@ -26,7 +26,7 @@ const getSwaggerConfig = () => {
       servers: [
         {
           url: API_BASE_URL || `http://localhost:${PORT || '3001'}`,
-          description: 'API 服務器'
+          description: 'API 服務器',
         },
       ],
       components: {
