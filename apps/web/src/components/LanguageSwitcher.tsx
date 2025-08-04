@@ -24,7 +24,8 @@ export default function LanguageSwitcher({
     // 切換到另一種語言
     const newLocale = locale === 'zh' ? 'en' : 'zh';
     // 移除當前語言前綴，然後加上新語言前綴
-    const pathWithoutLocale = pathname.replace(new RegExp(`^/${locale}(?=/|$)`), '') || '/';
+    const pathWithoutLocale =
+      pathname.replace(new RegExp(`^/${locale}(?=/|$)`), '') || '/';
     const newPath = `/${newLocale}${pathWithoutLocale}`;
 
     router.push(newPath);
