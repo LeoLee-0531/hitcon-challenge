@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { validateFlag } from '@/data/flags';
 
+// 響應式設計斷點
+const MOBILE_BREAKPOINT = 1075;
+
 interface Challenge {
   id: string;
   title: string;
@@ -27,7 +30,7 @@ const challenges: Challenge[] = [
     description: '',
     completed: true,
     current: false,
-    link: 'https://example.com/prompt-injection',
+    link: 'https://sitcon.org/prompt-injection',
   },
   {
     id: 'worker-recruitment',
@@ -35,7 +38,7 @@ const challenges: Challenge[] = [
     description: '',
     completed: false,
     current: false,
-    link: 'https://example.com/worker-recruitment',
+    link: 'https://sitcon.org/worker-recruitment',
   },
   {
     id: 'elf-text',
@@ -43,7 +46,7 @@ const challenges: Challenge[] = [
     description: '',
     completed: false,
     current: false,
-    link: 'https://example.com/elf-text',
+    link: 'https://sitcon.org/elf-text',
   },
   {
     id: 'git-leak',
@@ -51,7 +54,7 @@ const challenges: Challenge[] = [
     description: '',
     completed: false,
     current: false,
-    link: 'https://example.com/git-leak',
+    link: 'https://sitcon.org/git-leak',
   },
   {
     id: 'python-jail',
@@ -59,7 +62,7 @@ const challenges: Challenge[] = [
     description: '',
     completed: false,
     current: false,
-    link: 'https://example.com/python-jail',
+    link: 'https://sitcon.org/python-jail',
   },
   {
     id: 'about-sitcon',
@@ -67,7 +70,7 @@ const challenges: Challenge[] = [
     description: '',
     completed: false,
     current: false,
-    link: 'https://example.com/about-sitcon',
+    link: 'https://sitcon.org/about-sitcon',
   },
 ];
 
@@ -86,7 +89,7 @@ export default function ChallengesPage() {
   useEffect(() => {
     const checkScreenSize = () => {
       const width = window.innerWidth;
-      setIsMobile(width < 1075);
+      setIsMobile(width < MOBILE_BREAKPOINT);
     };
 
     checkScreenSize();
@@ -95,31 +98,39 @@ export default function ChallengesPage() {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const trimmedPassword = password.trim();
 
-    if (validateFlag(selectedChallenge.id, trimmedPassword)) {
-      setSubmitStatus('success');
-      setSubmitMessage('恭喜！Flag 正確！');
+    try {
+      const isValid = await validateFlag(selectedChallenge.id, trimmedPassword);
 
-      // 更新 challenges 陣列
-      const updatedChallenges = challengesList.map((challenge) =>
-        challenge.id === selectedChallenge.id
-          ? { ...challenge, completed: true }
-          : challenge
-      );
-      setChallengesList(updatedChallenges);
+      if (isValid) {
+        setSubmitStatus('success');
+        setSubmitMessage('恭喜！Flag 正確！');
 
-      // 更新 selectedChallenge
-      setSelectedChallenge((prev) => ({ ...prev, completed: true }));
+        // 更新 challenges 陣列
+        const updatedChallenges = challengesList.map((challenge) =>
+          challenge.id === selectedChallenge.id
+            ? { ...challenge, completed: true }
+            : challenge
+        );
+        setChallengesList(updatedChallenges);
 
-      // 清空輸入框
-      setPassword('');
-    } else {
+        // 更新 selectedChallenge
+        setSelectedChallenge((prev) => ({ ...prev, completed: true }));
+
+        // 清空輸入框
+        setPassword('');
+      } else {
+        setSubmitStatus('error');
+        setSubmitMessage('Flag 錯誤，請再試一次！');
+
+        // 清空輸入框
+        setPassword('');
+      }
+    } catch (error) {
       setSubmitStatus('error');
-      setSubmitMessage('Flag 錯誤，請再試一次！');
-
-      // 清空輸入框
+      setSubmitMessage('驗證失敗，請稍後再試！');
       setPassword('');
     }
 
@@ -135,10 +146,9 @@ export default function ChallengesPage() {
       className="text-white w-full"
       style={{
         backgroundColor: '#121712',
-        fontFamily: '"Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif',
+        fontFamily: 'var(--font-family-base)',
         paddingLeft: isMobile ? '20px' : '65px',
         paddingRight: isMobile ? '20px' : '65px',
-        paddingTop: isMobile ? '100px' : '65px',
       }}
     >
       <div
@@ -486,15 +496,16 @@ export default function ChallengesPage() {
                     (e.currentTarget.style.backgroundColor = '#0DF20D')
                   }
                 >
-                  <img
-                    src="go-to-challenge.png"
-                    alt="check"
+                  <span
+                    className="material-icons"
                     style={{
-                      width: isMobile ? '14px' : '18px',
-                      height: isMobile ? '14px' : '18px',
+                      fontSize: isMobile ? '14px' : '18px',
                       margin: isMobile ? '4px' : '6px',
+                      color: '#121712',
                     }}
-                  />
+                  >
+                    open_in_new
+                  </span>
                   <span>前往關卡</span>
                 </a>
               </div>

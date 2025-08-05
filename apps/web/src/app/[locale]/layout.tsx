@@ -69,19 +69,22 @@ export default async function LocaleLayout({
       lang={locale}
       dir="ltr"
       suppressHydrationWarning
-      style={{ backgroundColor: '#121712' }}
     >
-      <body
-        className={`${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased flex flex-col min-h-screen`}
-        style={{ backgroundColor: '#121712' }}
-      >
+      <head>
+        <link
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet"
+        />
+      </head>
+              <body
+          className={`${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased flex flex-col min-h-screen pt-[100px] bg-primary`}
+        >
         <NextIntlClientProvider messages={messages}>
           <Navigation />
 
           {/* temp Main Content (include navBar) */}
           <main
             className="container mx-auto px-6 py-8"
-            style={{ backgroundColor: '#121712' }}
           >
             {children}
           </main>
