@@ -80,7 +80,7 @@ export default async function LocaleLayout({
 
           {/* temp Main Content (include navBar) */}
           <main
-            className="flex-1 container mx-auto px-6 py-8"
+            className="container mx-auto px-6 py-8"
             style={{ backgroundColor: '#121712' }}
           >
             {children}

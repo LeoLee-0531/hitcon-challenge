@@ -132,19 +132,21 @@ export default function ChallengesPage() {
 
   return (
     <div
-      className="min-h-screen text-white w-full h-full"
+      className="text-white w-full"
       style={{
         backgroundColor: '#121712',
         fontFamily: '"Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif',
         paddingLeft: isMobile ? '20px' : '65px',
         paddingRight: isMobile ? '20px' : '65px',
-        paddingTop: isMobile ? '70px' : '65px',
-        minHeight: '100vh',
+        paddingTop: isMobile ? '100px' : '65px',
       }}
     >
       <div
         className={isMobile ? 'flex flex-col' : 'flex'}
-        style={{ height: isMobile ? 'auto' : 'calc(100vh - 80px)' }}
+        style={{
+          height: isMobile ? 'auto' : 'calc(100vh - 80px)',
+          minHeight: isMobile ? 'auto' : 'calc(100vh - 80px)',
+        }}
       >
         {/* Left Sidebar */}
         <div
@@ -152,98 +154,254 @@ export default function ChallengesPage() {
           style={{
             backgroundColor: '#121712',
             width: isMobile ? '100%' : '320px',
-            paddingLeft: '16px',
-            paddingRight: '16px',
+            paddingLeft: isMobile ? '35px' : '16px',
+            paddingRight: isMobile ? '16px' : '16px',
             paddingTop: isMobile ? '8px' : '24px',
             paddingBottom: isMobile ? '8px' : '24px',
             marginTop: '10px',
             marginBottom: isMobile ? '12px' : '0',
           }}
         >
-          <div className="relative">
-            {challengesList.map((challenge, index) => (
-              <div
-                key={challenge.id}
-                className="relative flex items-start cursor-pointer"
-                style={{
-                  width: isMobile ? '100%' : '214px',
-                  height: isMobile ? '40px' : '64px',
-                  marginBottom: isMobile ? '2px' : '0',
-                }}
-                onClick={() => setSelectedChallenge(challenge)}
-              >
-                {/* 圓形圖標 */}
-                <div
-                  className="rounded-full flex items-center justify-center relative"
-                  style={{
-                    width: isMobile ? '24px' : '33px',
-                    height: isMobile ? '24px' : '33px',
-                    padding: isMobile ? '4px' : '7px',
-                    backgroundColor: challenge.completed
-                      ? '#77B55A'
-                      : 'transparent',
-                    border: challenge.completed ? 'none' : '3px solid #ffffff',
-                  }}
-                >
-                  {challenge.completed && (
-                    <svg
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
+          {isMobile ? (
+            // 手機版：左右兩列布局
+            <div style={{ display: 'flex', gap: '12px' }}>
+              {/* 左邊四個任務 */}
+              <div style={{ flex: 1 }}>
+                {challengesList.slice(0, 4).map((challenge, index) => (
+                  <div
+                    key={challenge.id}
+                    className="relative flex items-start cursor-pointer"
+                    style={{
+                      width: '100%',
+                      height: '40px',
+                      marginBottom: '2px',
+                    }}
+                    onClick={() => setSelectedChallenge(challenge)}
+                  >
+                    {/* 圓形圖標 */}
+                    <div
+                      className="rounded-full flex items-center justify-center relative"
                       style={{
-                        color: '#000000',
-                        width: isMobile ? '14px' : '20px',
-                        height: isMobile ? '14px' : '20px',
-                        strokeWidth: '2',
+                        width: '24px',
+                        height: '24px',
+                        padding: '4px',
+                        backgroundColor: challenge.completed
+                          ? '#77B55A'
+                          : 'transparent',
+                        border: challenge.completed
+                          ? 'none'
+                          : '3px solid #ffffff',
                       }}
                     >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                      />
-                    </svg>
-                  )}
-                </div>
+                      {challenge.completed && (
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          style={{
+                            color: '#000000',
+                            width: '14px',
+                            height: '14px',
+                            strokeWidth: '2',
+                          }}
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                          />
+                        </svg>
+                      )}
+                    </div>
 
-                {/* 文字框 */}
-                <div
-                  className="ml-3 flex items-center"
-                  style={{
-                    width: isMobile ? 'calc(100% - 35px)' : '166px',
-                    height: isMobile ? '18px' : '24px',
-                    paddingTop: isMobile ? '5px' : '8px',
-                  }}
-                >
-                  <span
+                    {/* 文字框 */}
+                    <div
+                      className="ml-3 flex items-center"
+                      style={{
+                        width: 'calc(100% - 35px)',
+                        height: '18px',
+                        paddingTop: '5px',
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: '#ffffff',
+                          fontSize: '12px',
+                          fontWeight: 'bold',
+                          lineHeight: '1',
+                        }}
+                      >
+                        {challenge.title}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* 右邊三個任務 */}
+              <div style={{ flex: 1 }}>
+                {challengesList.slice(4, 7).map((challenge, index) => (
+                  <div
+                    key={challenge.id}
+                    className="relative flex items-start cursor-pointer"
                     style={{
-                      color: '#ffffff',
-                      fontSize: isMobile ? '13px' : '20px',
-                      fontWeight: 'bold',
-                      lineHeight: '1',
+                      width: '100%',
+                      height: '40px',
+                      marginBottom: '2px',
+                    }}
+                    onClick={() => setSelectedChallenge(challenge)}
+                  >
+                    {/* 圓形圖標 */}
+                    <div
+                      className="rounded-full flex items-center justify-center relative"
+                      style={{
+                        width: '24px',
+                        height: '24px',
+                        padding: '4px',
+                        backgroundColor: challenge.completed
+                          ? '#77B55A'
+                          : 'transparent',
+                        border: challenge.completed
+                          ? 'none'
+                          : '3px solid #ffffff',
+                      }}
+                    >
+                      {challenge.completed && (
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          style={{
+                            color: '#000000',
+                            width: '14px',
+                            height: '14px',
+                            strokeWidth: '2',
+                          }}
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                          />
+                        </svg>
+                      )}
+                    </div>
+
+                    {/* 文字框 */}
+                    <div
+                      className="ml-3 flex items-center"
+                      style={{
+                        width: 'calc(100% - 35px)',
+                        height: '18px',
+                        paddingTop: '5px',
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: '#ffffff',
+                          fontSize: '12px',
+                          fontWeight: 'bold',
+                          lineHeight: '1',
+                        }}
+                      >
+                        {challenge.title}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            // 電腦版：保持原來的垂直布局
+            <div className="relative">
+              {challengesList.map((challenge, index) => (
+                <div
+                  key={challenge.id}
+                  className="relative flex items-start cursor-pointer"
+                  style={{
+                    width: '214px',
+                    height: '64px',
+                    marginBottom: '0',
+                  }}
+                  onClick={() => setSelectedChallenge(challenge)}
+                >
+                  {/* 圓形圖標 */}
+                  <div
+                    className="rounded-full flex items-center justify-center relative"
+                    style={{
+                      width: '33px',
+                      height: '33px',
+                      padding: '7px',
+                      backgroundColor: challenge.completed
+                        ? '#77B55A'
+                        : 'transparent',
+                      border: challenge.completed
+                        ? 'none'
+                        : '3px solid #ffffff',
                     }}
                   >
-                    {challenge.title}
-                  </span>
-                </div>
+                    {challenge.completed && (
+                      <svg
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        style={{
+                          color: '#000000',
+                          width: '20px',
+                          height: '20px',
+                          strokeWidth: '2',
+                        }}
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          clipRule="evenodd"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                        />
+                      </svg>
+                    )}
+                  </div>
 
-                {/* 連接線 (除了最後一個項目) */}
-                {index < challenges.length - 1 && !isMobile && (
+                  {/* 文字框 */}
                   <div
-                    className="absolute"
+                    className="ml-3 flex items-center"
                     style={{
-                      left: '15px',
-                      top: '40px',
-                      width: '2px',
-                      height: '20px',
-                      backgroundColor: '#3B543B',
+                      width: '166px',
+                      height: '24px',
+                      paddingTop: '8px',
                     }}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
+                  >
+                    <span
+                      style={{
+                        color: '#ffffff',
+                        fontSize: '20px',
+                        fontWeight: 'bold',
+                        lineHeight: '1',
+                      }}
+                    >
+                      {challenge.title}
+                    </span>
+                  </div>
+
+                  {/* 連接線 (除了最後一個項目) */}
+                  {index < challenges.length - 1 && (
+                    <div
+                      className="absolute"
+                      style={{
+                        left: '15px',
+                        top: '40px',
+                        width: '2px',
+                        height: '20px',
+                        backgroundColor: '#3B543B',
+                      }}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Main Content Area */}
@@ -257,7 +415,7 @@ export default function ChallengesPage() {
             style={{
               width: isMobile ? 'calc(100% - 32px)' : '520px',
               height: isMobile ? 'auto' : '400px',
-              minHeight: isMobile ? '400px' : '400px',
+              minHeight: isMobile ? '350px' : '400px',
               borderRadius: isMobile ? '16px' : '20px',
               background:
                 'linear-gradient(135deg, rgba(143, 204, 143, 0.3) 0%, rgba(71, 102, 71, 0.3) 100%)',
