@@ -2,12 +2,13 @@ import React from 'react';
 
 export default function AboutSITCONPage() {
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-[#1A2316] to-[#121712] flex flex-col items-center py-12 px-4">
+    <div className='bg-[#1A2316] py-20 my-12 px-6'>
+    {/* <div className="min-h-screen w-full bg-gradient-to-b from-[#1A2316] to-[#121712] flex flex-col items-center py-12 px-4"> */}
       {/* SITCON 2026 info */}
-      <section className="w-full max-w-3xl mb-10 text-center">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1 font-sans">
+      <section className="w-full text-center mb-20 mt-4">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-1 font-sans">
           📢 SITCON 2026
-          <span className="block mt-1 text-lg text-[#ACD997] font-medium">
+          <span className="block mt-1 text-xl text-[#ACD997] font-medium">
             @ 中央研究院人文社會科學館
           </span>
         </h1>
