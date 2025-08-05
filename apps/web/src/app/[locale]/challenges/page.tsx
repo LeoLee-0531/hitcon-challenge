@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { validateFlag } from '@/data/flags';
 
 // 響應式設計斷點
-const MOBILE_BREAKPOINT = 1075;
+const MOBILE_BREAKPOINT = 1024; // 使用標準的桌面斷點 (lg)
 
 interface Challenge {
   id: string;
@@ -163,7 +163,7 @@ export default function ChallengesPage() {
           className="py-6"
           style={{
             backgroundColor: '#121712',
-            width: isMobile ? '100%' : '320px',
+            width: isMobile ? '100%' : 'min(320px, 25vw)',
             paddingLeft: isMobile ? '35px' : '16px',
             paddingRight: isMobile ? '16px' : '16px',
             paddingTop: isMobile ? '8px' : '24px',
@@ -417,21 +417,23 @@ export default function ChallengesPage() {
         {/* Main Content Area */}
         <div
           className={
-            isMobile ? 'w-full' : 'flex-1 flex items-center justify-center'
+            isMobile ? 'w-full' : 'flex-1 flex items-start justify-center'
           }
+          style={{
+            paddingLeft: isMobile ? '0' : '40px',
+            paddingRight: isMobile ? '0' : '40px',
+          }}
         >
           <div
             className="p-8 flex flex-col justify-center"
             style={{
-              width: isMobile ? 'calc(100% - 32px)' : '520px',
+              width: isMobile ? 'calc(100% - 32px)' : 'min(520px, 60vw)',
               height: isMobile ? 'auto' : '400px',
               minHeight: isMobile ? '350px' : '400px',
               borderRadius: isMobile ? '16px' : '20px',
               background:
                 'linear-gradient(135deg, rgba(143, 204, 143, 0.3) 0%, rgba(71, 102, 71, 0.3) 100%)',
-              marginLeft: isMobile ? '16px' : '187px',
-              marginRight: isMobile ? '16px' : '187px',
-              marginTop: isMobile ? '0' : '20px',
+              marginTop: isMobile ? '0' : '40px',
               marginBottom: '10px',
               backdropFilter: 'blur(20px) brightness(80%)',
               border: '1px solid rgba(255, 255, 255, 0.4)',
@@ -523,7 +525,7 @@ export default function ChallengesPage() {
                   }}
                   className="rounded-lg transition-colors custom-input"
                   style={{
-                    width: isMobile ? 'calc(100% - 32px)' : '448px',
+                    width: isMobile ? 'calc(100% - 32px)' : 'min(448px, 100%)',
                     height: isMobile ? '48px' : '56px',
                     backgroundColor: 'rgba(23, 51, 23, 0.2)',
                     border: '1px solid #306930',
@@ -545,7 +547,7 @@ export default function ChallengesPage() {
                 <button
                   className="font-medium rounded-lg transition-colors"
                   style={{
-                    width: isMobile ? 'calc(100% - 32px)' : '448px',
+                    width: isMobile ? 'calc(100% - 32px)' : 'min(448px, 100%)',
                     height: isMobile ? '36px' : '40px',
                     backgroundColor: '#0DF20D',
                     color: '#000000',
@@ -572,7 +574,7 @@ export default function ChallengesPage() {
                     margin: '4px 16px',
                     padding: '8px',
                     borderRadius: '8px',
-                    width: isMobile ? 'calc(100% - 32px)' : '448px',
+                    width: isMobile ? 'calc(100% - 32px)' : 'min(448px, 100%)',
                     backgroundColor:
                       submitStatus === 'success'
                         ? 'rgba(34, 197, 94, 0.25)'
