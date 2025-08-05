@@ -147,15 +147,19 @@ export default function ChallengesPage() {
       style={{
         backgroundColor: '#121712',
         fontFamily: 'var(--font-family-base)',
-        paddingLeft: isMobile ? '20px' : '65px',
-        paddingRight: isMobile ? '20px' : '65px',
+        maxWidth: '820px',
+        margin: '0 auto',
       }}
     >
       <div
-        className={isMobile ? 'flex flex-col' : 'flex'}
+        className={
+          isMobile
+            ? 'flex flex-col items-center justify-center'
+            : 'flex items-center'
+        }
         style={{
-          height: isMobile ? 'auto' : 'calc(100vh - 80px)',
-          minHeight: isMobile ? 'auto' : 'calc(100vh - 80px)',
+          height: isMobile ? 'auto' : 'calc(100vh - 80px - 180px)',
+          minHeight: 'calc(100vh - 80px - 180px)',
         }}
       >
         {/* Left Sidebar */}
@@ -163,8 +167,9 @@ export default function ChallengesPage() {
           className="py-6"
           style={{
             backgroundColor: '#121712',
-            width: isMobile ? '100%' : 'min(320px, 25vw)',
-            paddingLeft: isMobile ? '35px' : '16px',
+            width: isMobile ? '100%' : 'min(270px, 25vw)',
+            maxWidth: '270px',
+            paddingLeft: isMobile ? '16px' : '16px',
             paddingRight: isMobile ? '16px' : '16px',
             paddingTop: isMobile ? '8px' : '24px',
             paddingBottom: isMobile ? '8px' : '24px',
@@ -174,7 +179,9 @@ export default function ChallengesPage() {
         >
           {isMobile ? (
             // 手機版：左右兩列布局
-            <div style={{ display: 'flex', gap: '12px' }}>
+            <div
+              style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}
+            >
               {/* 左邊四個任務 */}
               <div style={{ flex: 1 }}>
                 {challengesList.slice(0, 4).map((challenge, index) => (
@@ -416,9 +423,7 @@ export default function ChallengesPage() {
 
         {/* Main Content Area */}
         <div
-          className={
-            isMobile ? 'w-full' : 'flex-1 flex items-start justify-center'
-          }
+          className={isMobile ? 'w-full' : 'flex-1 flex items-start'}
           style={{
             paddingLeft: isMobile ? '0' : '40px',
             paddingRight: isMobile ? '0' : '40px',
@@ -433,8 +438,7 @@ export default function ChallengesPage() {
               borderRadius: isMobile ? '16px' : '20px',
               background:
                 'linear-gradient(135deg, rgba(143, 204, 143, 0.3) 0%, rgba(71, 102, 71, 0.3) 100%)',
-              marginTop: isMobile ? '0' : '40px',
-              marginBottom: '10px',
+              marginLeft: isMobile ? '16px' : '40px',
               backdropFilter: 'blur(20px) brightness(80%)',
               border: '1px solid rgba(255, 255, 255, 0.4)',
               boxShadow:
