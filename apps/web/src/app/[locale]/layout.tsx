@@ -73,7 +73,9 @@ export default async function LocaleLayout({
           <Navigation />
 
           {/* temp Main Content (include navBar) */}
-          <main className="flex-1 container mx-auto px-6 py-8">{children}</main>
+          <main className="flex flex-col flex-1 items-center container mx-auto px-6 py-8">
+            {children}
+          </main>
 
           {/* Footer */}
           <BaseFooter />
