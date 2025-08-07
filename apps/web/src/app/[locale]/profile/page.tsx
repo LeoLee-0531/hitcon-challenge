@@ -1,12 +1,29 @@
 'use client';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 
 // 響應式設計斷點
 const MOBILE_BREAKPOINT = 1024; // 使用標準的桌面斷點 (lg)
 
 export default function ProfilePage() {
   const [isMobile, setIsMobile] = useState(false);
+  const [qrCodeGenerated, setQrCodeGenerated] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  // 假的使用者資料，之後可以從 localStorage 取得
+  const fakeUserData = {
+    id: 'user-123',
+    username: '小美',
+    avatar: '/avatar.png',
+    completedChallenges: 3,
+    totalChallenges: 7,
+    level: 1, // 1-3 級
+  };
+
+  // 從假資料計算進度
+  const progressPercentage =
+    (fakeUserData.completedChallenges / fakeUserData.totalChallenges) * 100;
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -19,6 +36,23 @@ export default function ProfilePage() {
 
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
+
+  const generateQRCode = async () => {
+    try {
+      setIsGenerating(true);
+
+      // 模擬 QR code 生成過程
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // 生成 QR code，內容是使用者 ID
+      console.log('生成 QR code，使用者 ID:', fakeUserData.id);
+      setQrCodeGenerated(true);
+    } catch (error) {
+      console.error('生成 QR code 失敗:', error);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#121712] flex flex-col items-center py-8">
@@ -35,7 +69,7 @@ export default function ProfilePage() {
         {/* Avatar & Name */}
         <div className="flex flex-col items-center mb-8">
           <Image
-            src="/avatar.png"
+            src={fakeUserData.avatar}
             alt="avatar"
             width={128}
             height={128}
@@ -52,7 +86,7 @@ export default function ProfilePage() {
               fontSize: isMobile ? '16px' : '22px',
             }}
           >
-            小美
+            {fakeUserData.username}
           </div>
         </div>
 
@@ -70,7 +104,7 @@ export default function ProfilePage() {
               fontSize: isMobile ? '18px' : '24px',
             }}
           >
-            5/7
+            {fakeUserData.completedChallenges}/{fakeUserData.totalChallenges}
           </div>
           <div
             className="text-[#8FCC8F] mb-4 text-[14px]"
@@ -107,26 +141,26 @@ export default function ProfilePage() {
               </div>
               {/* 7個關卡進度條 */}
               <div className="flex w-full h-2">
-                {/* 第一關 */}
-                <div className="flex-1 bg-[#0DF20D] rounded-l-full"></div>
-                {/* 第二關 */}
-                <div className="flex-1 bg-[#0DF20D]"></div>
-                {/* 第三關 */}
-                <div className="flex-1 bg-[#0DF20D]"></div>
-                {/* 第四關 */}
-                <div className="flex-1 bg-[#0DF20D]"></div>
-                {/* 第五關 */}
-                <div className="flex-1 bg-[#0DF20D]"></div>
-                {/* 第六關 */}
-                <div
-                  className="flex-1"
-                  style={{ backgroundColor: '#306930' }}
-                ></div>
-                {/* 第七關 */}
-                <div
-                  className="flex-1 rounded-r-full"
-                  style={{ backgroundColor: '#306930' }}
-                ></div>
+                {/* 動態生成進度條 */}
+                {Array.from(
+                  { length: fakeUserData.totalChallenges },
+                  (_, index) => {
+                    const isCompleted =
+                      index < fakeUserData.completedChallenges;
+                    const isFirst = index === 0;
+                    const isLast = index === fakeUserData.totalChallenges - 1;
+
+                    return (
+                      <div
+                        key={index}
+                        className={`flex-1 ${isFirst ? 'rounded-l-full' : ''} ${isLast ? 'rounded-r-full' : ''}`}
+                        style={{
+                          backgroundColor: isCompleted ? '#0DF20D' : '#306930',
+                        }}
+                      />
+                    );
+                  }
+                )}
               </div>
               {/* 分隔線 */}
               <div className="absolute top-0 left-1/7 w-px h-2 bg-white"></div>
@@ -205,7 +239,7 @@ export default function ProfilePage() {
           </div>
           {/* 動態渲染獎勵等級說明 */}
           {(() => {
-            const userLevel = 2; // 假資料，之後可從 API 取得
+            const userLevel = fakeUserData.level; // 假資料，之後可從 API 取得
             const levels = [
               { label: '第一級:需完成3關', achieved: userLevel >= 1 },
               { label: '第二級:需完成5關', achieved: userLevel >= 2 },
@@ -316,8 +350,10 @@ export default function ProfilePage() {
             paddingBottom: isMobile ? '12px' : '12px',
             fontSize: isMobile ? '14px' : '16px',
           }}
+          onClick={generateQRCode}
+          disabled={isGenerating}
         >
-          產生兌換 QR code
+          {isGenerating ? '產生中...' : '產生兌換 QR code'}
         </button>
         <div
           className="w-full max-w-[960px] text-center text-xs text-gray-400 mb-4"
@@ -348,16 +384,28 @@ export default function ProfilePage() {
           <div className="absolute inset-0 backdrop-blur-sm bg-[#3A4A3A]/12"></div>
           {/* QR code 內容 */}
           <div className="relative z-10">
-            <Image
-              src="/qrcode.png"
-              alt="QR code"
-              width={200}
-              height={200}
-              style={{
-                width: isMobile ? '150px' : '200px',
-                height: isMobile ? '150px' : '200px',
-              }}
-            />
+            {qrCodeGenerated ? (
+              <div className="text-center">
+                <div className="bg-white p-4 rounded-lg inline-block">
+                  <QRCodeSVG
+                    value={fakeUserData.id}
+                    size={isMobile ? 150 : 200}
+                    level="M"
+                    includeMargin={true}
+                  />
+                </div>
+                <div className="text-white text-lg font-bold mt-2">
+                  恭喜 {fakeUserData.username} 完成了{' '}
+                  {fakeUserData.completedChallenges} 關挑戰！
+                </div>
+                <div className="text-white text-lg mt-2">感謝您的參與！</div>
+              </div>
+            ) : (
+              <div className="text-center text-gray-400">
+                <div className="text-lg mb-2">📱</div>
+                <div>點擊按鈕生成 QR Code</div>
+              </div>
+            )}
           </div>
         </div>
       </main>
