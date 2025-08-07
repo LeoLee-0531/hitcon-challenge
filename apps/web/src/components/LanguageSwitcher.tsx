@@ -36,7 +36,7 @@ export default function LanguageSwitcher({
       className={`w-full h-full ${className}`}
       onClick={handleLanguageToggle}
     >
-      {languageNames[locale]}
+      {languageNames[locale === 'zh' ? 'en' : 'zh']}
     </button>
   );
 }

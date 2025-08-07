@@ -7,8 +7,15 @@
 @import '../../styles/components.css';
 @import '../../styles/components/Navigation.css';
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-space-grotesk), var(--font-noto-sans-tc), sans-serif;
+@layer base {
+  html {
+    font-family:
+      var(--font-space-grotesk), var(--font-noto-sans-tc), system-ui, sans-serif;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: inherit;
+  }
 }

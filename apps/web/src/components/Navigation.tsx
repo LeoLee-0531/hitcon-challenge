@@ -3,7 +3,11 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import LanguageSwitcher from './LanguageSwitcher';
+import { useGoogleAuth } from '../hooks/useGoogleAuth';
+import { getApiBaseUrl } from '../config/env';
+import type { User } from '../types/auth';
 
 interface SitconLogoProps {
   className?: string;
@@ -29,6 +33,73 @@ export function SitconLogo({
 
 export default function Navigation() {
   const t = useTranslations('nav');
+  const { login, isLoading } = useGoogleAuth();
+  const [user, setUser] = useState<User | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [initializing, setInitializing] = useState(true);
+
+  useEffect(() => {
+    setMounted(true);
+    initializeAuth();
+  }, []);
+
+  const initializeAuth = async () => {
+    // 檢查 localStorage 中的使用者資料
+    const userInfo = localStorage.getItem('user_info');
+    const userToken = localStorage.getItem('user_token');
+
+    if (userInfo && userToken) {
+      try {
+        const parsedUser = JSON.parse(userInfo);
+
+        // 如果沒有頭像資料，嘗試從 API 獲取最新的使用者資料
+        if (!parsedUser.picture) {
+          try {
+            const profileData = await fetchUserProfile(userToken);
+            if (profileData && profileData.profileImage) {
+              const updatedUser = {
+                ...parsedUser,
+                picture: profileData.profileImage,
+              };
+              localStorage.setItem('user_info', JSON.stringify(updatedUser));
+              setUser(updatedUser);
+            } else {
+              setUser(parsedUser);
+            }
+          } catch (error) {
+            setUser(parsedUser);
+          }
+        } else {
+          setUser(parsedUser);
+        }
+      } catch (error) {
+        console.error('解析使用者資料失敗:', error);
+        localStorage.removeItem('user_info');
+        localStorage.removeItem('user_token');
+      }
+    }
+
+    // 設定初始化完成
+    setInitializing(false);
+  };
+
+  const fetchUserProfile = async (token: string) => {
+    try {
+      const response = await fetch(`${getApiBaseUrl()}/user/profile`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        return data.data;
+      }
+    } catch (error) {
+      console.error('Failed to fetch user profile:', error);
+    }
+    return null;
+  };
 
   return (
     <nav className="nav p-10">
@@ -51,12 +122,43 @@ export default function Navigation() {
         </div>
         <div className="nav-side flex items-center gap-4">
           <LanguageSwitcher className="language-switcher side-box" />
-          <Link
-            href="/login"
-            className="login side-box nav-link flex items-center justify-center"
-          >
-            {t('login')}
-          </Link>
+          {!mounted || initializing ? (
+            // 組件掛載前或初始化時顯示載入狀態
+            <div className="w-10 h-10 rounded-full bg-gray-200/20"></div>
+          ) : user ? (
+            <Link href="/profile" className="flex items-center">
+              <div className={`w-10 h-10 rounded-full overflow-hidden flex items-center justify-center transition-all duration-300 ${user.picture ? '' : 'bg-[var(--primary-20)]'
+                }`}>
+                {user.picture ? (
+                  <Image
+                    src={user.picture}
+                    alt={user.nickname}
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="text-white text-sm font-semibold">
+                    {user.nickname.charAt(0).toUpperCase()}
+                  </span>
+                )}
+              </div>
+            </Link>
+          ) : (
+            <button
+              onClick={login}
+              disabled={isLoading}
+              className="login-btn side-box rounded-full flex items-center justify-center"
+            >
+              {isLoading ? (
+                <div className="w-4 h-4 !m-0 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-white">
+                  <path d="M11,7L9.6,8.4l2.6,2.6H2v2h10.2l-2.6,2.6L11,17l5-5L11,7z M20,19h-8v2h8c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-8v2h8V19z" />
+                </svg>
+              )}
+            </button>
+          )}
         </div>
       </div>
     </nav>

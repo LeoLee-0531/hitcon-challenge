@@ -64,6 +64,7 @@ export const getUserProfile = async (
       nickname: user.nickname,
       email: user.email,
       language: user.language,
+      profileImage: user.profileImage,
       progress,
     });
   } catch (error) {

@@ -1,7 +1,15 @@
 import { Router } from 'express';
-import { googleAuth, adminLogin } from '../controllers/auth';
+import {
+  googleAuth,
+  googleOAuthCallback,
+  adminLogin,
+} from '../controllers/auth';
 import { validateBody } from '../middleware/validation';
-import { googleAuthSchema, adminLoginSchema } from '../schemas/validation';
+import {
+  googleAuthSchema,
+  googleCodeSchema,
+  adminLoginSchema,
+} from '../schemas/validation';
 
 const router: Router = Router();
 
@@ -108,6 +116,77 @@ const router: Router = Router();
  *                       format: date-time
  */
 router.post('/google', validateBody(googleAuthSchema), googleAuth);
+
+/**
+ * @swagger
+ * /api/auth/google/callback:
+ *   post:
+ *     summary: Google OAuth 回調處理
+ *     description: 處理 Google OAuth 授權碼並完成登入
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - code
+ *             properties:
+ *               code:
+ *                 type: string
+ *                 description: Google OAuth 授權碼
+ *                 example: '4/0AbcdEfg...'
+ *     responses:
+ *       200:
+ *         description: 登入成功
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     user_token:
+ *                       type: string
+ *                       description: JWT token
+ *                     user_id:
+ *                       type: string
+ *                       description: User ID
+ *                     nickname:
+ *                       type: string
+ *                       description: User nickname
+ *                     email:
+ *                       type: string
+ *                       description: User email
+ *                     language:
+ *                       type: string
+ *                       description: User language preference
+ *                 timestamp:
+ *                   type: string
+ *                   format: date-time
+ *       400:
+ *         description: 請求參數錯誤
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       401:
+ *         description: Google 認證失敗
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.post(
+  '/google/callback',
+  validateBody(googleCodeSchema),
+  googleOAuthCallback
+);
 
 /**
  * @swagger

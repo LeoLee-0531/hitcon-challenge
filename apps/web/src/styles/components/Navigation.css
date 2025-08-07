@@ -31,13 +31,18 @@
   color: var(--nature-99);
 }
 
+.side-box:disabled {
+  
+}
+
 .language-switcher {
   width: 50px;
   height: 40px;
   cursor: pointer;
 }
 
-.login {
-  width: 80px;
+.login-btn {
+  width: 40px;
   height: 40px;
+  cursor: pointer;
 }

@@ -21,8 +21,8 @@ export const config = {
     // 為所有帶有語言前綴的請求設定 cookie 來記住之前的語言
     '/(zh|en)/:path*',
 
-    // 啟用為缺失語言的重定向
+    // 啟用為缺失語言的重定向，但排除 auth callback
     // (例如：`/pathnames` -> `/en/pathnames`)
-    '/((?!_next|_vercel|.*\\..*).*)',
+    '/((?!_next|_vercel|auth/callback|.*\\..*).*)',
   ],
 };
