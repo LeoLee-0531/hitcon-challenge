@@ -1,0 +1,41 @@
+{
+  "common": {
+    "title": "HITCON Challenge",
+    "subtitle": "Security Challenge Platform",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "submit": "Submit"
+  },
+  "nav": {
+    "challenges": "Challenges",
+    "about": "About SITCON",
+    "recruitment": "SITCON Recruitment",
+    "login": "Login"
+  },
+  "home": {
+    "welcome": "Welcome to HITCON Challenge",
+    "description": "Test your cybersecurity skills with our challenging problems",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "featuredChallenges": "Featured Challenges",
+    "recentActivity": "Recent Activity"
+  },
+  "errors": {
+    "notFound": "Page not found",
+    "serverError": "Internal server error",
+    "unauthorized": "Unauthorized access",
+    "validationError": "Validation error",
+    "networkError": "Network error",
+    "tryAgain": "Please try again later"
+  }
+}
