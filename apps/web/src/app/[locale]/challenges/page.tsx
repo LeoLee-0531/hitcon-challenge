@@ -158,8 +158,8 @@ export default function ChallengesPage() {
             : 'flex items-center'
         }
         style={{
-          height: isMobile ? 'auto' : 'calc(100vh - 80px - 180px)',
-          minHeight: 'calc(100vh - 80px - 180px)',
+          height: isMobile ? 'auto' : 'auto',
+          minHeight: 'auto',
         }}
       >
         {/* Left Sidebar */}
@@ -503,7 +503,7 @@ export default function ChallengesPage() {
                   }
                 >
                   <span
-                    className="material-icons"
+                    className="material-symbols-outlined"
                     style={{
                       fontSize: isMobile ? '14px' : '18px',
                       margin: isMobile ? '4px' : '6px',
