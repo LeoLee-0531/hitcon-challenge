@@ -66,14 +66,20 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir="ltr" suppressHydrationWarning>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+        />
+      </head>
       <body
-        className={`${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased pt-[100px] bg-primary`}
+        className={`${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased flex flex-col min-h-screen pt-[100px] bg-primary`}
       >
         <NextIntlClientProvider messages={messages}>
           <Navigation />
 
           {/* temp Main Content (include navBar) */}
-          <main className="flex-1 container mx-auto px-6 py-8">{children}</main>
+          <main className="container mx-auto px-6 py-8">{children}</main>
 
           {/* Footer */}
           <BaseFooter />
