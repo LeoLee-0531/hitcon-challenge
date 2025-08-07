@@ -365,26 +365,26 @@ export default function ProfilePage() {
         </div>
 
         {/* QR code 區塊 */}
-        <div
-          className="w-full max-w-[960px] bg-[#2A3A2A] rounded-xl flex flex-col items-center py-12 relative overflow-hidden"
-          style={{
-            paddingTop: isMobile ? '32px' : '48px',
-            paddingBottom: isMobile ? '32px' : '48px',
-          }}
-        >
-          {/* 玻璃光線效果 */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent transform -skew-y-12 -translate-x-1/2 translate-y-1/2 w-full h-full"></div>
-          {/* 折射效果層 */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent transform rotate-45"></div>
-          {/* 深度效果 */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/10"></div>
-          {/* 色散效果 */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#3A4A3A]/25 to-[#2A3A2A]/25"></div>
-          {/* 霜化效果 */}
-          <div className="absolute inset-0 backdrop-blur-sm bg-[#3A4A3A]/12"></div>
-          {/* QR code 內容 */}
-          <div className="relative z-10">
-            {qrCodeGenerated ? (
+        {qrCodeGenerated && (
+          <div
+            className="w-full max-w-[960px] bg-[#2A3A2A] rounded-xl flex flex-col items-center py-12 relative overflow-hidden"
+            style={{
+              paddingTop: isMobile ? '32px' : '48px',
+              paddingBottom: isMobile ? '32px' : '48px',
+            }}
+          >
+            {/* 玻璃光線效果 */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent transform -skew-y-12 -translate-x-1/2 translate-y-1/2 w-full h-full"></div>
+            {/* 折射效果層 */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent transform rotate-45"></div>
+            {/* 深度效果 */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/10"></div>
+            {/* 色散效果 */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#3A4A3A]/25 to-[#2A3A2A]/25"></div>
+            {/* 霜化效果 */}
+            <div className="absolute inset-0 backdrop-blur-sm bg-[#3A4A3A]/12"></div>
+            {/* QR code 內容 */}
+            <div className="relative z-10">
               <div className="text-center">
                 <div className="bg-white p-4 rounded-lg inline-block">
                   <QRCodeSVG
@@ -400,14 +400,9 @@ export default function ProfilePage() {
                 </div>
                 <div className="text-white text-lg mt-2">感謝您的參與！</div>
               </div>
-            ) : (
-              <div className="text-center text-gray-400">
-                <div className="text-lg mb-2">📱</div>
-                <div>點擊按鈕生成 QR Code</div>
-              </div>
-            )}
+            </div>
           </div>
-        </div>
+        )}
       </main>
     </div>
   );
