@@ -56,11 +56,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <div
-      lang={locale}
-      dir="ltr"
-      className="pt-[100px] bg-primary min-h-screen"
-    >
+    <div lang={locale} dir="ltr" className="pt-[100px] bg-primary min-h-screen">
       <NextIntlClientProvider messages={messages}>
         <Navigation />
 

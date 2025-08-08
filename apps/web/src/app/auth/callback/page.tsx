@@ -21,13 +21,16 @@ export default function AuthCallbackPage() {
         }
 
         // 呼叫後端 API 進行 Google 登入
-        const response = await fetch(`${getApiBaseUrl()}/auth/google/callback`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ code }),
-        });
+        const response = await fetch(
+          `${getApiBaseUrl()}/auth/google/callback`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ code }),
+          }
+        );
 
         const data = await response.json();
 
@@ -53,7 +56,6 @@ export default function AuthCallbackPage() {
           // 登入失敗，重導向回首頁
           router.push('/');
         }
-
       } catch (error) {
         console.error('Google 登入錯誤:', error);
         // 發生錯誤時也重導向回首頁

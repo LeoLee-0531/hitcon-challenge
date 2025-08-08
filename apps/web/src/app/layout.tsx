@@ -13,9 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html suppressHydrationWarning className={fontVariables}>
-      <body className="antialiased">
-        {children}
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

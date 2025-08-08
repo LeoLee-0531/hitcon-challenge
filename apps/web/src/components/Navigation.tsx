@@ -102,7 +102,7 @@ export default function Navigation() {
     try {
       const response = await fetch(`${getApiBaseUrl()}/user/profile`, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -119,7 +119,7 @@ export default function Navigation() {
   const toggleMobileMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsMobileMenuOpen(prev => !prev);
+    setIsMobileMenuOpen((prev) => !prev);
   };
 
   return (
@@ -151,7 +151,9 @@ export default function Navigation() {
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-200/20"></div>
             ) : user ? (
               <Link href="/profile" className="flex items-center">
-                <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden flex items-center justify-center transition-all duration-300 ${user.picture ? '' : 'bg-[var(--primary-20)]'}`}>
+                <div
+                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden flex items-center justify-center transition-all duration-300 ${user.picture ? '' : 'bg-[var(--primary-20)]'}`}
+                >
                   {user.picture ? (
                     <Image
                       src={user.picture}
@@ -176,7 +178,13 @@ export default function Navigation() {
                 {isLoading ? (
                   <div className="w-3 h-3 sm:w-4 sm:h-4 !m-0 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                 ) : (
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-white">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="text-white"
+                  >
                     <path d="M11,7L9.6,8.4l2.6,2.6H2v2h10.2l-2.6,2.6L11,17l5-5L11,7z M20,19h-8v2h8c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-8v2h8V19z" />
                   </svg>
                 )}
@@ -190,9 +198,15 @@ export default function Navigation() {
               aria-label="切換手機選單"
             >
               <div className="flex flex-col justify-center items-center w-4 h-4 sm:w-5 sm:h-5 !m-0">
-                <span className={`block w-full h-0.5 bg-white transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
-                <span className={`block w-full h-0.5 bg-white mt-1 transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
-                <span className={`block w-full h-0.5 bg-white mt-1 transition-transform duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
+                <span
+                  className={`block w-full h-0.5 bg-white transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}
+                ></span>
+                <span
+                  className={`block w-full h-0.5 bg-white mt-1 transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}
+                ></span>
+                <span
+                  className={`block w-full h-0.5 bg-white mt-1 transition-transform duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+                ></span>
               </div>
             </button>
           </div>
