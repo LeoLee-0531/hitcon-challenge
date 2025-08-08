@@ -131,7 +131,7 @@ export default function Navigation() {
           </Link>
 
           {/* 電腦版導覽列 */}
-          <div className="nav-links hidden md:flex gap-[50px]">
+          <div className="nav-links hidden md:flex md:gap-[25px] lg:gap-[50px]">
             <Link href="/challenges" className="nav-link">
               {t('challenges')}
             </Link>
