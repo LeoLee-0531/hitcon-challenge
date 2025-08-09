@@ -26,3 +26,5 @@ export const config = {
     '/((?!_next|_vercel|auth/callback|.*\\..*).*)',
   ],
 };
+
+export { auth as middleware } from "@/auth"

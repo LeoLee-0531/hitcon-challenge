@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/config';
 import Navigation from '@/components/Navigation';
 import './globals.css';
+import { SessionProvider } from 'next-auth/react';
 
 export async function generateMetadata({
   params,
@@ -56,6 +57,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
+    <SessionProvider>
     <div lang={locale} dir="ltr" className="pt-[100px] bg-primary min-h-screen">
       <NextIntlClientProvider messages={messages}>
         <Navigation />
@@ -64,5 +66,6 @@ export default async function LocaleLayout({
         <main className="flex-1 container mx-auto px-6 py-8">{children}</main>
       </NextIntlClientProvider>
     </div>
+    </SessionProvider>
   );
 }
