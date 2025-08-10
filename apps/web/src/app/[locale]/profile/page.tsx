@@ -236,6 +236,9 @@ export default function ProfilePage() {
             }}
           >
             獎勵等級說明
+            <span className="text-sm font-normal text-gray-300 ml-2">
+              * 至少要完成三關才能拿到獎品！
+            </span>
           </div>
           {/* 動態渲染獎勵等級說明 */}
           {(() => {
@@ -336,7 +339,7 @@ export default function ProfilePage() {
               <li>第一級：可選擇「貼紙」作為獎品。</li>
               <li>第二級：可選擇「貼紙」或「鑰匙圈」作為獎品（二擇一）。</li>
               <li>
-                第三級：可選擇「貼紙」、「鑰匙圈」或「衣服」作為獎品（三擇一）。
+                第三級：可選擇「貼紙」、「鑰匙圈」或「年會T-shirt」作為獎品（三擇一）。
               </li>
             </ul>
           </div>
