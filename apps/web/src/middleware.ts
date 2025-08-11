@@ -1,7 +1,9 @@
 import createMiddleware from 'next-intl/middleware';
 import { locales, defaultLocale } from './i18n/config';
+import type { NextRequest } from 'next/server';
+import { auth } from '@/auth';
 
-export default createMiddleware({
+const intlMiddleware = createMiddleware({
   // 支援的語言列表
   locales,
 
@@ -12,17 +14,18 @@ export default createMiddleware({
   localePrefix: 'as-needed',
 });
 
+export function middleware(request: NextRequest) {
+  const intlResponse = intlMiddleware(request);
+  if (intlResponse) return intlResponse;
+
+  return auth();
+}
+
 export const config = {
   // 僅匹配需要國際化的路徑
   matcher: [
-    // 在根路徑啟用重定向到匹配的語言
     '/',
-
-    // 為所有帶有語言前綴的請求設定 cookie 來記住之前的語言
     '/(zh|en)/:path*',
-
-    // 啟用為缺失語言的重定向
-    // (例如：`/pathnames` -> `/en/pathnames`)
-    '/((?!_next|_vercel|.*\\..*).*)',
+    '/((?!api|_next|_vercel|auth/callback|.*\\..*).*)',
   ],
 };

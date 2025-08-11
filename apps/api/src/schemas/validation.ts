@@ -8,6 +8,14 @@ export const googleAuthSchema = Joi.object({
   }),
 });
 
+export const googleCodeSchema = Joi.object({
+  code: Joi.string().required().messages({
+    'any.required': 'Google 授權碼是必需的',
+    'string.base': 'Google 授權碼必須是字串',
+    'string.empty': 'Google 授權碼不能為空',
+  }),
+});
+
 export const adminLoginSchema = Joi.object({
   password: Joi.string().required().messages({
     'any.required': '密碼是必需的',
