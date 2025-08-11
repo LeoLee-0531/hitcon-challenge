@@ -16,3 +16,16 @@ export interface AuthenticatedRequest extends Request {
     username: string;
   };
 }
+
+// Auth 相關的 payload 類型
+export interface GoogleTokenPayload {
+  google_token: string;
+}
+
+export interface GoogleCodePayload {
+  code: string;
+}
+
+export interface AdminLoginPayload {
+  password: string;
+}
