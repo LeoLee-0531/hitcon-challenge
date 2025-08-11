@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 
 export default function AboutSITCONPage() {
@@ -6,16 +7,30 @@ export default function AboutSITCONPage() {
     {/* <div className="min-h-screen w-full bg-gradient-to-b from-[#1A2316] to-[#121712] flex flex-col items-center py-12 px-4"> */}
       {/* SITCON 2026 info */}
       <section className="w-full text-center mb-20 mt-4">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-1 font-sans">
+      <div className="flex items-center justify-center gap-4">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white font-sans mb-0">
           📢 SITCON 2026
-          <span className="block mt-1 text-xl text-[#ACD997] font-medium">
-            @ 中央研究院人文社會科學館
-          </span>
         </h1>
-        <div className="text-base text-[#ACD997] font-medium mb-1">
-          2026 / 3 / 28 ( Sat. )
-        </div>
-      </section>
+        <a
+          href="https://sitcon.org/2026/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-12 h-12 flex items-center justify-center rounded-full bg-[#0DF20D] shadow hover:opacity-80 transition"
+        >
+          <img
+            src="/hyperlink.png"
+            alt="SITCON 2026 連結"
+            className="w-6 h-6"
+          />
+        </a>
+      </div>
+      <span className="block mt-1 text-xl text-[#ACD997] font-medium">
+        @ 中央研究院人文社會科學館
+      </span>
+      <div className="text-base text-[#ACD997] font-medium mb-1">
+        2026 / 3 / 28 ( Sat. )
+      </div>
+    </section>
 
       {/* About SITCON */}
       <section className="w-full max-w-3xl bg-white/5 rounded-xl shadow px-6 py-8 mb-8">
