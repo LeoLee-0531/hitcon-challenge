@@ -12,7 +12,11 @@
     "format:check": "prettier --check 'src/**/*.{ts,tsx,js,jsx,json,css,md}'"
   },
   "dependencies": {
+    "@google-cloud/local-auth": "^3.0.1",
+    "dotenv": "^17.2.1",
+    "googleapis": "^155.0.0",
     "next": "15.4.2",
+    "next-auth": "5.0.0-beta.29",
     "next-intl": "^4.3.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
