@@ -58,14 +58,18 @@ export default async function LocaleLayout({
 
   return (
     <SessionProvider>
-    <div lang={locale} dir="ltr" className="pt-[100px] bg-primary min-h-screen">
-      <NextIntlClientProvider messages={messages}>
-        <Navigation />
+      <div
+        lang={locale}
+        dir="ltr"
+        className="pt-[100px] bg-primary min-h-screen"
+      >
+        <NextIntlClientProvider messages={messages}>
+          <Navigation />
 
-        {/* temp Main Content (include navBar) */}
-        <main className="flex-1 container mx-auto px-6 py-8">{children}</main>
-      </NextIntlClientProvider>
-    </div>
+          {/* temp Main Content (include navBar) */}
+          <main className="flex-1 container mx-auto px-6 py-8">{children}</main>
+        </NextIntlClientProvider>
+      </div>
     </SessionProvider>
   );
 }

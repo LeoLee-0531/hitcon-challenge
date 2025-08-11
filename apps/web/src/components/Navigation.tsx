@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import LanguageSwitcher from './LanguageSwitcher';
-import { signIn, signOut } from "next-auth/react"
+import { signIn } from 'next-auth/react';
 import { SessionProvider, useSession } from 'next-auth/react';
 
 interface SitconLogoProps {
@@ -40,7 +40,7 @@ export default function Navigation() {
 
   async function loginGoogle() {
     setIsLoading(true);
-    await signIn("google").finally(() => {
+    await signIn('google').finally(() => {
       setIsLoading(false);
     });
   }
@@ -97,29 +97,28 @@ export default function Navigation() {
               {!mounted ? (
                 // 組件掛載前或初始化時顯示載入狀態
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-200/20"></div>
-              ) : (
-                session ?
-                  <>
-                    <Link href="/profile" className="flex items-center">
-                      <div
-                        className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden flex items-center justify-center transition-all duration-300 ${session.user?.image ? '' : 'bg-[var(--primary-20)]'}`}
-                      >
-                        {session.user?.image ? (
-                          <Image
-                            src={session.user.image}
-                            alt={session.user.name || 'User'}
-                            width={40}
-                            height={40}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <span className="text-white text-xs sm:text-sm font-semibold">
-                            {session.user?.name?.charAt(0).toUpperCase()}
-                          </span>
-                        )}
-                      </div>
-                    </Link>
-                    {/* <button
+              ) : session ? (
+                <>
+                  <Link href="/profile" className="flex items-center">
+                    <div
+                      className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden flex items-center justify-center transition-all duration-300 ${session.user?.image ? '' : 'bg-[var(--primary-20)]'}`}
+                    >
+                      {session.user?.image ? (
+                        <Image
+                          src={session.user.image}
+                          alt={session.user.name || 'User'}
+                          width={40}
+                          height={40}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-white text-xs sm:text-sm font-semibold">
+                          {session.user?.name?.charAt(0).toUpperCase()}
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+                  {/* <button
                       onClick={() => signOut()}
                       className="login-btn side-box rounded-full flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10"
                     >
@@ -133,29 +132,29 @@ export default function Navigation() {
                         <path d="M11,7L9.6,8.4l2.6,2.6H2v2h10.2l-2.6,2.6L11,17l5-5L11,7z M20,19h-8v2h8c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-8v2h8V19z" />
                       </svg>
                     </button> */}
-                  </>
-                  :
-                  <>
-                    <button
-                      onClick={loginGoogle}
-                      disabled={isLoading}
-                      className="login-btn side-box rounded-full flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10"
-                    >
-                      {isLoading ? (
-                        <div className="w-3 h-3 sm:w-4 sm:h-4 !m-0 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      ) : (
-                        <svg
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="text-white"
-                        >
-                          <path d="M11,7L9.6,8.4l2.6,2.6H2v2h10.2l-2.6,2.6L11,17l5-5L11,7z M20,19h-8v2h8c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-8v2h8V19z" />
-                        </svg>
-                      )}
-                    </button>
-                  </>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={loginGoogle}
+                    disabled={isLoading}
+                    className="login-btn side-box rounded-full flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10"
+                  >
+                    {isLoading ? (
+                      <div className="w-3 h-3 sm:w-4 sm:h-4 !m-0 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    ) : (
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="text-white"
+                      >
+                        <path d="M11,7L9.6,8.4l2.6,2.6H2v2h10.2l-2.6,2.6L11,17l5-5L11,7z M20,19h-8v2h8c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-8v2h8V19z" />
+                      </svg>
+                    )}
+                  </button>
+                </>
               )}
 
               {/* 漢堡選單 */}

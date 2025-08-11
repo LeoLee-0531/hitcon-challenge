@@ -2,7 +2,7 @@
 
 import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from 'next/navigation';
-import { type Locale, locales } from '@/i18n/config';
+import { type Locale } from '@/i18n/config';
 
 interface LanguageSwitcherProps {
   className?: string;
