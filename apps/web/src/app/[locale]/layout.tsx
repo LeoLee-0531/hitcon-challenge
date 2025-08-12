@@ -67,15 +67,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <Navigation />
 
-          <main className="flex-1">
-            <div className="grid grid-cols-12 gap-4">
-              <div className="sm:col-span-2 col-span-1" />
-              <div className="sm:col-span-8 col-span-10">
-                {children}
-              </div>
-              <div className="sm:col-span-2 col-span-1" />
-            </div>
-          </main>
+        <main className="flex-1">{children}</main>
 
           {/* Footer */}
           <BaseFooter />
