@@ -66,8 +66,19 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <Navigation />
 
-          {/* temp Main Content (include navBar) */}
-          <main className="flex-1 container mx-auto px-6 py-8">{children}</main>
+          <main className="flex-1">
+            <div className="grid grid-cols-12 gap-4">
+              <div className="sm:col-span-2 col-span-1" />
+              <div className="sm:col-span-8 col-span-10">
+                {children}
+              </div>
+              <div className="sm:col-span-2 col-span-1" />
+            </div>
+          </main>
+
+          {/* Footer */}
+          <BaseFooter />
+
         </NextIntlClientProvider>
       </div>
     </SessionProvider>
