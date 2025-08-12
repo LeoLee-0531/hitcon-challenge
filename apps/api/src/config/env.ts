@@ -7,14 +7,15 @@ interface RequiredEnvVars {
   JWT_SECRET: string;
   ADMIN_JWT_SECRET: string;
   DATABASE_URL: string;
-  GOOGLE_CLIENT_ID: string;
+  NEXT_PUBLIC_GOOGLE_CLIENT_ID: string;
+  GOOGLE_CLIENT_SECRET: string;
 }
 
 interface OptionalEnvVars {
   PORT?: string;
   NODE_ENV?: string;
-  ALLOWED_ORIGINS?: string;
-  API_BASE_URL?: string;
+  NEXT_PUBLIC_FRONTEND_URL?: string;
+  NEXT_PUBLIC_API_BASE_URL?: string;
 }
 
 /**
@@ -27,7 +28,8 @@ export function validateEnvironmentVariables(): RequiredEnvVars &
     'JWT_SECRET',
     'ADMIN_JWT_SECRET',
     'DATABASE_URL',
-    'GOOGLE_CLIENT_ID',
+    'NEXT_PUBLIC_GOOGLE_CLIENT_ID',
+    'GOOGLE_CLIENT_SECRET',
   ];
 
   const missingVars: string[] = [];
@@ -54,11 +56,13 @@ export function validateEnvironmentVariables(): RequiredEnvVars &
     JWT_SECRET: process.env.JWT_SECRET as string,
     ADMIN_JWT_SECRET: process.env.ADMIN_JWT_SECRET as string,
     DATABASE_URL: process.env.DATABASE_URL as string,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID as string,
+    NEXT_PUBLIC_GOOGLE_CLIENT_ID: process.env
+      .NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET as string,
     PORT: process.env.PORT,
     NODE_ENV: process.env.NODE_ENV,
-    ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS,
-    API_BASE_URL: process.env.API_BASE_URL,
+    NEXT_PUBLIC_FRONTEND_URL: process.env.NEXT_PUBLIC_FRONTEND_URL,
+    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
   };
 }
 
@@ -70,9 +74,16 @@ export const {
   JWT_SECRET,
   ADMIN_JWT_SECRET,
   DATABASE_URL,
-  GOOGLE_CLIENT_ID,
+  NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
   PORT,
   NODE_ENV,
-  ALLOWED_ORIGINS,
-  API_BASE_URL,
+  NEXT_PUBLIC_FRONTEND_URL,
+  NEXT_PUBLIC_API_BASE_URL,
 } = env;
+
+// 為了相容性，提供別名
+export const GOOGLE_CLIENT_ID = NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+export const FRONTEND_URL = NEXT_PUBLIC_FRONTEND_URL;
+export const API_BASE_URL = NEXT_PUBLIC_API_BASE_URL;
+export const ALLOWED_ORIGINS = NEXT_PUBLIC_FRONTEND_URL; // CORS 使用前端 URL
