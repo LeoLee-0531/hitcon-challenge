@@ -19,7 +19,7 @@ const challenges: Challenge[] = [
   {
     id: 'instagram',
     title: 'Instagram',
-    description: '在 SITCON 的 Instagram 上,似乎藏著什麼祕密....',
+    description: '在 SITCON 的 Instagram 上似乎藏著什麼祕密....',
     completed: true,
     current: true,
     link: 'https://sitcon.org/instagram',
@@ -27,7 +27,7 @@ const challenges: Challenge[] = [
   {
     id: 'prompt-injection',
     title: 'Prompt Injection',
-    description: '',
+    description: '喵喵喵我是一隻貓',
     completed: true,
     current: false,
     link: 'https://sitcon.org/prompt-injection',
@@ -35,39 +35,41 @@ const challenges: Challenge[] = [
   {
     id: 'worker-recruitment',
     title: 'SITCON 工人招募',
-    description: '',
+    description: '每個工作組別好像都很重要呢！\nSITCON 星人好像留了什麼訊息...',
     completed: false,
     current: false,
     link: 'https://sitcon.org/worker-recruitment',
   },
   {
     id: 'elf-text',
-    title: '精靈文',
-    description: '',
+    title: '精靈文 @攤位',
+    description:
+      '生在台灣的小精靈把秘密藏在了紙條上\n或許會有精通古典密碼學的台灣人知道該如何解開\nP.S.請到 SITCON 攤位進行挑戰！',
     completed: false,
     current: false,
-    link: 'https://sitcon.org/elf-text',
+    link: 'https://en.wikipedia.org/wiki/Cryptography',
   },
   {
     id: 'git-leak',
     title: 'Git Leak',
-    description: '',
+    description:
+      '搭著飛機來支援我們的 SITCON 工人好像出事了！\n但他們留了一個網站好像想告訴我們些什麼',
     completed: false,
     current: false,
-    link: 'https://sitcon.org/git-leak',
+    link: 'https://camp-git-leak-game.joingame.cc/',
   },
   {
     id: 'python-jail',
     title: 'Python Jail',
-    description: '',
+    description: '被困在 Python Jail 了，或許有什麼方法可以逃出牢籠拿到旗子',
     completed: false,
     current: false,
-    link: 'https://sitcon.org/python-jail',
+    link: 'https://camp-python-jail-game.joingame.cc/',
   },
   {
     id: 'about-sitcon',
     title: '關於 SITCON',
-    description: '',
+    description: '文字中看不到的不代表不存在\n或許可以問問看 Claude 或 Gemini',
     completed: false,
     current: false,
     link: 'https://sitcon.org/about-sitcon',
@@ -468,6 +470,7 @@ export default function ChallengesPage() {
                     fontSize: isMobile ? '12px' : '16px',
                     textAlign: 'center',
                     padding: isMobile ? '0 20px' : '0',
+                    whiteSpace: 'pre-line',
                   }}
                 >
                   {selectedChallenge.description}

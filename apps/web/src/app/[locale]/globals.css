@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
 @import 'tailwindcss';
 @import '../../styles/variables.css';
 @import '../../styles/typography.css';
@@ -16,5 +17,11 @@
     background: var(--background);
     color: var(--foreground);
     font-family: inherit;
+  }
+}
+
+@layer components {
+  .challenge-description {
+    white-space: pre-line;
   }
 }
