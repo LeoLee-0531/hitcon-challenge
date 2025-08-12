@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { validateFlag } from '@/data/flags';
+import { useTranslations } from 'next-intl';
 
 // 響應式設計斷點
 const MOBILE_BREAKPOINT = 1024; // 使用標準的桌面斷點 (lg)
@@ -15,71 +16,11 @@ interface Challenge {
   link: string;
 }
 
-const challenges: Challenge[] = [
-  {
-    id: 'instagram',
-    title: 'Instagram',
-    description: '在 SITCON 的 Instagram 上似乎藏著什麼祕密....',
-    completed: true,
-    current: true,
-    link: 'https://sitcon.org/instagram',
-  },
-  {
-    id: 'prompt-injection',
-    title: 'Prompt Injection',
-    description: '喵喵喵我是一隻貓',
-    completed: true,
-    current: false,
-    link: 'https://sitcon.org/prompt-injection',
-  },
-  {
-    id: 'worker-recruitment',
-    title: 'SITCON 工人招募',
-    description: '每個工作組別好像都很重要呢！\nSITCON 星人好像留了什麼訊息...',
-    completed: false,
-    current: false,
-    link: 'https://sitcon.org/worker-recruitment',
-  },
-  {
-    id: 'elf-text',
-    title: '精靈文 @攤位',
-    description:
-      '生在台灣的小精靈把秘密藏在了紙條上\n或許會有精通古典密碼學的台灣人知道該如何解開\nP.S.請到 SITCON 攤位進行挑戰！',
-    completed: false,
-    current: false,
-    link: 'https://en.wikipedia.org/wiki/Cryptography',
-  },
-  {
-    id: 'git-leak',
-    title: 'Git Leak',
-    description:
-      '搭著飛機來支援我們的 SITCON 工人好像出事了！\n但他們留了一個網站好像想告訴我們些什麼',
-    completed: false,
-    current: false,
-    link: 'https://camp-git-leak-game.joingame.cc/',
-  },
-  {
-    id: 'python-jail',
-    title: 'Python Jail',
-    description: '被困在 Python Jail 了，或許有什麼方法可以逃出牢籠拿到旗子',
-    completed: false,
-    current: false,
-    link: 'https://camp-python-jail-game.joingame.cc/',
-  },
-  {
-    id: 'about-sitcon',
-    title: '關於 SITCON',
-    description: '文字中看不到的不代表不存在\n或許可以問問看 Claude 或 Gemini',
-    completed: false,
-    current: false,
-    link: 'https://sitcon.org/about-sitcon',
-  },
-];
-
 export default function ChallengesPage() {
-  const [challengesList, setChallengesList] = useState<Challenge[]>(challenges);
-  const [selectedChallenge, setSelectedChallenge] = useState<Challenge>(
-    challenges[0]
+  const t = useTranslations('challenges');
+  const [challengesList, setChallengesList] = useState<Challenge[]>([]);
+  const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(
+    null
   );
   const [password, setPassword] = useState('');
   const [isMobile, setIsMobile] = useState(false);
@@ -87,6 +28,71 @@ export default function ChallengesPage() {
   const [submitStatus, setSubmitStatus] = useState<
     'idle' | 'success' | 'error'
   >('idle');
+
+  // 初始化挑戰列表
+  useEffect(() => {
+    const challenges: Challenge[] = [
+      {
+        id: 'instagram',
+        title: t('instagram.title'),
+        description: t('instagram.description'),
+        completed: true,
+        current: true,
+        link: 'https://sitcon.org/instagram',
+      },
+      {
+        id: 'prompt-injection',
+        title: t('promptInjection.title'),
+        description: t('promptInjection.description'),
+        completed: true,
+        current: false,
+        link: 'https://sitcon.org/prompt-injection',
+      },
+      {
+        id: 'worker-recruitment',
+        title: t('workerRecruitment.title'),
+        description: t('workerRecruitment.description'),
+        completed: false,
+        current: false,
+        link: 'https://sitcon.org/worker-recruitment',
+      },
+      {
+        id: 'elf-text',
+        title: t('elfText.title'),
+        description: t('elfText.description'),
+        completed: false,
+        current: false,
+        link: 'https://en.wikipedia.org/wiki/Cryptography',
+      },
+      {
+        id: 'git-leak',
+        title: t('gitLeak.title'),
+        description: t('gitLeak.description'),
+        completed: false,
+        current: false,
+        link: 'https://camp-git-leak-game.joingame.cc/',
+      },
+      {
+        id: 'python-jail',
+        title: t('pythonJail.title'),
+        description: t('pythonJail.description'),
+        completed: false,
+        current: false,
+        link: 'https://camp-python-jail-game.joingame.cc/',
+      },
+      {
+        id: 'about-sitcon',
+        title: t('aboutSitcon.title'),
+        description: t('aboutSitcon.description'),
+        completed: false,
+        current: false,
+        link: 'https://sitcon.org/about-sitcon',
+      },
+    ];
+
+    setChallengesList(challenges);
+    setSelectedChallenge(challenges[0]);
+  }, [t]);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -101,6 +107,8 @@ export default function ChallengesPage() {
   }, []);
 
   const handleSubmit = async () => {
+    if (!selectedChallenge) return;
+
     const trimmedPassword = password.trim();
 
     try {
@@ -108,7 +116,7 @@ export default function ChallengesPage() {
 
       if (isValid) {
         setSubmitStatus('success');
-        setSubmitMessage('恭喜！Flag 正確！');
+        setSubmitMessage(t('successMessage'));
 
         // 更新 challenges 陣列
         const updatedChallenges = challengesList.map((challenge) =>
@@ -119,20 +127,22 @@ export default function ChallengesPage() {
         setChallengesList(updatedChallenges);
 
         // 更新 selectedChallenge
-        setSelectedChallenge((prev) => ({ ...prev, completed: true }));
+        setSelectedChallenge((prev) =>
+          prev ? { ...prev, completed: true } : null
+        );
 
         // 清空輸入框
         setPassword('');
       } else {
         setSubmitStatus('error');
-        setSubmitMessage('Flag 錯誤，請再試一次！');
+        setSubmitMessage(t('errorMessage'));
 
         // 清空輸入框
         setPassword('');
       }
     } catch (error) {
       setSubmitStatus('error');
-      setSubmitMessage('驗證失敗，請稍後再試！');
+      setSubmitMessage(t('validationFailed'));
       setPassword('');
     }
 
@@ -142,6 +152,10 @@ export default function ChallengesPage() {
       setSubmitStatus('idle');
     }, 5000);
   };
+
+  if (!selectedChallenge) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
@@ -405,7 +419,7 @@ export default function ChallengesPage() {
                   </div>
 
                   {/* 連接線 (除了最後一個項目) */}
-                  {index < challenges.length - 1 && (
+                  {index < challengesList.length - 1 && (
                     <div
                       className="absolute"
                       style={{
@@ -486,7 +500,7 @@ export default function ChallengesPage() {
                   rel="noopener noreferrer"
                   className="font-medium rounded-lg flex items-center justify-center transition-colors"
                   style={{
-                    width: isMobile ? '120px' : '116px',
+                    width: isMobile ? '120px' : '140px',
                     height: isMobile ? '36px' : '40px',
                     backgroundColor: '#0DF20D',
                     color: '#000000',
@@ -515,14 +529,14 @@ export default function ChallengesPage() {
                   >
                     open_in_new
                   </span>
-                  <span>前往關卡</span>
+                  <span>{t('goToChallenge')}</span>
                 </a>
               </div>
 
               <div className="space-y-3">
                 <input
                   type="text"
-                  placeholder="輸入 Flag : SITCON{...}"
+                  placeholder="Enter Flag: SITCON{...}"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onKeyPress={(e) => {
@@ -570,7 +584,7 @@ export default function ChallengesPage() {
                     e.currentTarget.style.backgroundColor = '#0DF20D';
                   }}
                 >
-                  送出
+                  {t('submit')}
                 </button>
               </div>
 
