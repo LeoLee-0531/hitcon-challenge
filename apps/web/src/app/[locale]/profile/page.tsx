@@ -2,11 +2,13 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
+import { useTranslations } from 'next-intl';
 
 // 響應式設計斷點
 const MOBILE_BREAKPOINT = 1024; // 使用標準的桌面斷點 (lg)
 
 export default function ProfilePage() {
+  const t = useTranslations('profile');
   const [isMobile, setIsMobile] = useState(false);
   const [qrCodeGenerated, setQrCodeGenerated] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -112,7 +114,7 @@ export default function ProfilePage() {
               fontSize: isMobile ? '12px' : '14px',
             }}
           >
-            通過關卡
+            {t('completedChallenges')}
           </div>
           <div className="w-full">
             <div
@@ -121,7 +123,7 @@ export default function ProfilePage() {
                 fontSize: isMobile ? '12px' : '16px',
               }}
             >
-              <span>獎勵等級</span>
+              <span>{t('rewardLevel')}</span>
             </div>
             <div className="relative w-full h-2 bg-gray-700 rounded-full">
               {/* milestone 標籤（進度條上方） */}
@@ -130,13 +132,13 @@ export default function ProfilePage() {
                 style={{ top: '-25px', height: '16px', pointerEvents: 'none' }}
               >
                 <span className="absolute left-3/7 top-0 -translate-x-1/2 text-white text-xs">
-                  第一級
+                  {t('level1')}
                 </span>
                 <span className="absolute left-5/7 top-0 -translate-x-1/2 text-white text-xs">
-                  第二級
+                  {t('level2')}
                 </span>
                 <span className="absolute right-0 top-0 text-white text-xs">
-                  第三級
+                  {t('level3')}
                 </span>
               </div>
               {/* 7個關卡進度條 */}
@@ -235,18 +237,18 @@ export default function ProfilePage() {
               marginBottom: isMobile ? '16px' : '16px',
             }}
           >
-            獎勵等級說明
+            {t('rewardLevelDescription')}
             <span className="text-sm font-normal text-gray-300 ml-2">
-              * 至少要完成三關才能拿到獎品！
+              {t('minRequirementNote')}
             </span>
           </div>
           {/* 動態渲染獎勵等級說明 */}
           {(() => {
             const userLevel = fakeUserData.level; // 假資料，之後可從 API 取得
             const levels = [
-              { label: '第一級:需完成3關', achieved: userLevel >= 1 },
-              { label: '第二級:需完成5關', achieved: userLevel >= 2 },
-              { label: '第三級:需完成7關', achieved: userLevel >= 3 },
+              { label: t('level1Requirement'), achieved: userLevel >= 1 },
+              { label: t('level2Requirement'), achieved: userLevel >= 2 },
+              { label: t('level3Requirement'), achieved: userLevel >= 3 },
             ];
             return (
               <div
@@ -295,7 +297,7 @@ export default function ProfilePage() {
                       className={`ml-auto ${level.achieved ? 'text-[#0DF20D]' : 'text-gray-400'}`}
                       style={{ fontSize: isMobile ? '10px' : '12px' }}
                     >
-                      {level.achieved ? '已達成' : '未達成'}
+                      {level.achieved ? t('achieved') : t('notAchieved')}
                     </span>
                   </div>
                 ))}
@@ -319,7 +321,7 @@ export default function ProfilePage() {
                 fontSize: isMobile ? '14px' : '16px',
               }}
             >
-              兌換規則說明
+              {t('exchangeRules')}
             </span>
           </div>
           <div
@@ -329,18 +331,16 @@ export default function ProfilePage() {
               lineHeight: isMobile ? '16px' : '20px',
             }}
           >
-            不管達成哪個等級，都只能領取一份獎品！但達成等級越高升能有更多選擇！
+            {t('exchangeRulesDescription')}
             <ul
               className="list-disc pl-5 mt-2 space-y-[12px]"
               style={{
                 gap: isMobile ? '8px' : '12px',
               }}
             >
-              <li>第一級：可選擇「貼紙」作為獎品。</li>
-              <li>第二級：可選擇「貼紙」或「鑰匙圈」作為獎品（二擇一）。</li>
-              <li>
-                第三級：可選擇「貼紙」、「鑰匙圈」或「年會T-shirt」作為獎品（三擇一）。
-              </li>
+              <li>{t('level1Reward')}</li>
+              <li>{t('level2Reward')}</li>
+              <li>{t('level3Reward')}</li>
             </ul>
           </div>
         </div>
@@ -356,7 +356,7 @@ export default function ProfilePage() {
           onClick={generateQRCode}
           disabled={isGenerating}
         >
-          {isGenerating ? '產生中...' : '產生兌換 QR code'}
+          {isGenerating ? t('generating') : t('generateQRCode')}
         </button>
         <div
           className="w-full max-w-[960px] text-center text-xs text-gray-400 mb-4"
@@ -364,7 +364,7 @@ export default function ProfilePage() {
             fontSize: isMobile ? '10px' : '12px',
           }}
         >
-          * 回到 SITCON 攤位出示 QR Code 即可兌換獎品
+          {t('qrCodeNote')}
         </div>
 
         {/* QR code 區塊 */}
@@ -398,10 +398,11 @@ export default function ProfilePage() {
                   />
                 </div>
                 <div className="text-white text-lg font-bold mt-2">
-                  恭喜 {fakeUserData.username} 完成了{' '}
-                  {fakeUserData.completedChallenges} 關挑戰！
+                  {t('congratulations')} {fakeUserData.username}{' '}
+                  {t('completedText')} {fakeUserData.completedChallenges}{' '}
+                  {t('completedChallengesText')}
                 </div>
-                <div className="text-white text-lg mt-2">感謝您的參與！</div>
+                <div className="text-white text-lg mt-2">{t('thankYou')}</div>
               </div>
             </div>
           </div>
