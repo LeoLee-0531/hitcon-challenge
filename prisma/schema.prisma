@@ -10,10 +10,7 @@ datasource db {
 // 用戶表
 model User {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  googleId     String   @unique
   email        String   @unique
-  nickname     String
-  profileImage String?
   language     String   @default("zh") // zh, en
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

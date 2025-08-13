@@ -1,47 +1,40 @@
 import type { Metadata } from 'next';
-import { Noto_Sans_TC, Space_Grotesk } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/config';
 import Navigation from '@/components/Navigation';
-import './globals.css';
-import Link from 'next/link';
 import BaseFooter from '@/components/BaseFooter';
+import './globals.css';
+import { SessionProvider } from 'next-auth/react';
 
-const notoSansTC = Noto_Sans_TC({
-  variable: '--font-noto-sans-tc',
-  subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '700'],
-  display: 'swap',
-});
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
 
-const spaceGrotesk = Space_Grotesk({
-  variable: '--font-space-grotesk',
-  subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '700'],
-  display: 'swap',
-});
-
-export const metadata: Metadata = {
-  title: {
-    default: 'HITCON Challenge',
-    template: '%s | HITCON Challenge',
-  },
-  description: 'Security Challenge Platform',
-  keywords: ['security', 'hacking', 'CTF', 'cybersecurity', 'challenge'],
-  openGraph: {
-    type: 'website',
-    locale: 'zh_TW',
-    title: 'HITCON Challenge',
+  return {
+    title: {
+      default: 'HITCON Challenge',
+      template: '%s | HITCON Challenge',
+    },
     description: 'Security Challenge Platform',
-    siteName: 'HITCON Challenge',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+    keywords: ['security', 'hacking', 'CTF', 'cybersecurity', 'challenge'],
+    openGraph: {
+      type: 'website',
+      locale: locale === 'zh' ? 'zh_TW' : 'en_US',
+      title: 'HITCON Challenge',
+      description: 'Security Challenge Platform',
+      siteName: 'HITCON Challenge',
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 interface LocaleLayoutProps {
   children: React.ReactNode;
@@ -65,6 +58,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
+<<<<<<< HEAD
     <html lang={locale} dir="ltr" suppressHydrationWarning>
       <head>
         <link
@@ -74,18 +68,30 @@ export default async function LocaleLayout({
       </head>
       <body
         className={`${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased flex flex-col min-h-screen pt-[100px] bg-primary`}
+=======
+    <SessionProvider>
+      <div
+        lang={locale}
+        dir="ltr"
+        className="pt-[100px] bg-primary min-h-screen"
+>>>>>>> 2d6503f0d7bba82f38a2855ad3b72ac8ff785cbc
       >
         <NextIntlClientProvider messages={messages}>
           <Navigation />
 
+<<<<<<< HEAD
           {/* temp Main Content (include navBar) */}
           <main className="flex flex-col flex-1 items-center container mx-auto px-6 py-8">
             {children}
           </main>
+=======
+          <main className="flex-1">{children}</main>
+
+>>>>>>> 2d6503f0d7bba82f38a2855ad3b72ac8ff785cbc
           {/* Footer */}
           <BaseFooter />
         </NextIntlClientProvider>
-      </body>
-    </html>
+      </div>
+    </SessionProvider>
   );
 }
