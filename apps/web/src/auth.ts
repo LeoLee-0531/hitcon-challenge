@@ -8,7 +8,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user, account }) {
       // 初次登入
-      if (account && user) {
+      if (account && account.id_token) {
         try {
           const response = await apiFetch(
             `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/login`,
@@ -16,9 +16,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                email: user.email,
-                name: user.name,
-                image: user.image,
+                id_token: account.id_token,
               }),
             }
           );
@@ -45,7 +43,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           }
         } catch (error) {
           console.error('取得 API Token 時發生錯誤', error);
-          // 你可以回傳錯誤物件或 null 來表示失敗
           return null;
         }
       }

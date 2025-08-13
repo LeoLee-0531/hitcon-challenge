@@ -33,14 +33,6 @@ export const userLanguageSchema = Joi.object({
 });
 
 export const userLoginSchema = Joi.object({
-  email: Joi.string().email().required().messages({
-    'string.email': '請提供有效的電子郵件地址',
-    'any.required': '電子郵件是必需的',
-  }),
-  name: Joi.string().required().messages({
-    'any.required': '名稱是必需的',
-  }),
-  image: Joi.string().uri().optional(),
   id_token: Joi.string().required().messages({
     'any.required': 'Google id_token 是必需的',
     'string.base': 'Google id_token 必須是字串',
