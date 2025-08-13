@@ -66,7 +66,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <Navigation />
 
-          {/* temp Main Content (include navBar) */}
+          {/* Main Content (include navBar) */}
           <main className="flex-1 container mx-auto px-6 py-8">{children}</main>
         </NextIntlClientProvider>
       </div>

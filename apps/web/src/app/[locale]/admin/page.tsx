@@ -201,7 +201,16 @@ export default function ScanParticipantPage() {
                     <span className="absolute left-3/7 top-0 -translate-x-1/2 text-white text-xs">
                       {t('level1')}
                     </span>
-                    <span className="absolute left-5/7 top-0 -translate-x-1/2 text-white text-xs">
+                    <span
+                      className="absolute top-0 -translate-x-1/2 text-white text-xs"
+                      style={{ left: '42.8571%' }}
+                    >
+                      {t('level1')}
+                    </span>
+                    <span
+                      className="absolute top-0 -translate-x-1/2 text-white text-xs"
+                      style={{ left: '71.4286%' }}
+                    >
                       {t('level2')}
                     </span>
                     <span className="absolute right-0 top-0 text-white text-xs">
@@ -234,12 +243,30 @@ export default function ScanParticipantPage() {
                     )}
                   </div>
                   {/* 分隔線 */}
-                  <div className="absolute top-0 left-1/7 w-px h-2 bg-white"></div>
-                  <div className="absolute top-0 left-2/7 w-px h-2 bg-white"></div>
-                  <div className="absolute top-[-1px] left-3/7 w-0.5 h-3 bg-white"></div>
-                  <div className="absolute top-0 left-4/7 w-px h-2 bg-white"></div>
-                  <div className="absolute top-[-1px] left-5/7 w-0.5 h-3 bg-white"></div>
-                  <div className="absolute top-0 left-6/7 w-px h-2 bg-white"></div>
+                  <div
+                    className="absolute top-0 w-px h-2 bg-white"
+                    style={{ left: '14.2857%' }}
+                  ></div>
+                  <div
+                    className="absolute top-0 w-px h-2 bg-white"
+                    style={{ left: '28.5714%' }}
+                  ></div>
+                  <div
+                    className="absolute top-[-1px] w-0.5 h-3 bg-white"
+                    style={{ left: '42.8571%' }}
+                  ></div>
+                  <div
+                    className="absolute top-0 w-px h-2 bg-white"
+                    style={{ left: '57.1429%' }}
+                  ></div>
+                  <div
+                    className="absolute top-[-1px] w-0.5 h-3 bg-white"
+                    style={{ left: '71.4286%' }}
+                  ></div>
+                  <div
+                    className="absolute top-0 w-px h-2 bg-white"
+                    style={{ left: '85.7143%' }}
+                  ></div>
                   {/* 數字標籤（進度條下方） */}
                   <div
                     className="absolute w-full"
