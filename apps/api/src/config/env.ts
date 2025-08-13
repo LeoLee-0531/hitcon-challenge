@@ -56,8 +56,7 @@ export function validateEnvironmentVariables(): RequiredEnvVars &
     JWT_SECRET: process.env.JWT_SECRET as string,
     ADMIN_JWT_SECRET: process.env.ADMIN_JWT_SECRET as string,
     DATABASE_URL: process.env.DATABASE_URL as string,
-    AUTH_GOOGLE_ID: process.env
-      .AUTH_GOOGLE_ID as string,
+    AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID as string,
     AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET as string,
     PORT: process.env.PORT,
     NODE_ENV: process.env.NODE_ENV,

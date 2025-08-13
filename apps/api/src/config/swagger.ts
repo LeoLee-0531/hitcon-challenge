@@ -156,7 +156,7 @@ const getSwaggerConfig = () => {
                 type: 'string',
                 format: 'uri',
                 example: 'https://example.com/image.jpg',
-              }
+              },
             },
           },
           Stage: {
