@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getRewardStatus } from '../controllers/reward';
-import { authenticateUserOrAdmin } from '../middleware/auth';
+import { authenticateUser } from '../middleware/auth';
 
 const router: Router = Router();
 
@@ -76,6 +76,6 @@ const router: Router = Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/status', authenticateUserOrAdmin, getRewardStatus);
+router.get('/status', authenticateUser, getRewardStatus);
 
 export default router;

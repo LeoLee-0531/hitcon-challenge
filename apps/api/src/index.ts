@@ -1,8 +1,9 @@
 import { config } from 'dotenv';
 import path from 'path';
+import 'dotenv/config';
 
-// 載入根目錄的環境變數
-config({ path: path.resolve(__dirname, '../../../.env') });
+// 載入環境變數
+config({ path: path.resolve(__dirname, '../.env') });
 
 // 在應用程式啟動的最早期驗證所有必要的環境變數
 import './config/env';
