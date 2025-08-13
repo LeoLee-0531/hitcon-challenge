@@ -66,12 +66,6 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir="ltr" suppressHydrationWarning>
-      <head>
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
-        />
-      </head>
       <body
         className={`${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased flex flex-col min-h-screen pt-[100px] bg-[#121712]`}
       >
