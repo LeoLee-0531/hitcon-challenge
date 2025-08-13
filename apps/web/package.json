@@ -12,27 +12,26 @@
     "format:check": "prettier --check 'src/**/*.{ts,tsx,js,jsx,json,css,md}'"
   },
   "dependencies": {
-    "next": "15.4.2",
-    "next-intl": "^4.3.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "next": "15.4.2",
     "types": "workspace:*",
     "utils": "workspace:*"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@eslint/js": "^9",
-    "@tailwindcss/postcss": "^4",
+    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@typescript-eslint/eslint-plugin": "^8",
-    "@typescript-eslint/parser": "^8",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.4.2",
+    "@eslint/eslintrc": "^3",
+    "@eslint/js": "^9",
+    "@typescript-eslint/eslint-plugin": "^8",
+    "@typescript-eslint/parser": "^8",
     "eslint-plugin-prettier": "^5",
-    "prettier": "^3",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "prettier": "^3"
   }
 }

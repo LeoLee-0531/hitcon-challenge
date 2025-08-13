@@ -16,8 +16,16 @@
   color: var(--nature-99);
 }
 
-.nav-side {
-  width: 142px;
+.link:hover {
+  color: #ffffff84;
+}
+
+.link:hover {
+  color: #ffffff84;
+}
+
+.btn:hover {
+  background-color: #0d1e0d;
 }
 
 .side-box {

@@ -33,7 +33,7 @@ export default function LanguageSwitcher({
 
   return (
     <button
-      className={`w-full h-full ${className}`}
+      className={`btn w-full h-full ${className}`}
       onClick={handleLanguageToggle}
     >
       {languageNames[locale]}

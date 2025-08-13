@@ -3,11 +3,17 @@
 import { useTranslations } from 'next-intl';
 import '@/styles/components/FrontPage.css';
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  isMobile: boolean;
+}
+
+export default function HeroSection({ isMobile }: HeroSectionProps) {
   const t = useTranslations('');
   return (
     <div className="front-hero flex-col-center">
-      <div className="front-hero-title font-bold">SITCON X HITCON 2025</div>
+      <div className={`front-hero-title font-bold ${isMobile ? 'text-center' : ''}`}>
+        SITCON X HITCON 2025
+      </div>
 
       <div className="front-hero-subtitle font-bold">駭客挑戰，限時開啟！</div>
 

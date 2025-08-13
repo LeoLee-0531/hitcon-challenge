@@ -3,10 +3,14 @@
 import { useTranslations } from 'next-intl';
 import '@/styles/components/FrontPage.css';
 
-export default function EventDescription() {
+interface EventDescriptionProps {
+  isMobile: boolean;
+}
+
+export default function EventDescription({ isMobile }: EventDescriptionProps) {
   const t = useTranslations('');
   return (
-    <div className="glass-container shadow-md">
+    <div className={`glass-container shadow-md ${isMobile ? 'w-full p-4' : ''}`}>
       <div>
         <div className="event-title font-bold">活動說明</div>
         <p className="event-content font-light">

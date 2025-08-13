@@ -39,13 +39,13 @@ export default function Navigation() {
           </Link>
         </div>
         <div className="nav-links flex gap-[50px]">
-          <Link href="/challenges" className="nav-link">
+          <Link href="/challenges" className="nav-link link">
             {t('challenges')}
           </Link>
-          <Link href="/about" className="nav-link">
+          <Link href="/about" className="nav-link link">
             {t('about')}
           </Link>
-          <Link href="/recruitment" className="nav-link">
+          <Link href="/recruitment" className="nav-link link">
             {t('recruitment')}
           </Link>
         </div>
@@ -53,7 +53,7 @@ export default function Navigation() {
           <LanguageSwitcher className="language-switcher side-box" />
           <Link
             href="/login"
-            className="login side-box nav-link flex items-center justify-center"
+            className="login side-box nav-link flex items-center btn justify-center"
           >
             {t('login')}
           </Link>
