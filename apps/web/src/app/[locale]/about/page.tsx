@@ -6,7 +6,7 @@ export default function AboutSITCONPage() {
     <div className="grid grid-cols-12 gap-4">
       <div className="sm:col-span-2 col-span-1" />
       <div className="sm:col-span-8 col-span-10">
-        <div className="bg-gradient-to-b from-[#1A2316] to-[#121712] flex flex-col items-center py-20 my-12 px-6">
+        <div className="bg-[#121712] flex flex-col items-center py-20 my-12 px-6">
           {/* <div className="min-h-screen w-full bg-gradient-to-b from-[#1A2316] to-[#121712] flex flex-col items-center py-12 px-4"> */}
           {/* SITCON 2026 info */}
           <section className="w-full text-center mb-20 mt-4">

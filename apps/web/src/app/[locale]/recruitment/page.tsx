@@ -117,7 +117,7 @@ export default function RecruitPage() {
       <div className="xl:col-span-8 col-span-10">
         <main
           id="top"
-          className="min-h-screen w-full bg-gradient-to-b from-[#1A2316] to-[#121712] text-white my-12"
+          className="min-h-screen w-full bg-[#121712] text-white my-12"
         >
           <div className="mx-auto max-w-6xl px-4 py-8 mb-8">
             {/* Header */}
