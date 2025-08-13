@@ -143,10 +143,6 @@ const getSwaggerConfig = () => {
           User: {
             type: 'object',
             properties: {
-              id: {
-                type: 'string',
-                example: 'user-123',
-              },
               email: {
                 type: 'string',
                 format: 'email',
@@ -156,15 +152,10 @@ const getSwaggerConfig = () => {
                 type: 'string',
                 example: '使用者名稱',
               },
-              language: {
+              image: {
                 type: 'string',
-                enum: ['zh', 'en'],
-                example: 'zh',
-              },
-              createdAt: {
-                type: 'string',
-                format: 'date-time',
-                example: '2023-12-01T10:00:00.000Z',
+                format: 'uri',
+                example: 'https://example.com/image.jpg',
               },
             },
           },

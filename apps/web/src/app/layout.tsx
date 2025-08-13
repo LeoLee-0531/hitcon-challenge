@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { fontVariables } from '@/config/fonts';
+import SessionProviderWrapper from './SessionProviderWrapper';
 
 export const metadata: Metadata = {
   title: 'HITCON Challenge',
@@ -13,7 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html suppressHydrationWarning className={fontVariables}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <SessionProviderWrapper>{children}</SessionProviderWrapper>
+      </body>
     </html>
   );
 }
