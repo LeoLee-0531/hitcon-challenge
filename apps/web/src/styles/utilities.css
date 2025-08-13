@@ -18,7 +18,7 @@
 }
 
 .bg-primary {
-  background-color: var(--nature-10);
+  background-color: var(--primary);
 }
 .bg-accent {
   background-color: var(--accent);

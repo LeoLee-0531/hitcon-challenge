@@ -448,13 +448,14 @@ export default function ChallengesPage() {
           <div
             className="p-8 flex flex-col justify-center"
             style={{
-              width: isMobile ? 'calc(100% - 32px)' : 'min(520px, 60vw)',
+              width: isMobile ? 'calc(100% - 64px)' : 'min(520px, 60vw)',
               height: isMobile ? 'auto' : '400px',
               minHeight: isMobile ? '350px' : '400px',
               borderRadius: isMobile ? '16px' : '20px',
               background:
                 'linear-gradient(135deg, rgba(143, 204, 143, 0.3) 0%, rgba(71, 102, 71, 0.3) 100%)',
-              marginLeft: isMobile ? '16px' : '40px',
+              marginLeft: isMobile ? '32px' : '40px',
+              marginRight: isMobile ? '32px' : '0',
               backdropFilter: 'blur(20px) brightness(80%)',
               border: '1px solid rgba(255, 255, 255, 0.4)',
               boxShadow:
