@@ -108,7 +108,7 @@ export default function AboutSITCONPage() {
 
           {/* Footer note */}
           <div className="w-full max-w-3xl mt-4 text-base text-gray-300 font-light italic text-center">
-            ＊這行文字內容好像被塞了些什麼神奇的東西
+            ＊這行文字內容好像被塞了些什麼󠀁󠁓󠁉󠁔󠁃󠁏󠁎󠁻󠁗󠀰󠁷󠁟󠁌󠁌󠁍󠁟󠁣󠀴󠁮󠁟󠁓󠀳󠁥󠁟󠀷󠁨󠀱󠁳󠁽󠁿神奇的東西
           </div>
         </div>
       </div>
