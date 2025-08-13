@@ -13,7 +13,11 @@
   },
   "dependencies": {
     "html5-qrcode": "^2.3.8",
+    "@google-cloud/local-auth": "^3.0.1",
+    "dotenv": "^17.2.1",
+    "googleapis": "^155.0.0",
     "next": "15.4.2",
+    "next-auth": "5.0.0-beta.29",
     "next-intl": "^4.3.4",
     "qrcode.react": "^4.2.0",
     "react": "19.1.0",
