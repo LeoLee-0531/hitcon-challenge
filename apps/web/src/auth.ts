@@ -1,16 +1,15 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
-import { apiFetch } from './utils/apiFetch';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Google],
   session: { strategy: 'jwt' },
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, account }) {
       // 初次登入
       if (account && account.id_token) {
         try {
-          const response = await apiFetch(
+          const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/login`,
             {
               method: 'POST',

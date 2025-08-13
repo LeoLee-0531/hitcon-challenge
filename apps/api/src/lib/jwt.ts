@@ -21,7 +21,7 @@ export const verifyUserToken = (token: string): JWTUserPayload => {
     }
     return payload as JWTUserPayload;
   } catch (error) {
-    console.error('使用者權杖驗證失敗：', error);
+    console.error('使用者權杖驗證失敗');
     throw new Error('無效或已過期的使用者權杖。');
   }
 };

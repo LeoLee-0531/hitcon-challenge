@@ -30,36 +30,6 @@ model User {
   @@map("users")
 }
 
-
-// 關卡表
-// model Stage {
-//   id          String @id @default(auto()) @map("_id") @db.ObjectId
-//   stageNumber Int    @unique // 1, 2, 3, 4, 5, 6, 7
-//   password    String // 通關密碼
-
-//   // 中文內容
-//   titleZh       String
-//   descriptionZh String
-
-//   // 英文內容
-//   titleEn       String
-//   descriptionEn String
-
-//   // 外部連結
-//   externalUrl String?
-
-//   // 狀態
-//   isActive Boolean @default(true)
-
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-
-//   // 關聯
-//   userProgress UserProgress[]
-
-//   @@map("stages")
-// }
-
 model Stage {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   stageNumber Int    @unique // 1, 2, 3, 4, 5, 6, 7

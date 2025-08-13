@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { fontVariables } from '@/config/fonts';
-import { SessionProvider } from 'next-auth/react';
+import SessionProviderWrapper from './SessionProviderWrapper';
 
 export const metadata: Metadata = {
   title: 'HITCON Challenge',
@@ -13,10 +13,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SessionProvider>
-      <html suppressHydrationWarning className={fontVariables}>
-        <body className="antialiased">{children}</body>
-      </html>
-    </SessionProvider>
+    <html suppressHydrationWarning className={fontVariables}>
+      <body className="antialiased">
+        <SessionProviderWrapper>{children}</SessionProviderWrapper>
+      </body>
+    </html>
   );
 }
