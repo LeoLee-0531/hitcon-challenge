@@ -11,19 +11,6 @@ export interface ApiResponse<T = any> {
   };
 }
 
-// API 請求 payload 類型
-export interface GoogleTokenPayload {
-  google_token: string;
-}
-
-export interface AdminLoginPayload {
-  password: string;
-}
-
-export interface UserLanguagePayload {
-  language: 'zh' | 'en';
-}
-
 export interface StageVerifyPayload {
   stage_id: string;
   password: string;
@@ -37,22 +24,17 @@ export interface RewardClaimPayload {
 export interface JWTUserPayload {
   id: string;
   email: string;
-  nickname: string;
-  language: string;
-}
-
-export interface JWTAdminPayload {
-  id: string;
-  username: string;
+  name: string;
+  role: 'USER' | 'ADMIN';
 }
 
 // 使用者資料類型
 export interface UserData {
   id: string;
   email: string;
-  nickname: string;
+  name: string;
   language: string;
-  profileImage?: string;
+  image?: string;
 }
 
 // 管理員資料類型

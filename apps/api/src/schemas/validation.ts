@@ -32,6 +32,14 @@ export const userLanguageSchema = Joi.object({
   }),
 });
 
+export const userLoginSchema = Joi.object({
+  id_token: Joi.string().required().messages({
+    'any.required': 'Google id_token 是必需的',
+    'string.base': 'Google id_token 必須是字串',
+    'string.empty': 'Google id_token 不能為空',
+  }),
+});
+
 export const stageVerifySchema = Joi.object({
   stage_id: Joi.string().required().messages({
     'any.required': '關卡 ID 是必需的',
