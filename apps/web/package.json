@@ -12,35 +12,31 @@
     "format:check": "prettier --check 'src/**/*.{ts,tsx,js,jsx,json,css,md}'"
   },
   "dependencies": {
-<<<<<<< HEAD
-=======
     "@google-cloud/local-auth": "^3.0.1",
     "dotenv": "^17.2.1",
     "googleapis": "^155.0.0",
     "next": "15.4.2",
     "next-auth": "5.0.0-beta.29",
     "next-intl": "^4.3.4",
->>>>>>> 2d6503f0d7bba82f38a2855ad3b72ac8ff785cbc
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.4.2",
     "types": "workspace:*",
     "utils": "workspace:*"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@eslint/js": "^9",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
-    "eslint": "^9",
-    "eslint-config-next": "15.4.2",
-    "@eslint/eslintrc": "^3",
-    "@eslint/js": "^9",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
+    "eslint": "^9",
+    "eslint-config-next": "15.4.2",
     "eslint-plugin-prettier": "^5",
-    "prettier": "^3"
+    "prettier": "^3",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

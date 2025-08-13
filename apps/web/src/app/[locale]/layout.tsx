@@ -58,36 +58,17 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-<<<<<<< HEAD
-    <html lang={locale} dir="ltr" suppressHydrationWarning>
-      <head>
-        <link
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet"
-        />
-      </head>
-      <body
-        className={`${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased flex flex-col min-h-screen pt-[100px] bg-primary`}
-=======
+
+
     <SessionProvider>
       <div
         lang={locale}
         dir="ltr"
-        className="pt-[100px] bg-primary min-h-screen"
->>>>>>> 2d6503f0d7bba82f38a2855ad3b72ac8ff785cbc
+        className="font-sans antialiased flex flex-col min-h-screen pt-[100px] bg-primary"
       >
         <NextIntlClientProvider messages={messages}>
           <Navigation />
-
-<<<<<<< HEAD
-          {/* temp Main Content (include navBar) */}
-          <main className="flex flex-col flex-1 items-center container mx-auto px-6 py-8">
-            {children}
-          </main>
-=======
-          <main className="flex-1">{children}</main>
-
->>>>>>> 2d6503f0d7bba82f38a2855ad3b72ac8ff785cbc
+          <main className="flex flex-col flex-1 items-center container mx-auto px-6 py-8">{children}</main>
           {/* Footer */}
           <BaseFooter />
         </NextIntlClientProvider>

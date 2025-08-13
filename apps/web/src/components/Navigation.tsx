@@ -70,31 +70,6 @@ export default function Navigation() {
   };
 
   return (
-<<<<<<< HEAD
-    <nav className="nav p-10">
-      <div className="nav-content glass-box mx-auto flex justify-between items-center">
-        <div className="nav-side">
-          <Link href="/" className="flex items-center">
-            <SitconLogo />
-          </Link>
-        </div>
-        <div className="nav-links flex gap-[50px]">
-          <Link href="/challenges" className="nav-link link">
-            {t('challenges')}
-          </Link>
-          <Link href="/about" className="nav-link link">
-            {t('about')}
-          </Link>
-          <Link href="/recruitment" className="nav-link link">
-            {t('recruitment')}
-          </Link>
-        </div>
-        <div className="nav-side flex items-center gap-4">
-          <LanguageSwitcher className="language-switcher side-box" />
-          <Link
-            href="/login"
-            className="login side-box nav-link flex items-center btn justify-center"
-=======
     <>
       <SessionProvider>
         <nav className="nav p-4 sm:p-6 lg:p-10">
@@ -213,7 +188,6 @@ export default function Navigation() {
         <div className="md:hidden fixed top-0 w-full p-4 sm:p-6">
           <div
             className={`overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
->>>>>>> 2d6503f0d7bba82f38a2855ad3b72ac8ff785cbc
           >
             <div className="nav-content glass-box mx-auto !pt-[65px]">
               <div className="py-4">
