@@ -73,7 +73,7 @@ export default async function LocaleLayout({
         />
       </head>
       <body
-        className={`${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased flex flex-col min-h-screen pt-[100px] bg-primary`}
+        className={`${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased flex flex-col min-h-screen pt-[100px] bg-[#121712]`}
       >
         <NextIntlClientProvider messages={messages}>
           <Navigation />
