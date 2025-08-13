@@ -27,11 +27,12 @@ export default function AboutSITCONPage() {
               hover:opacity-80 transition
             "
               >
-                <img
-                  src="/hyperlink.png"
-                  alt="SITCON 2026 連結"
-                  className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8"
-                />
+                <span
+                  className="material-symbols-outlined text-black flex items-center justify-center"
+                  style={{ fontSize: 26 }}
+                >
+                  open_in_new
+                </span>
               </a>
             </div>
             <span className="block mt-1 text-xl text-[#ACD997] font-medium">
