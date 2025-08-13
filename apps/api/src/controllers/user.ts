@@ -1,8 +1,74 @@
-import type { Response } from 'express';
+import type { Response, Request } from 'express';
 import { prisma } from '../lib/prisma';
 import { sendSuccess, sendError } from '../utils/response';
 import { ERROR_CODES, ERROR_MESSAGES } from '../constants/errors';
-import type { AuthenticatedRequest, UserLanguagePayload } from '../types';
+import type { AuthenticatedRequest } from '../types';
+import { generateUserToken } from '../lib/jwt';
+
+import { OAuth2Client } from 'google-auth-library';
+
+export const loginUser = async (
+  req: Request<object, object, { id_token: string }>,
+  res: Response
+) => {
+  try {
+    const { id_token } = req.body;
+    if (!id_token) {
+      sendError(res, ERROR_CODES.INVALID_PARAMS, '缺少 id_token', 400);
+      return;
+    }
+
+    // 驗證 Google id_token
+    const client = new OAuth2Client();
+    let payload;
+    try {
+      const ticket = await client.verifyIdToken({
+        idToken: id_token,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+      payload = ticket.getPayload();
+    } catch (err) {
+      sendError(
+        res,
+        ERROR_CODES.INVALID_GOOGLE_TOKEN,
+        'Google id_token 驗證失敗',
+        401
+      );
+      return;
+    }
+
+    const email = payload?.email;
+    const name = payload?.name;
+    const image = payload?.picture;
+    if (!email || !name) {
+      sendError(res, ERROR_CODES.INVALID_PARAMS, 'Google 帳號資訊不完整', 400);
+      return;
+    }
+
+    const user = await prisma.user.upsert({
+      where: { email },
+      update: { name, image },
+      create: { email, name, image, role: 'USER' },
+    });
+
+    const token = generateUserToken({
+      id: user.id,
+      email: user.email ?? '',
+      name: user.name ?? '',
+      role: user.role,
+    });
+
+    sendSuccess(res, { token });
+  } catch (error) {
+    console.error('使用者登入錯誤:', error);
+    sendError(
+      res,
+      ERROR_CODES.INTERNAL_ERROR,
+      ERROR_MESSAGES[ERROR_CODES.INTERNAL_ERROR],
+      500
+    );
+  }
+};
 
 export const getUserProfile = async (
   req: AuthenticatedRequest,
@@ -51,90 +117,22 @@ export const getUserProfile = async (
     // 構建進度資料
     const progress = allStages.map((stage) => {
       const userProgress = user.progress.find((p) => p.stageId === stage.id);
-      const language = user.language as 'zh' | 'en';
 
       return {
         stage_id: stage.id,
-        stage_title: language === 'zh' ? stage.titleZh : stage.titleEn,
+        stage_title: stage.title,
         passed: userProgress?.passed || false,
       };
     });
 
     sendSuccess(res, {
-      nickname: user.nickname,
+      name: user.name,
       email: user.email,
-      language: user.language,
-      profileImage: user.profileImage,
+      image: user.image,
       progress,
     });
   } catch (error) {
     console.error('取得使用者個人資料錯誤:', error);
-    sendError(
-      res,
-      ERROR_CODES.INTERNAL_ERROR,
-      ERROR_MESSAGES[ERROR_CODES.INTERNAL_ERROR],
-      500
-    );
-  }
-};
-
-export const updateUserLanguage = async (
-  req: AuthenticatedRequest,
-  res: Response
-): Promise<void> => {
-  try {
-    if (!req.user) {
-      sendError(
-        res,
-        ERROR_CODES.UNAUTHORIZED,
-        ERROR_MESSAGES[ERROR_CODES.UNAUTHORIZED]
-      );
-      return;
-    }
-
-    const userId = req.user.id;
-    const { language }: UserLanguagePayload = req.body;
-
-    // 更新使用者語言
-    const updatedUser = await prisma.user.update({
-      where: { id: userId },
-      data: { language },
-      include: {
-        progress: {
-          include: {
-            stage: true,
-          },
-        },
-      },
-    });
-
-    // 獲取所有關卡
-    const allStages = await prisma.stage.findMany({
-      where: { isActive: true },
-      orderBy: { stageNumber: 'asc' },
-    });
-
-    // 構建進度資料
-    const progress = allStages.map((stage) => {
-      const userProgress = updatedUser.progress.find(
-        (p) => p.stageId === stage.id
-      );
-
-      return {
-        stage_id: stage.id,
-        stage_title: language === 'zh' ? stage.titleZh : stage.titleEn,
-        passed: userProgress?.passed || false,
-      };
-    });
-
-    sendSuccess(res, {
-      nickname: updatedUser.nickname,
-      email: updatedUser.email,
-      language: updatedUser.language,
-      progress,
-    });
-  } catch (error) {
-    console.error('更新使用者語言設定錯誤:', error);
     sendError(
       res,
       ERROR_CODES.INTERNAL_ERROR,
