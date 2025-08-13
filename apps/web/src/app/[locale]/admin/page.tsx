@@ -45,7 +45,7 @@ export default function ScanParticipantPage() {
       // 模擬 API 響應延遲
       setTimeout(() => {
         // 根據掃描到的 userid 生成模擬資料
-        const completedChallenges = Math.floor(Math.random() * 8) + 1; // 1-8 隨機數
+        const completedChallenges = Math.floor(Math.random() * 7) + 1; // 1-7 隨機數
 
         // 根據解題數計算等級
         let level = 0;
@@ -338,33 +338,82 @@ export default function ScanParticipantPage() {
                       <div
                         className="flex items-center gap-3"
                         key={level.label}
+                        style={{
+                          minHeight: isMobile ? '40px' : '48px',
+                          alignItems: 'center',
+                        }}
                       >
                         {level.achieved ? (
-                          <div className="relative w-12 h-12 flex items-center justify-center">
-                            {/* 48x48 dark circle */}
+                          <div
+                            className="relative flex items-center justify-center"
+                            style={{
+                              width: isMobile ? '32px' : '48px',
+                              height: isMobile ? '32px' : '48px',
+                              aspectRatio: '1',
+                              flexShrink: 0,
+                            }}
+                          >
+                            {/* dark circle */}
                             <span
-                              className="absolute w-12 h-12 rounded-full"
-                              style={{ background: '#1F2937' }}
+                              className="absolute"
+                              style={{
+                                width: isMobile ? '32px' : '48px',
+                                height: isMobile ? '32px' : '48px',
+                                background: '#1F2937',
+                                borderRadius: '50%',
+                                aspectRatio: '1',
+                                flexShrink: 0,
+                              }}
                             />
-                            {/* 24x24 green circle centered */}
+                            {/* green circle centered */}
                             <span
-                              className="absolute w-6 h-6 rounded-full"
-                              style={{ background: '#0DF20D' }}
+                              className="absolute"
+                              style={{
+                                width: isMobile ? '16px' : '24px',
+                                height: isMobile ? '16px' : '24px',
+                                background: '#0DF20D',
+                                borderRadius: '50%',
+                                aspectRatio: '1',
+                                flexShrink: 0,
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                              }}
                             />
                             {/* check icon centered */}
                             <span
-                              className="material-symbols-outlined text-[24px]"
-                              style={{ color: '#1F2937', zIndex: 1 }}
+                              className="material-symbols-outlined"
+                              style={{
+                                fontSize: isMobile ? '16px' : '24px',
+                                color: '#1F2937',
+                                zIndex: 1,
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                              }}
                             >
                               check
                             </span>
                           </div>
                         ) : (
                           <div
-                            className="w-12 h-12 rounded-full flex items-center justify-center"
-                            style={{ background: '#1F2937' }}
+                            className="flex items-center justify-center"
+                            style={{
+                              width: isMobile ? '32px' : '48px',
+                              height: isMobile ? '32px' : '48px',
+                              background: '#1F2937',
+                              borderRadius: '50%',
+                              aspectRatio: '1',
+                              flexShrink: 0,
+                            }}
                           >
-                            <span className="material-symbols-outlined text-[24px] text-white">
+                            <span
+                              className="material-symbols-outlined text-white"
+                              style={{
+                                fontSize: isMobile ? '16px' : '24px',
+                              }}
+                            >
                               trophy
                             </span>
                           </div>
@@ -377,7 +426,12 @@ export default function ScanParticipantPage() {
                         </span>
                         <span
                           className={`ml-auto ${level.achieved ? 'text-[#0DF20D]' : 'text-gray-400'}`}
-                          style={{ fontSize: isMobile ? '10px' : '12px' }}
+                          style={{
+                            fontSize: isMobile ? '10px' : '12px',
+                            width: isMobile ? '60px' : '80px',
+                            textAlign: 'center',
+                            flexShrink: 0,
+                          }}
                         >
                           {level.achieved ? t('achieved') : t('notAchieved')}
                         </span>

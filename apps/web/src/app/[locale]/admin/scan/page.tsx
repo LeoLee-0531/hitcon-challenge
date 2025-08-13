@@ -166,7 +166,7 @@ export default function ScanPage() {
           </div>
         </div>
 
-        <div className="text-center topmargin-10">
+        <div className="text-center topmargin-20">
           <div className="text-[#8FCC8F] text-lg mb-2">{t('alignQRCode')}</div>
           <div className="text-gray-400 text-sm">{t('autoRedirect')}</div>
         </div>
@@ -214,15 +214,21 @@ export default function ScanPage() {
         ) : (
           // 掃描中狀態
           <div className="w-full max-w-[640px] flex justify-center">
-            <div className="relative">
+            <div className="relative flex flex-col items-center">
               {/* 掃描器容器 */}
-              <div className="relative overflow-hidden rounded-lg border-2 border-[#0DF20D]">
+              <div
+                className="relative overflow-hidden rounded-lg border-2 border-[#0DF20D]"
+                style={{
+                  width: isMobile ? '300px' : '400px',
+                  height: isMobile ? '300px' : '400px',
+                }}
+              >
                 <div
                   id="qr-reader"
                   ref={scannerRef}
                   style={{
-                    width: isMobile ? '300px' : '400px',
-                    height: isMobile ? '300px' : '400px',
+                    width: '100%',
+                    height: '100%',
                     aspectRatio: '1 / 1',
                   }}
                 />
