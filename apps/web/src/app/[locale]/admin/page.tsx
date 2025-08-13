@@ -2,11 +2,13 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 // 響應式設計斷點
 const MOBILE_BREAKPOINT = 1024;
 
 export default function ScanParticipantPage() {
+  const t = useTranslations('admin');
   const [isMobile, setIsMobile] = useState(false);
   const [userData, setUserData] = useState<{
     id: string;
@@ -80,7 +82,7 @@ export default function ScanParticipantPage() {
   const handleRedeem = () => {
     if (userData) {
       // 這裡可以發送 API 請求更新領獎狀態
-      alert('獎品兌換成功！');
+      alert(t('rewardRedeemed'));
     }
   };
 
@@ -95,14 +97,14 @@ export default function ScanParticipantPage() {
         }}
       >
         <h2 className="text-white text-2xl font-bold mb-6">
-          Scan Participant QR Code
+          {t('scanParticipantQRCode')}
         </h2>
         <div className="flex justify-center">
           <button
             className="bg-[#0DF20D] text-black px-8 py-3 rounded-[9999px] font-semibold hover:bg-[#BEE3BE] transition text-lg"
             onClick={handleScanQRCode}
           >
-            Scan QR Code
+            {t('scanQRCode')}
           </button>
         </div>
       </div>
@@ -119,14 +121,14 @@ export default function ScanParticipantPage() {
           // 未掃描狀態
           <div className="text-white text-center py-20">
             <div className="text-4xl mb-4">📱</div>
-            <div className="text-xl">請先掃描參與者 QR Code</div>
+            <div className="text-xl">{t('pleaseScanFirst')}</div>
           </div>
         ) : (
           // 已掃描狀態 - 顯示用戶資料
           <>
             {/* Participant Profile Title */}
             <h2 className="text-white text-2xl font-bold mb-6 self-start">
-              Participant Profile
+              {t('participantProfile')}
             </h2>
 
             {/* Avatar & Name */}
@@ -175,7 +177,7 @@ export default function ScanParticipantPage() {
                   fontSize: isMobile ? '12px' : '14px',
                 }}
               >
-                通過關卡
+                {t('completedChallenges')}
               </div>
               <div className="w-full">
                 <div
@@ -184,7 +186,7 @@ export default function ScanParticipantPage() {
                     fontSize: isMobile ? '12px' : '16px',
                   }}
                 >
-                  <span>獎勵等級</span>
+                  <span>{t('rewardLevel')}</span>
                 </div>
                 <div className="relative w-full h-2 bg-gray-700 rounded-full">
                   {/* milestone 標籤（進度條上方） */}
@@ -197,13 +199,13 @@ export default function ScanParticipantPage() {
                     }}
                   >
                     <span className="absolute left-3/7 top-0 -translate-x-1/2 text-white text-xs">
-                      第一級
+                      {t('level1')}
                     </span>
                     <span className="absolute left-5/7 top-0 -translate-x-1/2 text-white text-xs">
-                      第二級
+                      {t('level2')}
                     </span>
                     <span className="absolute right-0 top-0 text-white text-xs">
-                      第三級
+                      {t('level3')}
                     </span>
                   </div>
                   {/* 7個關卡進度條 */}
@@ -308,23 +310,22 @@ export default function ScanParticipantPage() {
                   marginBottom: isMobile ? '16px' : '16px',
                 }}
               >
-                獎勵等級說明
+                {t('rewardLevelDescription')}
               </div>
               {/* 動態渲染獎勵等級說明 */}
               {(() => {
                 const userLevel = userData.level; // 假資料，之後可從 API 取得
                 const levels = [
                   {
-                    label: '第一級:可選擇「貼紙」作為獎品',
+                    label: t('level1Reward'),
                     achieved: userLevel >= 1,
                   },
                   {
-                    label: '第二級:可選擇「貼紙」或「鑰匙圈」作為獎品 (二擇一)',
+                    label: t('level2Reward'),
                     achieved: userLevel >= 2,
                   },
                   {
-                    label:
-                      '第三級:可選擇「貼紙」、「鑰匙圈」或「年會踢」作為獎品 (三擇一)',
+                    label: t('level3Reward'),
                     achieved: userLevel >= 3,
                   },
                 ];
@@ -378,7 +379,7 @@ export default function ScanParticipantPage() {
                           className={`ml-auto ${level.achieved ? 'text-[#0DF20D]' : 'text-gray-400'}`}
                           style={{ fontSize: isMobile ? '10px' : '12px' }}
                         >
-                          {level.achieved ? '已達成' : '未達成'}
+                          {level.achieved ? t('achieved') : t('notAchieved')}
                         </span>
                       </div>
                     ))}
@@ -397,7 +398,7 @@ export default function ScanParticipantPage() {
               }}
               onClick={handleRedeem}
             >
-              兌換獎品!
+              {t('redeemReward')}
             </button>
           </>
         )}

@@ -2,11 +2,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Html5Qrcode } from 'html5-qrcode';
+import { useTranslations } from 'next-intl';
 
 // 響應式設計斷點
 const MOBILE_BREAKPOINT = 1024;
 
 export default function ScanPage() {
+  const t = useTranslations('scan');
   const [isMobile, setIsMobile] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState<string | null>(null);
@@ -48,7 +50,7 @@ export default function ScanPage() {
         try {
           await html5QrCodeRef.current.stop();
         } catch (err) {
-          console.log('停止舊掃描器:', err);
+          console.log(t('stoppingScanner'), err);
         }
       }
 
@@ -82,11 +84,11 @@ export default function ScanPage() {
         );
         setIsScanning(true);
       } else {
-        setError('未找到可用的相機');
+        setError(t('noCameraFound'));
       }
     } catch (err) {
-      console.error('啟動掃描器失敗:', err);
-      setError('無法啟動相機，請檢查權限設定');
+      console.error(t('startingScannerFailed'), err);
+      setError(t('cannotStartCamera'));
       setIsScanning(false);
     }
   };
@@ -152,25 +154,21 @@ export default function ScanPage() {
       >
         <div className="mb-6">
           <h2 className="text-white text-2xl font-bold mb-4 text-left">
-            QR Code Scanner
+            {t('qrCodeScanner')}
           </h2>
           <div className="text-center">
             <button
               onClick={handleBack}
               className="bg-[#BEE3BE] text-black px-8 py-3 rounded-[9999px] font-semibold hover:bg-gray-600 transition text-lg"
             >
-              返回管理頁面
+              {t('backToAdmin')}
             </button>
           </div>
         </div>
 
         <div className="text-center topmargin-10">
-          <div className="text-[#8FCC8F] text-lg mb-2">
-            請將參與者的 QR Code 對準掃描框
-          </div>
-          <div className="text-gray-400 text-sm">
-            掃描成功後將自動跳轉回管理頁面
-          </div>
+          <div className="text-[#8FCC8F] text-lg mb-2">{t('alignQRCode')}</div>
+          <div className="text-gray-400 text-sm">{t('autoRedirect')}</div>
         </div>
       </div>
 
@@ -186,23 +184,27 @@ export default function ScanPage() {
           // 錯誤狀態
           <div className="text-center py-20">
             <div className="text-6xl mb-4">❌</div>
-            <div className="text-white text-xl mb-4">掃描器啟動失敗</div>
+            <div className="text-white text-xl mb-4">
+              {t('scannerStartFailed')}
+            </div>
             <div className="text-gray-400 mb-6">{error}</div>
             <button
               onClick={handleRestart}
               className="bg-[#0DF20D] text-black px-6 py-3 rounded-lg font-semibold hover:bg-[#0BE60B] transition"
             >
-              重新嘗試
+              {t('retry')}
             </button>
           </div>
         ) : scanResult ? (
           // 掃描成功狀態
           <div className="text-center py-20">
             <div className="text-6xl mb-4">✅</div>
-            <div className="text-white text-xl mb-4">掃描成功！</div>
-            <div className="text-[#8FCC8F] mb-6">正在跳轉回管理頁面...</div>
+            <div className="text-white text-xl mb-4">{t('scanSuccess')}</div>
+            <div className="text-[#8FCC8F] mb-6">{t('redirecting')}</div>
             <div className="bg-[#232B20] rounded-lg p-4 mb-6 max-w-md mx-auto">
-              <div className="text-gray-400 text-sm mb-2">掃描結果：</div>
+              <div className="text-gray-400 text-sm mb-2">
+                {t('scanResult')}
+              </div>
               <div className="text-white text-sm break-all">{scanResult}</div>
             </div>
             <div className="animate-pulse">
@@ -258,11 +260,9 @@ export default function ScanPage() {
               {/* 掃描說明 */}
               <div className="mt-6 text-center">
                 <div className="text-white text-lg mb-2">
-                  將 QR Code 放入掃描框內
+                  {t('putQRCodeInFrame')}
                 </div>
-                <div className="text-gray-400 text-sm">
-                  確保 QR Code 清晰可見，避免反光和陰影
-                </div>
+                <div className="text-gray-400 text-sm">{t('ensureClear')}</div>
               </div>
             </div>
           </div>
