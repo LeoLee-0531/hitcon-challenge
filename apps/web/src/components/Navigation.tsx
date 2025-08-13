@@ -33,7 +33,6 @@ export function SitconLogo({
 export default function Navigation() {
   const t = useTranslations('nav');
   const { data: session } = useSession();
-  console.log('Session Data:', session);
 
   const [mounted, setMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
