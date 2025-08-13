@@ -64,7 +64,7 @@ export default async function LocaleLayout({
       <div
         lang={locale}
         dir="ltr"
-        className="font-sans antialiased flex flex-col min-h-screen pt-[100px] bg-primary"
+        className="antialiased flex flex-col min-h-screen pt-[100px] bg-primary"
       >
         <NextIntlClientProvider messages={messages}>
           <Navigation />

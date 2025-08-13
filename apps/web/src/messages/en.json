@@ -37,5 +37,14 @@
     "validationError": "Validation error",
     "networkError": "Network error",
     "tryAgain": "Please try again later"
+  },
+  "frontpage":{
+    "title": "HITCON Challenge",
+    "subtitle": "A platform for cybersecurity enthusiasts to test their skills",
+    "description": "Join our challenges and improve your cybersecurity knowledge.",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "featuredChallenges": "Featured Challenges",
+    "recentActivity": "Recent Activity"
   }
 }

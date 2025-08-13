@@ -37,5 +37,12 @@
     "validationError": "驗證錯誤",
     "networkError": "網路錯誤",
     "tryAgain": "請稍後再試"
+  },
+  "frontpage":{
+    "title": "HITCON Challenge",
+    "subtitle": "駭客挑戰，限時開啟！",
+    "description": "挑戰七道關卡，贏得 SITCON 限定好禮！",
+    "location": "中央研究院 人文社會科學館區",
+    "con": "挑戰七道關卡，贏得 SITCON 限定好禮！"
   }
 }
