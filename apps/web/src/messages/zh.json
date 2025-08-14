@@ -57,5 +57,22 @@
     "joinDesc3": "若你想進一步了解 SITCON 年會籌備與討論內容，歡迎到 ",
     "joinDesc4": " 上查看 SITCON 2026 的籌備歷程。",
     "footerNote": "＊這行文字內容好像被塞了些什麼神奇的東西"
+  },
+  "recruitment": {
+    "title": "SITCON 2026\n工作人員招募資訊",
+    "subtitle": "歡迎加入籌備團隊！下方表格含截止日期、招募名額、表單連結與工作內容。",
+    "formBtn": "報名表單",
+    "headcount": "招募人數",
+    "duties": "工作內容",
+    "preferred": "推薦條件",
+    "process": "招募流程",
+    "techStack": "技術 / 工具",
+    "notes": "備註",
+    "backToTop": "⬆️ 回頂端",
+    "colTeam": "組別",
+    "colDeadline": "截止日期",
+    "colHeadcount": "招募人數",
+    "colDuties": "工作內容",
+    "colOthers": "推薦條件 / 流程 / 技術"
   }
 }

@@ -57,5 +57,22 @@
     "joinDesc3": "If you want to learn more about SITCON's preparation and discussions, visit ",
     "joinDesc4": " to see the progress of SITCON 2026.",
     "footerNote": "* This line seems to contain some magical content."
+  },
+  "recruitment": {
+    "title": "SITCON 2026\nStaff Recruitment Information",
+    "subtitle": "Welcome to join the organizing team! The table below includes deadlines, headcount, form links, and job details.",
+    "formBtn": "Application Form",
+    "headcount": "Headcount",
+    "duties": "Duties",
+    "preferred": "Preferred Qualifications",
+    "process": "Recruitment Process",
+    "techStack": "Tech / Tools",
+    "notes": "Notes",
+    "backToTop": "⬆️ Back to Top",
+    "colTeam": "Team",
+    "colDeadline": "Deadline",
+    "colHeadcount": "Headcount",
+    "colDuties": "Duties",
+    "colOthers": "Preferred / Process / Tech"
   }
 }

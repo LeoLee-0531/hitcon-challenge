@@ -1,6 +1,7 @@
 // app/recruit/page.tsx
 import React from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 type Team = {
   id: string;
@@ -116,6 +117,7 @@ const TEAMS: Team[] = [
 ];
 
 export default function RecruitPage() {
+  const t = useTranslations('recruitment');
   return (
     <div className="grid grid-cols-12">
       <div className="xl:col-span-2 col-span-1" />
@@ -128,32 +130,31 @@ export default function RecruitPage() {
             {/* Header */}
             <header className="mb-8 py-15 text-center">
               <h1 className="text-3xl sm:text-4xl md:text-4.5xl font-bold">
-                SITCON 2026 <br />
-                工作人員招募資訊
+                {t('title')}
               </h1>
               <p className="mt-2 text-sm text-emerald-300/80">
-                歡迎加入籌備團隊！下方表格含截止日期、招募名額、表單連結與工作內容。
+                {t('subtitle')}
               </p>
             </header>
 
             {/* Cards (mobile) */}
             <section className="md:hidden space-y-4">
-              {TEAMS.map((t) => (
+              {TEAMS.map((team) => (
                 <article
-                  key={t.id}
+                  key={team.id}
                   className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-2">
-                      <h2 className="text-lg font-semibold">{t.name}</h2>
+                      <h2 className="text-lg font-semibold">{team.name}</h2>
                       <div className="flex items-center gap-2">
-                        {t.dancingManImgs && (
+                        {team.dancingManImgs && (
                           <div className="flex">
-                            {t.dancingManImgs.map((src, idx) => (
+                            {team.dancingManImgs.map((src, idx) => (
                               <img
                                 key={idx}
                                 src={src}
-                                alt={`dancingMan-${t.id}-${idx}`}
+                                alt={`dancingMan-${team.id}-${idx}`}
                                 className="h-7 object-contain rounded-md bg-black/10"
                               />
                             ))}
@@ -163,43 +164,43 @@ export default function RecruitPage() {
                     </div>
 
                     <div>
-                      <Badge>{t.deadline}</Badge>
-                      <ExternalLink href={t.formUrl}>{'報名表單'}</ExternalLink>
+                      <Badge>{team.deadline}</Badge>
+                      <ExternalLink href={team.formUrl}>{t('formBtn')}</ExternalLink>
                     </div>
                   </div>
 
                   <div className="mt-3 grid grid-cols-1 gap-2">
-                    {t.headcount && (
-                      <Row label="招募人數">
-                        <span className="text-gray-200">{t.headcount}</span>
+                    {team.headcount && (
+                      <Row label={t('headcount')}>
+                        <span className="text-gray-200">{team.headcount}</span>
                       </Row>
                     )}
 
-                    <Row label="工作內容">
-                      <BulletList items={t.duties} />
+                    <Row label={t('duties')}>
+                      <BulletList items={team.duties} />
                     </Row>
 
-                    {t.preferred && t.preferred.length > 0 && (
-                      <Row label="推薦條件">
-                        <BulletList items={t.preferred} />
+                    {team.preferred && team.preferred.length > 0 && (
+                      <Row label={t('preferred')}>
+                        <BulletList items={team.preferred} />
                       </Row>
                     )}
 
-                    {t.process && t.process.length > 0 && (
-                      <Row label="招募流程">
-                        <BulletList items={t.process} />
+                    {team.process && team.process.length > 0 && (
+                      <Row label={t('process')}>
+                        <BulletList items={team.process} />
                       </Row>
                     )}
 
-                    {t.techStack && t.techStack.length > 0 && (
-                      <Row label="技術 / 工具">
-                        <TagList items={t.techStack} />
+                    {team.techStack && team.techStack.length > 0 && (
+                      <Row label={t('techStack')}>
+                        <TagList items={team.techStack} />
                       </Row>
                     )}
 
-                    {t.notes && t.notes.length > 0 && (
-                      <Row label="備註">
-                        <BulletList items={t.notes} />
+                    {team.notes && team.notes.length > 0 && (
+                      <Row label={t('notes')}>
+                        <BulletList items={team.notes} />
                       </Row>
                     )}
                   </div>
@@ -210,7 +211,7 @@ export default function RecruitPage() {
                   href="#top"
                   className="text-sm text-emerald-300 hover:text-emerald-200 underline underline-offset-2"
                 >
-                  ⬆️ 回頂端
+                  {t('backToTop')}
                 </Link>
               </div>
             </section>
@@ -221,31 +222,31 @@ export default function RecruitPage() {
                 <table className="w-full border-collapse">
                   <thead className="bg-emerald-900/30">
                     <tr>
-                      <Th className="w-[80px]">組別</Th>
-                      <Th className="w-[100px]">截止日期</Th>
-                      <Th className="w-[110px]">招募人數</Th>
-                      <Th>工作內容</Th>
-                      <Th>推薦條件 / 流程 / 技術</Th>
+                      <Th className="w-[80px]">{t('colTeam')}</Th>
+                      <Th className="w-[100px]">{t('colDeadline')}</Th>
+                      <Th className="w-[110px]">{t('colHeadcount')}</Th>
+                      <Th>{t('colDuties')}</Th>
+                      <Th>{t('colOthers')}</Th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/10">
-                    {TEAMS.map((t, idx) => (
+                    {TEAMS.map((team, idx) => (
                       <tr
-                        key={t.id}
+                        key={team.id}
                         className={
                           idx % 2 === 0 ? 'bg-white/0' : 'bg-white/[0.03]'
                         }
                       >
                         <Td>
-                          <div className="font-semibold">{t.name}</div>
+                          <div className="font-semibold">{team.name}</div>
                           {/* dancingMan 圖片 */}
-                          {t.dancingManImgs && (
+                          {team.dancingManImgs && (
                             <div className="flex mt-2 justify-center">
-                              {t.dancingManImgs.map((src, idx) => (
+                              {team.dancingManImgs.map((src, idx) => (
                                 <img
                                   key={idx}
                                   src={src}
-                                  alt={`dancingMan-${t.id}-${idx}`}
+                                  alt={`dancingMan-${team.id}-${idx}`}
                                   className="h-5 object-contain rounded-md bg-black/10"
                                 />
                               ))}
@@ -254,44 +255,44 @@ export default function RecruitPage() {
                         </Td>
                         <Td>
                           <div className="flex flex-col gap-2">
-                            <Badge>{t.deadline}</Badge>
-                            <ExternalLink href={t.formUrl}>
-                              {'報名表單'}
+                            <Badge>{team.deadline}</Badge>
+                            <ExternalLink href={team.formUrl}>
+                              {t('formBtn')}
                             </ExternalLink>
                           </div>
                         </Td>
                         <Td>
                           <span className="text-gray-200">
-                            {t.headcount ?? '—'}
+                            {team.headcount ?? '—'}
                           </span>
                         </Td>
                         <Td>
-                          <BulletList items={t.duties} />
+                          <BulletList items={team.duties} />
                         </Td>
                         <Td>
                           <div className="space-y-3">
-                            {t.preferred && t.preferred.length > 0 && (
+                            {team.preferred && team.preferred.length > 0 && (
                               <section>
                                 <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
-                                  推薦條件
+                                  {t('preferred')}
                                 </h4>
-                                <BulletList items={t.preferred} />
+                                <BulletList items={team.preferred} />
                               </section>
                             )}
-                            {t.process && t.process.length > 0 && (
+                            {team.process && team.process.length > 0 && (
                               <section>
                                 <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
-                                  招募流程
+                                  {t('process')}
                                 </h4>
-                                <BulletList items={t.process} />
+                                <BulletList items={team.process} />
                               </section>
                             )}
-                            {t.techStack && t.techStack.length > 0 && (
+                            {team.techStack && team.techStack.length > 0 && (
                               <section>
                                 <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
-                                  技術 / 工具
+                                  {t('techStack')}
                                 </h4>
-                                <TagList items={t.techStack} />
+                                <TagList items={team.techStack} />
                               </section>
                             )}
                           </div>
@@ -301,15 +302,6 @@ export default function RecruitPage() {
                   </tbody>
                 </table>
               </div>
-
-              {/* <div className="mt-4 text-right">
-            <Link
-              href="#top"
-              className="text-sm text-emerald-300 hover:text-emerald-200 underline underline-offset-2"
-            >
-              ⬆️ 回頂端
-            </Link>
-          </div> */}
             </section>
           </div>
         </main>
