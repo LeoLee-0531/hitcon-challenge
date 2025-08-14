@@ -33,4 +33,15 @@
   --primary-30: #8fcc8f;
   --primary-40: #d4e1db;
   --primary-50: #214a21;
+  --primary-60: #f2cc0d;
+  --primary-70: #e07393;
+
+  /* Font Size */
+  --size-xs: 16px;
+  --size-sm: 18px;
+  --size-md: 20px;
+  --size-ha: 24px;
+  --size-lg: 32px;
+  --size-xl: 36px;
+  --size-2xl: 64px;
 }
