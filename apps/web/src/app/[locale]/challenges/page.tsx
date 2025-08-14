@@ -262,7 +262,7 @@ export default function ChallengesPage() {
       <div
         className="text-white w-full"
         style={{
-          backgroundColor: '#121712',
+          backgroundColor: 'var(--background)',
           fontFamily: 'var(--font-family-base)',
           maxWidth: '820px',
           margin: '0 auto',
