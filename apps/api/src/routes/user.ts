@@ -1,10 +1,59 @@
 import { Router } from 'express';
-import { getUserProfile, loginUser } from '../controllers/user';
+import { getUserProfile, loginUser, getUserMe } from '../controllers/user';
 import { authenticateUser } from '../middleware/auth';
 import { validateBody } from '../middleware/validation';
 import { userLoginSchema } from '../schemas/validation';
 
 const router: Router = Router();
+
+// 取得目前使用者基本資料
+/**
+ * @swagger
+ * /api/user/me:
+ *   get:
+ *     summary: 取得目前使用者基本資料
+ *     description: 回傳目前登入使用者的 id、email、role
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: 成功取得使用者基本資料
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       example: "user-id-123"
+ *                     name:
+ *                       type: string
+ *                       example: "使用者名稱"
+ *                     email:
+ *                       type: string
+ *                       format: email
+ *                       example: "user@example.com"
+ *                     role:
+ *                       type: string
+ *                       example: "ADMIN"
+ *                 timestamp:
+ *                   type: string
+ *                   format: date-time
+ *       401:
+ *         description: 未授權或 token 無效
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.get('/me', authenticateUser, getUserMe);
 
 router.post('/login', validateBody(userLoginSchema), loginUser);
 

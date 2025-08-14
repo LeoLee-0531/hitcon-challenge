@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import type { JWTUserPayload } from '../types';
-import { JWT_SECRET, ADMIN_JWT_SECRET } from '../config/env';
+import { JWT_SECRET } from '../config/env';
 
 export const generateUserToken = (payload: JWTUserPayload): string => {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: '2d' });

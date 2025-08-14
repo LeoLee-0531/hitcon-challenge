@@ -5,7 +5,6 @@
 
 interface RequiredEnvVars {
   JWT_SECRET: string;
-  ADMIN_JWT_SECRET: string;
   DATABASE_URL: string;
   AUTH_GOOGLE_ID: string;
   AUTH_GOOGLE_SECRET: string;
@@ -14,8 +13,8 @@ interface RequiredEnvVars {
 interface OptionalEnvVars {
   PORT?: string;
   NODE_ENV?: string;
-  NEXT_PUBLIC_FRONTEND_URL?: string;
-  NEXT_PUBLIC_API_BASE_URL?: string;
+  FRONTEND_URL?: string;
+  API_BASE_URL?: string;
 }
 
 /**
@@ -26,7 +25,6 @@ export function validateEnvironmentVariables(): RequiredEnvVars &
   OptionalEnvVars {
   const requiredVars: (keyof RequiredEnvVars)[] = [
     'JWT_SECRET',
-    'ADMIN_JWT_SECRET',
     'DATABASE_URL',
     'AUTH_GOOGLE_ID',
     'AUTH_GOOGLE_SECRET',
@@ -54,14 +52,13 @@ export function validateEnvironmentVariables(): RequiredEnvVars &
   // 返回驗證過的環境變數
   return {
     JWT_SECRET: process.env.JWT_SECRET as string,
-    ADMIN_JWT_SECRET: process.env.ADMIN_JWT_SECRET as string,
     DATABASE_URL: process.env.DATABASE_URL as string,
     AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID as string,
     AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET as string,
     PORT: process.env.PORT,
     NODE_ENV: process.env.NODE_ENV,
-    NEXT_PUBLIC_FRONTEND_URL: process.env.NEXT_PUBLIC_FRONTEND_URL,
-    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    FRONTEND_URL: process.env.FRONTEND_URL,
+    API_BASE_URL: process.env.API_BASE_URL,
   };
 }
 
@@ -69,20 +66,15 @@ export function validateEnvironmentVariables(): RequiredEnvVars &
 export const env = validateEnvironmentVariables();
 
 // 便利的常數導出
-export const {
-  JWT_SECRET,
-  ADMIN_JWT_SECRET,
-  DATABASE_URL,
-  AUTH_GOOGLE_ID,
-  AUTH_GOOGLE_SECRET,
-  PORT,
-  NODE_ENV,
-  NEXT_PUBLIC_FRONTEND_URL,
-  NEXT_PUBLIC_API_BASE_URL,
-} = env;
+export const JWT_SECRET = env.JWT_SECRET;
+export const DATABASE_URL = env.DATABASE_URL;
+export const AUTH_GOOGLE_ID = env.AUTH_GOOGLE_ID;
+export const AUTH_GOOGLE_SECRET = env.AUTH_GOOGLE_SECRET;
+export const PORT = env.PORT;
+export const NODE_ENV = env.NODE_ENV;
+export const FRONTEND_URL = env.FRONTEND_URL;
+export const API_BASE_URL = env.API_BASE_URL;
 
 // 為了相容性，提供別名
 export const GOOGLE_CLIENT_ID = AUTH_GOOGLE_ID;
-export const FRONTEND_URL = NEXT_PUBLIC_FRONTEND_URL;
-export const API_BASE_URL = NEXT_PUBLIC_API_BASE_URL;
-export const ALLOWED_ORIGINS = NEXT_PUBLIC_FRONTEND_URL; // CORS 使用前端 URL
+export const ALLOWED_ORIGINS = env.FRONTEND_URL; // CORS 使用前端 URL

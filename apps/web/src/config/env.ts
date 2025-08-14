@@ -7,7 +7,7 @@
  * 取得 API Base URL
  */
 export const getApiBaseUrl = (): string => {
-  return process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001/api';
+  return process.env.API_BASE_URL || 'http://localhost:3001/api';
 };
 
 /**
@@ -18,7 +18,7 @@ export const getFrontendUrl = (): string => {
     return window.location.origin;
   }
 
-  return process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
+  return process.env.FRONTEND_URL || 'http://localhost:3000';
 };
 
 /**
