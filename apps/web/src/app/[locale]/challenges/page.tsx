@@ -50,12 +50,12 @@ export default function ChallengesPage() {
       setSubmitMessage('驗證失敗，請稍後再試！');
       setPassword('');
     }
+
     setTimeout(() => {
       setSubmitMessage('');
       setSubmitStatus('idle');
     }, 5000);
   };
-
   return (
     <div className={isMobile ? 'layout-mobile' : 'layout-desktop'}>
       <ChallengeSidebar

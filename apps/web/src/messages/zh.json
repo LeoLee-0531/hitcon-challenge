@@ -30,6 +30,65 @@
     "featuredChallenges": "精選挑戰",
     "recentActivity": "最近活動"
   },
+  "profile": {
+    "completedChallenges": "通過關卡",
+    "rewardLevel": "獎勵等級",
+    "level1": "第一級",
+    "level2": "第二級",
+    "level3": "第三級",
+    "level1Requirement": "第一級:需完成 2 關",
+    "level2Requirement": "第二級:需完成 4 關",
+    "level3Requirement": "第三級:需完成 6 關",
+    "achieved": "已達成",
+    "notAchieved": "未達成",
+    "rewardLevelDescription": "獎勵等級說明",
+    "minRequirementNote": "* 至少要完成 2 關才能拿到獎品！",
+    "exchangeRules": "兌換規則說明",
+    "exchangeRulesDescription": "不管達成哪個等級，都只能領取一份獎品！但達成等級越高升能有更多選擇！",
+    "level1Reward": "第一級：可選擇「貼紙」作為獎品。",
+    "level2Reward": "第二級：可選擇「貼紙」或「鑰匙圈」作為獎品（二擇一）。",
+    "level3Reward": "第三級：可選擇「貼紙」、「鑰匙圈」或「年會T-shirt」作為獎品（三擇一）。",
+    "generateQRCode": "產生兌換 QR code",
+    "generating": "產生中...",
+    "qrCodeNote": "* 回到 SITCON 攤位出示 QR Code 即可兌換獎品",
+    "congratulations": "恭喜",
+    "completedText": "完成",
+    "completedChallengesText": "關挑戰",
+    "thankYou": "感謝您的參與！"
+  },
+  "challenges": {
+    "instagram": {
+      "title": "Instagram",
+      "description": "在 SITCON 的 Instagram 上似乎藏著什麼祕密...."
+    },
+    "workerRecruitment": {
+      "title": "SITCON 工人招募",
+      "description": "每個工作組別好像都很重要呢！\nSITCON 星人好像留了什麼訊息..."
+    },
+    "elfText": {
+      "title": "精靈文 @攤位",
+      "description": "生在台灣的小精靈把秘密藏在了紙條上\n或許會有精通古典密碼學的台灣人知道該如何解開\nP.S.請到 SITCON 攤位進行挑戰！"
+    },
+    "gitLeak": {
+      "title": "Git Leak",
+      "description": "搭著飛機來支援我們的 SITCON 工人好像出事了！\n但他們留了一個網站好像想告訴我們些什麼"
+    },
+    "pythonJail": {
+      "title": "Python Jail",
+      "description": "被困在 Python Jail 了，或許有什麼方法可以逃出牢籠拿到旗子"
+    },
+    "aboutSitcon": {
+      "title": "關於 SITCON",
+      "description": "文字中看不到的不代表不存在\n或許可以問問看 Claude 或 Gemini"
+    },
+    "goToChallenge": "前往關卡",
+    "submit": "送出",
+    "successMessage": "恭喜！Flag 正確！",
+    "errorMessage": "Flag 錯誤，請再試一次！",
+    "validationFailed": "驗證失敗，請稍後再試！",
+    "submitting": "送出中...",
+    "loginRequired": "請先登入後再進行關卡驗證"
+  },
   "errors": {
     "notFound": "找不到頁面",
     "serverError": "伺服器內部錯誤",
