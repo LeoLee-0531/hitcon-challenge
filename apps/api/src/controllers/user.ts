@@ -34,6 +34,34 @@ import { generateUserToken } from '../lib/jwt';
 
 import { OAuth2Client } from 'google-auth-library';
 
+// 取得目前使用者基本資料（id, email, role）
+export const getUserMe = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    if (!req.user) {
+      sendError(
+        res,
+        ERROR_CODES.UNAUTHORIZED,
+        ERROR_MESSAGES[ERROR_CODES.UNAUTHORIZED]
+      );
+      return;
+    }
+
+    const { id, name, email, role } = req.user;
+    sendSuccess(res, { id, name, email, role });
+  } catch (error) {
+    console.error('取得使用者基本資料錯誤:', error);
+    sendError(
+      res,
+      ERROR_CODES.INTERNAL_ERROR,
+      ERROR_MESSAGES[ERROR_CODES.INTERNAL_ERROR],
+      500
+    );
+  }
+};
+
 export const loginUser = async (
   req: Request<object, object, { id_token: string }>,
   res: Response
