@@ -3,16 +3,13 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useTranslations } from 'next-intl';
-import { useSession } from 'next-auth/react';
-import { apiFetch } from '@/utils/apiFetch';
-import { env } from '@/config/env';
+import { useSession, signOut } from 'next-auth/react';
 
 // 響應式設計斷點
 const MOBILE_BREAKPOINT = 1024; // 使用標準的桌面斷點 (lg)
 
 export default function ProfilePage() {
   const t = useTranslations('profile');
-  const { data: session } = useSession();
   const [isMobile, setIsMobile] = useState(false);
   const [qrCodeGenerated, setQrCodeGenerated] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -23,7 +20,7 @@ export default function ProfilePage() {
   const defaultUserData = {
     id: '',
     username: '',
-    avatar: '/avatar.png',
+    avatar: '',
     completedChallenges: 0,
     totalChallenges: 6,
     level: 0,
@@ -36,25 +33,15 @@ export default function ProfilePage() {
     100;
 
   // 獲取使用者資料
+  // TODO: 從 session 獲取加快速度
   const fetchUserData = async () => {
-    if (!session?.apiToken) return;
-
+    setIsLoading(true);
     try {
-      const response = await apiFetch(`${env.API_BASE_URL}/api/user/profile`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${session.apiToken}`,
-        },
-      });
+      const response = await fetch(`/api/user/profile`);
 
       if (response.ok) {
         const result = await response.json();
         if (result.success && result.data) {
-          // 顯示API回傳的資料
-          console.log('API回傳的完整資料:', result.data);
-          console.log('API回傳的user_id:', result.data.user_id);
-          console.log('API回傳的user_id類型:', typeof result.data.user_id);
-
           // 計算等級 (每完成 2 個關卡升一級)
           const completedCount =
             result.data.progress?.filter((p: any) => p.passed).length || 0;
@@ -63,8 +50,8 @@ export default function ProfilePage() {
 
           setUserData({
             id: result.data.user_id,
-            username: result.data.name || 'NonameUser',
-            avatar: result.data.image || '/avatar.png',
+            username: result.data.name,
+            avatar: result.data.image,
             completedChallenges: completedCount,
             totalChallenges: 6,
             level: calculatedLevel,
@@ -78,24 +65,26 @@ export default function ProfilePage() {
     }
   };
 
-  useEffect(() => {
-    if (session?.apiToken) {
-      fetchUserData();
-    } else {
-      setIsLoading(false);
-    }
-  }, [session?.apiToken]);
+  // useEffect(() => {
+  //   if (session?.apiToken) {
+  //     fetchUserData();
+  //   } else {
+  //     setIsLoading(false);
+  //   }
+  // }, [session?.apiToken]);
 
   useEffect(() => {
-    const checkScreenSize = () => {
-      const width = window.innerWidth;
-      setIsMobile(width < MOBILE_BREAKPOINT);
-    };
+    fetchUserData();
 
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
+    // const checkScreenSize = () => {
+    //   const width = window.innerWidth;
+    //   setIsMobile(width < MOBILE_BREAKPOINT);
+    // };
 
-    return () => window.removeEventListener('resize', checkScreenSize);
+    // checkScreenSize();
+    // window.addEventListener('resize', checkScreenSize);
+
+    // return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
   const generateQRCode = async () => {
@@ -149,6 +138,16 @@ export default function ProfilePage() {
           >
             {currentUserData.username}
           </div>
+
+          {/* Logout Button */}
+          <button
+            className="mt-4 px-4 py-2 bg-red-800 text-white rounded hover:bg-red-900 transition"
+            style={{ fontSize: isMobile ? '12px' : '14px' }}
+            onClick={() => signOut({ callbackUrl: '/' })}
+          >
+          {/* TODO: 沒有登入的使用者會被導回首頁 */}
+            {t('logout')}
+          </button>
         </div>
 
         {/* Progress Section */}
@@ -336,9 +335,9 @@ export default function ProfilePage() {
                         className="w-12 h-12 rounded-full flex items-center justify-center"
                         style={{ background: '#1F2937' }}
                       >
-                        <span className="material-symbols-outlined text-[24px] text-white">
-                          trophy
-                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="white">
+                          <path d="M12 17c2.76 0 5-2.24 5-5V7h-2V5H9v2H7v5c0 2.76 2.24 5 5 5zm-7-7V7h2v3c0 3.53 2.61 6.43 6 6.92V21h-2v-2H7v2H5v-2H3v-2h2v-2H3v-2h2v-2H3zm16 0v2h-2v2h2v2h-2v2h2v2h-2v2h-2v-2h-2v2h-2v-2c3.39-.49 6-3.39 6-6.92V7h2v3z" />
+                        </svg>
                       </div>
                     )}
                     <span

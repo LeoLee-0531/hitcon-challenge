@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 
 import ChallengeSidebar from '@/components/Challenges/ChallengeSidebar';
 import ChallengeMain from '@/components/Challenges/ChallengeMain';
@@ -28,21 +29,32 @@ interface Challenge {
   link: string;
 }
 
+
 export default function ChallengesPage() {
-  const { data: session } = useSession();
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const t = useTranslations('challenges');
 
   const [challengesList, setChallengesList] = useState<Challenge[]>([]);
-  const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(
-    null
-  );
+  const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
   const [password, setPassword] = useState('');
   const [isMobile, setIsMobile] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
-  const [submitStatus, setSubmitStatus] = useState<
-    'idle' | 'success' | 'error'
-  >('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // 登入提醒狀態
+  const [showLoginAlert, setShowLoginAlert] = useState(false);
+
+  // 如果 session 為 null，導回首頁並提醒登入
+  useEffect(() => {
+    if (status === 'loading') return; // 等待 useSession 完成
+    if (!session) {
+      setShowLoginAlert(true);
+      setTimeout(() => {
+        router.push('/');
+      }, 2000);
+    }
+  }, [session, status]);
 
   // 清理和驗證 flag 輸入
   const sanitizeFlag = (input: string): string => {
@@ -66,15 +78,8 @@ export default function ChallengesPage() {
 
   // 獲取用戶進度
   const fetchUserProgress = useCallback(async () => {
-    if (!session?.apiToken) return;
-
     try {
-      const response = await apiFetch(`${env.API_BASE_URL}/api/user/profile`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${session.apiToken}`,
-        },
-      });
+      const response = await fetch(`/api/user/profile`);
 
       if (response.ok) {
         const result = await response.json();
@@ -131,7 +136,7 @@ export default function ChallengesPage() {
     } catch (error) {
       // 靜默處理錯誤
     }
-  }, [session?.apiToken]);
+  }, [session]);
 
   // 初始化挑戰列表
   useEffect(() => {
@@ -295,8 +300,8 @@ export default function ChallengesPage() {
             // 安全地處理錯誤訊息
             const errorMsg =
               result.error &&
-              typeof result.error === 'object' &&
-              'message' in result.error
+                typeof result.error === 'object' &&
+                'message' in result.error
                 ? String(result.error.message)
                 : t('errorMessage');
             setSubmitMessage(errorMsg);
@@ -314,8 +319,8 @@ export default function ChallengesPage() {
           // 安全地處理錯誤訊息
           const errorMsg =
             errorData.error &&
-            typeof errorData.error === 'object' &&
-            'message' in errorData.error
+              typeof errorData.error === 'object' &&
+              'message' in errorData.error
               ? String(errorData.error.message)
               : t('errorMessage');
           setSubmitMessage(errorMsg);
@@ -338,6 +343,17 @@ export default function ChallengesPage() {
       setSubmitStatus('idle');
     }, 5000);
   };
+
+  if (showLoginAlert) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+          <h2 className="text-xl font-bold mb-4">{t('loginRequired')}</h2>
+          <p>{t('redirectingToHome')}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

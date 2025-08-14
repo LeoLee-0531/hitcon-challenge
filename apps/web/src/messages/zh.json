@@ -54,7 +54,8 @@
     "congratulations": "恭喜",
     "completedText": "完成",
     "completedChallengesText": "關挑戰",
-    "thankYou": "感謝您的參與！"
+    "thankYou": "感謝您的參與！",
+    "logout": "登出"
   },
   "challenges": {
     "instagram": {

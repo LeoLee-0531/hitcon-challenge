@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import LanguageSwitcher from './LanguageSwitcher';
-import { signIn, signOut } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 
 interface SitconLogoProps {
@@ -118,20 +118,6 @@ export default function Navigation() {
                     )}
                   </div>
                 </Link>
-                <button
-                  onClick={() => signOut()}
-                  className="login-btn side-box rounded-full flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10"
-                >
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="text-white"
-                  >
-                    <path d="M11,7L9.6,8.4l2.6,2.6H2v2h10.2l-2.6,2.6L11,17l5-5L11,7z M20,19h-8v2h8c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-8v2h8V19z" />
-                  </svg>
-                </button>
               </>
             ) : (
               <>
