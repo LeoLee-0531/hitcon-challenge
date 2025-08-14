@@ -88,7 +88,7 @@
     "validationFailed": "Validation failed, please try again later!",
     "submitting": "Submitting...",
     "loginRequired": "Please login first to verify the challenge",
-    "invalidFlagFormat": "Invalid flag format. Please use SITCON{...} format."
+    "invalidFlagFormat": "Invalid flag format. Please use our flag format."
   },
   "errors": {
     "notFound": "Page not found",
