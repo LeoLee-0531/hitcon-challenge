@@ -59,7 +59,8 @@
     "submit": "送出",
     "successMessage": "恭喜！Flag 正確！",
     "errorMessage": "Flag 錯誤，請再試一次！",
-    "validationFailed": "驗證失敗，請稍後再試！"
+    "validationFailed": "驗證失敗，請稍後再試！",
+    "submitting": "送出中..."
   },
   "errors": {
     "notFound": "找不到頁面",

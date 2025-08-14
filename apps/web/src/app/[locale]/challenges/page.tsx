@@ -1,14 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { validateFlag } from '@/data/flags';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { apiFetch } from '@/utils/apiFetch';
+import { env } from '@/config/env';
 
 // 響應式設計斷點
 const MOBILE_BREAKPOINT = 1024; // 使用標準的桌面斷點 (lg)
 
 interface Challenge {
   id: string;
+  stageId: string; // 新增：資料庫中的關卡 ID
   title: string;
   description: string;
   completed: boolean;
@@ -18,6 +23,8 @@ interface Challenge {
 
 export default function ChallengesPage() {
   const t = useTranslations('challenges');
+  const { data: session } = useSession();
+  const router = useRouter();
   const [challengesList, setChallengesList] = useState<Challenge[]>([]);
   const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(
     null
@@ -28,28 +35,96 @@ export default function ChallengesPage() {
   const [submitStatus, setSubmitStatus] = useState<
     'idle' | 'success' | 'error'
   >('idle');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // 調試環境變數
+  useEffect(() => {
+    console.log('Environment variables:');
+    console.log('NEXT_PUBLIC_API_BASE_URL:', process.env.NEXT_PUBLIC_API_BASE_URL);
+    console.log('env.API_BASE_URL:', env.API_BASE_URL);
+    console.log('NODE_ENV:', process.env.NODE_ENV);
+  }, []);
+
+  // 獲取用戶進度
+  const fetchUserProgress = useCallback(async () => {
+    if (!session?.apiToken) return;
+
+    try {
+      const response = await apiFetch(`${env.API_BASE_URL}/api/user/profile`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${session.apiToken}`,
+        },
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('User profile:', result);
+        
+        if (result.success && result.data) {
+          // 更新關卡完成狀態
+          setChallengesList(prevChallenges => 
+            prevChallenges.map((challenge) => {
+              // 檢查這個關卡是否已完成
+              const stageProgress = result.data.progress?.find(
+                (progress: any) => progress.stage_id === challenge.stageId
+              );
+              
+              const isCompleted = stageProgress?.passed || false;
+              
+              return {
+                ...challenge,
+                completed: isCompleted,
+              };
+            })
+          );
+          
+          // 更新選中的關卡狀態
+          setSelectedChallenge(prevSelected => {
+            if (!prevSelected) return null;
+            
+            const stageProgress = result.data.progress?.find(
+              (progress: any) => progress.stage_id === prevSelected.stageId
+            );
+            
+            const isCompleted = stageProgress?.passed || false;
+            
+            return {
+              ...prevSelected,
+              completed: isCompleted,
+            };
+          });
+        }
+      }
+    } catch (error) {
+      console.error('獲取用戶進度錯誤:', error);
+    }
+  }, [session?.apiToken]);
 
   // 初始化挑戰列表
   useEffect(() => {
     const challenges: Challenge[] = [
       {
         id: 'instagram',
+        stageId: '688a0306075d3123e024b691',
         title: t('instagram.title'),
         description: t('instagram.description'),
-        completed: true,
-        current: true,
+        completed: false,
+        current: false,
         link: 'https://sitcon.org/instagram',
       },
       {
         id: 'worker-recruitment',
+        stageId: '688a0306075d3123e024b68c',
         title: t('workerRecruitment.title'),
         description: t('workerRecruitment.description'),
         completed: false,
         current: false,
-        link: 'https://sitcon.org/worker-recruitment',
+        link: '/recruitment',
       },
       {
         id: 'elf-text',
+        stageId: '688a0306075d3123e024b692',
         title: t('elfText.title'),
         description: t('elfText.description'),
         completed: false,
@@ -58,14 +133,16 @@ export default function ChallengesPage() {
       },
       {
         id: 'git-leak',
+        stageId: '688a0306075d3123e024b68d',
         title: t('gitLeak.title'),
         description: t('gitLeak.description'),
         completed: false,
         current: false,
-        link: 'https://camp-git-leak-game.joingame.cc/',
+        link: 'https://camp-2025-gitleak.pages.dev/',
       },
       {
         id: 'python-jail',
+        stageId: '688a0306075d3123e024b690',
         title: t('pythonJail.title'),
         description: t('pythonJail.description'),
         completed: false,
@@ -74,17 +151,25 @@ export default function ChallengesPage() {
       },
       {
         id: 'about-sitcon',
+        stageId: '688a0306075d3123e024b68f',
         title: t('aboutSitcon.title'),
         description: t('aboutSitcon.description'),
         completed: false,
         current: false,
-        link: 'https://sitcon.org/about-sitcon',
+        link: '/about',
       },
     ];
 
     setChallengesList(challenges);
     setSelectedChallenge(challenges[0]);
   }, [t]);
+
+  // 當 session 改變時，獲取用戶進度（只在登入狀態改變時）
+  useEffect(() => {
+    if (session?.apiToken && challengesList.length > 0) {
+      fetchUserProgress();
+    }
+  }, [session?.apiToken, challengesList.length, fetchUserProgress]);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -101,41 +186,77 @@ export default function ChallengesPage() {
   const handleSubmit = async () => {
     if (!selectedChallenge) return;
 
+    // 防止重複送出
+    if (isSubmitting) return;
+
+    // 檢查用戶是否已登入
+    if (!session?.apiToken) {
+      setSubmitStatus('error');
+      setSubmitMessage('請先登入後再進行關卡驗證');
+      return;
+    }
+
     const trimmedPassword = password.trim();
 
+    // 調試信息
+    console.log('API Base URL:', env.API_BASE_URL);
+    console.log('Selected Challenge:', selectedChallenge);
+    console.log('Session:', session);
+
     try {
-      const isValid = await validateFlag(selectedChallenge.id, trimmedPassword);
+      setIsSubmitting(true);
+      // 調用後端 API 驗證關卡密碼
+      const apiUrl = `http://localhost:3001/api/stages/verify`;
+      console.log('Calling API:', apiUrl);
+      
+      const response = await apiFetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(session?.apiToken && {
+            'Authorization': `Bearer ${session.apiToken}`,
+          }),
+        },
+        body: JSON.stringify({
+          stage_id: selectedChallenge.stageId,
+          password: trimmedPassword,
+        }),
+      });
 
-      if (isValid) {
-        setSubmitStatus('success');
-        setSubmitMessage(t('successMessage'));
+      console.log('API Response:', response);
 
-        // 更新 challenges 陣列
-        const updatedChallenges = challengesList.map((challenge) =>
-          challenge.id === selectedChallenge.id
-            ? { ...challenge, completed: true }
-            : challenge
-        );
-        setChallengesList(updatedChallenges);
+      if (response.ok) {
+        const result = await response.json();
+        console.log('API Result:', result);
+        
+        if (result.success) {
+          setSubmitStatus('success');
+          setSubmitMessage(t('successMessage'));
 
-        // 更新 selectedChallenge
-        setSelectedChallenge((prev) =>
-          prev ? { ...prev, completed: true } : null
-        );
+          // 重新獲取用戶進度以更新 UI
+          await fetchUserProgress();
 
-        // 清空輸入框
-        setPassword('');
+          // 清空輸入框
+          setPassword('');
+        } else {
+          setSubmitStatus('error');
+          setSubmitMessage(result.error?.message || t('errorMessage'));
+          setPassword('');
+        }
       } else {
+        const errorData = await response.json();
+        console.log('API Error:', errorData);
         setSubmitStatus('error');
-        setSubmitMessage(t('errorMessage'));
-
-        // 清空輸入框
+        setSubmitMessage(errorData.error?.message || t('errorMessage'));
         setPassword('');
       }
     } catch (error) {
+      console.error('驗證關卡密碼錯誤:', error);
       setSubmitStatus('error');
       setSubmitMessage(t('validationFailed'));
       setPassword('');
+    } finally {
+      setIsSubmitting(false);
     }
 
     // 5秒後清除訊息
@@ -487,10 +608,8 @@ export default function ChallengesPage() {
 
             <div className="space-y-4">
               <div className="flex justify-center">
-                <a
+                <Link
                   href={selectedChallenge.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="font-medium rounded-lg flex items-center justify-center transition-colors"
                   style={{
                     width: isMobile ? '120px' : '140px',
@@ -523,62 +642,68 @@ export default function ChallengesPage() {
                     open_in_new
                   </span>
                   <span>{t('goToChallenge')}</span>
-                </a>
+                </Link>
               </div>
 
               <div className="space-y-3">
-                <input
-                  type="text"
-                  placeholder="Enter Flag: SITCON{...}"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-                      handleSubmit();
-                    }
-                  }}
-                  className="rounded-lg transition-colors custom-input"
-                  style={{
-                    width: isMobile ? 'calc(100% - 32px)' : 'min(448px, 100%)',
-                    height: isMobile ? '48px' : '56px',
-                    backgroundColor: 'rgba(23, 51, 23, 0.2)',
-                    border: '1px solid #306930',
-                    color: '#ffffff',
-                    outline: 'none',
-                    margin: '8px 16px',
-                    padding: '0 16px',
-                    borderRadius: '8px',
-                    backdropFilter: 'blur(30px) brightness(90%)',
-                    boxShadow:
-                      '0 2px 10px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-                    filter: 'brightness(90%)',
-                    fontSize: isMobile ? '14px' : '16px',
-                  }}
-                  onFocus={(e) => (e.target.style.borderColor = '#22c55e')}
-                  onBlur={(e) => (e.target.style.borderColor = '#444444')}
-                />
+                  <input
+                    type="text"
+                    placeholder="Enter Flag: SITCON{...}"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && !isSubmitting) {
+                        handleSubmit();
+                      }
+                    }}
+                    disabled={isSubmitting}
+                    className="rounded-lg transition-colors custom-input"
+                    style={{
+                      width: isMobile ? 'calc(100% - 32px)' : 'min(448px, 100%)',
+                      height: isMobile ? '48px' : '56px',
+                      backgroundColor: 'rgba(23, 51, 23, 0.2)',
+                      border: '1px solid #306930',
+                      color: '#ffffff',
+                      outline: 'none',
+                      margin: '8px 16px',
+                      padding: '0 16px',
+                      borderRadius: '8px',
+                      backdropFilter: 'blur(30px) brightness(90%)',
+                      boxShadow:
+                        '0 2px 10px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                      filter: 'brightness(90%)',
+                      fontSize: isMobile ? '14px' : '16px',
+                    }}
+                    onFocus={(e) => (e.target.style.borderColor = '#22c55e')}
+                    onBlur={(e) => (e.target.style.borderColor = '#444444')}
+                  />
 
-                <button
-                  className="font-medium rounded-lg transition-colors"
-                  style={{
-                    width: isMobile ? 'calc(100% - 32px)' : 'min(448px, 100%)',
-                    height: isMobile ? '36px' : '40px',
-                    backgroundColor: '#0DF20D',
-                    color: '#000000',
-                    border: 'none',
-                    margin: '8px 16px',
-                    fontSize: isMobile ? '14px' : '16px',
-                  }}
-                  onClick={handleSubmit}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#0BE00B';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '#0DF20D';
-                  }}
-                >
-                  {t('submit')}
-                </button>
+                  <button
+                    className="font-medium rounded-lg transition-colors"
+                    style={{
+                      width: isMobile ? 'calc(100% - 32px)' : 'min(448px, 100%)',
+                      height: isMobile ? '36px' : '40px',
+                      backgroundColor: '#0DF20D',
+                      color: '#000000',
+                      border: 'none',
+                      margin: '8px 16px',
+                      fontSize: isMobile ? '14px' : '16px',
+                      opacity: isSubmitting ? 0.6 : 1,
+                      cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                    }}
+                    onClick={() => {
+                      if (!isSubmitting) handleSubmit();
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#0BE00B';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = '#0DF20D';
+                    }}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? t('submitting') : t('submit')}
+                  </button>
               </div>
 
               {submitMessage && (
