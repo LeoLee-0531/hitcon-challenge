@@ -21,6 +21,10 @@ const config: Config = {
         danger: 'var(--danger)',
         warning: 'var(--warning)',
         success: 'var(--success)',
+        nature: {
+          10: 'var(--nature-10)',
+          99: 'var(--nature-99)',
+        },
       },
       fontFamily: {
         sans: [

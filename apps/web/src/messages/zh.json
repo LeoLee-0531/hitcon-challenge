@@ -98,6 +98,29 @@
     "networkError": "網路錯誤",
     "tryAgain": "請稍後再試"
   },
+  "admin": {
+    "scanParticipantQRCode": "掃描 QR Code",
+    "scanQRCode": "掃描 QR Code"
+  },
+  "scan": {
+    "alignQRCode": "請將參與者的 QR Code 對準掃描框",
+    "autoRedirect": "掃描成功後將自動跳轉回管理頁面",
+    "putQRCodeInFrame": "將 QR Code 放入掃描框內",
+    "ensureClear": "確保 QR Code 清晰可見，避免反光和陰影",
+    "noCameraFound": "未找到可用的相機",
+    "cameraAccessError": "無法啟動相機，請檢查權限設定",
+    "selectCamera": "選擇相機",
+    "scanAgain": "重新掃描",
+    "claimReward": "領取獎勵",
+    "resetReward": "重置兌換",
+    "claimSuccess": "兌換成功",
+    "claimFailed": "兌換失敗",
+    "confirmReset": "確定要重製兌換狀態？",
+    "resetSuccess": "重置成功",
+    "resetFailed": "重置失敗",
+    "queryFailed": "查詢失敗",
+    "apiError": "API 錯誤"
+  },
   "frontpage": {
     "title": "HITCON Challenge",
     "subtitle": "駭客挑戰，限時開啟！",

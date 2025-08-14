@@ -36,7 +36,7 @@ model Stage {
   password    String // 通關密碼
 
   title       String
-  description String
+  description String?
   externalUrl String?
   isActive Boolean @default(true)
 

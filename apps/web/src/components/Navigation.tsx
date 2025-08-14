@@ -38,6 +38,7 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // TODO: 是否可以改成在 server 端驗證是否登入在渲染
   async function loginGoogle() {
     setIsLoading(true);
     await signIn('google').finally(() => {
