@@ -1,6 +1,6 @@
-"use client";
-import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+'use client';
+import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function ScanQRCodeButton() {
   const router = useRouter();

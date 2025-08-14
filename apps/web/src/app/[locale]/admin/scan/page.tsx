@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useState, useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import React from 'react';
@@ -59,7 +59,11 @@ export default function ScanPanel() {
     setScanResult(data);
     if (html5QrCodeRef.current && isScanning) {
       html5QrCodeRef.current.stop().catch((err) => {
-        if (err && typeof err.message === 'string' && err.message.includes('scanner is not running or paused')) {
+        if (
+          err &&
+          typeof err.message === 'string' &&
+          err.message.includes('scanner is not running or paused')
+        ) {
           // 忽略此錯誤
           return;
         }
@@ -72,11 +76,14 @@ export default function ScanPanel() {
       const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
       const token = session?.apiToken || '';
       console.log('final token: ', token);
-      const res = await fetch(`${baseURL}/api/reward/status?user_id=${encodeURIComponent(data)}`, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : '',
-        },
-      });
+      const res = await fetch(
+        `${baseURL}/api/reward/status?user_id=${encodeURIComponent(data)}`,
+        {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : '',
+          },
+        }
+      );
       const result = await res.json();
       if (result.success) {
         setUserData(result.data);
@@ -95,19 +102,32 @@ export default function ScanPanel() {
 
   // Modal 元件
   // TODO: Modal 樣式優化
-  const UserModal = ({ data, onClose }: { data: any, onClose: () => void }) => (
+  const UserModal = ({ data, onClose }: { data: any; onClose: () => void }) => (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
       <div className="bg-[#181c18] rounded-lg p-8 w-[90vw] max-w-md shadow-lg relative">
         <button
           className="absolute top-2 right-2 text-gray-400 hover:text-white text-xl"
           onClick={onClose}
-        >×</button>
+        >
+          ×
+        </button>
         <div className="space-y-2 text-white">
-          <div><span className="text-gray-400">名稱:</span> {data.name ?? '未提供'}</div>
-          <div><span className="text-gray-400">通過關卡數:</span> {data.passed_count}</div>
-          <div><span className="text-gray-400">已領獎:</span> {data.reward_claimed ? '是' : '否'}</div>
+          <div>
+            <span className="text-gray-400">名稱:</span> {data.name ?? '未提供'}
+          </div>
+          <div>
+            <span className="text-gray-400">通過關卡數:</span>{' '}
+            {data.passed_count}
+          </div>
+          <div>
+            <span className="text-gray-400">已領獎:</span>{' '}
+            {data.reward_claimed ? '是' : '否'}
+          </div>
           {data.claimed_at && (
-            <div><span className="text-gray-400">領獎時間:</span> {new Date(data.claimed_at).toLocaleString()}</div>
+            <div>
+              <span className="text-gray-400">領獎時間:</span>{' '}
+              {new Date(data.claimed_at).toLocaleString()}
+            </div>
           )}
         </div>
         <div className="mt-6 flex flex-col gap-2 items-center">
@@ -141,7 +161,9 @@ export default function ScanPanel() {
                   console.error(err);
                 }
               }}
-            >{t('claimReward')}</button>
+            >
+              {t('claimReward')}
+            </button>
           ) : (
             <button
               className="bg-[#F20D0D] text-white px-4 py-2 rounded hover:bg-[#e80b0b] w-full border-2 border-[#F20D0D]"
@@ -172,7 +194,9 @@ export default function ScanPanel() {
                   console.error(err);
                 }
               }}
-            >{t("resetReward")}</button>
+            >
+              {t('resetReward')}
+            </button>
           )}
           <button
             className="bg-[#0DF20D] text-black px-4 py-2 rounded hover:bg-[#0be80b] w-full"
@@ -181,7 +205,9 @@ export default function ScanPanel() {
               setUserData(null);
               handleRestart();
             }}
-          >{t('scanAgain')}</button>
+          >
+            {t('scanAgain')}
+          </button>
         </div>
       </div>
     </div>
@@ -215,7 +241,7 @@ export default function ScanPanel() {
           disableFlip: false,
         },
         handleScanSuccess,
-        () => { }
+        () => {}
       );
       setIsScanning(true);
     } catch (err: any) {
@@ -266,20 +292,26 @@ export default function ScanPanel() {
           <div className="text-gray-400 text-sm">{t('autoRedirect')}</div>
           {/* 相機權限/存取失敗提示 */}
           {!isScanning && !scanResult && (
-            <div className="text-red-400 text-sm mt-2">{t('cameraAccessError')}</div>
+            <div className="text-red-400 text-sm mt-2">
+              {t('cameraAccessError')}
+            </div>
           )}
           {/* 攝像頭選擇下拉選單 */}
           {cameras.length > 0 && (
             <div className="mt-4 flex flex-col items-center">
-              <label htmlFor="camera-select" className="text-gray-400 mb-1">{t('selectCamera')}</label>
+              <label htmlFor="camera-select" className="text-gray-400 mb-1">
+                {t('selectCamera')}
+              </label>
               <select
                 id="camera-select"
                 className="bg-[#181c18] text-white border border-[#0DF20D] rounded px-2 py-1"
                 value={selectedCameraId || ''}
-                onChange={e => setSelectedCameraId(e.target.value)}
+                onChange={(e) => setSelectedCameraId(e.target.value)}
               >
-                {cameras.map(cam => (
-                  <option key={cam.id} value={cam.id}>{cam.label || cam.id}</option>
+                {cameras.map((cam) => (
+                  <option key={cam.id} value={cam.id}>
+                    {cam.label || cam.id}
+                  </option>
                 ))}
               </select>
             </div>
@@ -294,7 +326,11 @@ export default function ScanPanel() {
           <div className="relative flex flex-col items-center">
             {/* 掃描器容器 */}
             <div className="relative overflow-hidden rounded-lg border-2 border-[#0DF20D] w-[300px] h-[300px] md:w-[400px] md:h-[400px] aspect-square">
-              <div id="qr-reader" ref={scannerRef} className="w-full h-full aspect-square" />
+              <div
+                id="qr-reader"
+                ref={scannerRef}
+                className="w-full h-full aspect-square"
+              />
 
               {/* 隱藏 html5-qrcode 的內建掃描框，保持相機正常亮度 */}
               <style jsx>{`
@@ -307,8 +343,7 @@ export default function ScanPanel() {
                 }
                 /* 隱藏內建的白色掃描框 */
                 #qr-reader div[style*='border: 2px solid white'],
-                #qr-reader
-                  div[style*='border: 2px solid rgb(255, 255, 255)'] {
+                #qr-reader div[style*='border: 2px solid rgb(255, 255, 255)'] {
                   display: none !important;
                 }
               `}</style>
@@ -337,7 +372,14 @@ export default function ScanPanel() {
         </div>
         {/* Modal 顯示使用者資料 */}
         {showModal && userData && (
-          <UserModal data={userData} onClose={() => { setShowModal(false); setUserData(null); handleRestart(); }} />
+          <UserModal
+            data={userData}
+            onClose={() => {
+              setShowModal(false);
+              setUserData(null);
+              handleRestart();
+            }}
+          />
         )}
       </main>
     </>
