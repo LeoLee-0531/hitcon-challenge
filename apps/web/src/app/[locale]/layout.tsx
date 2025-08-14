@@ -15,19 +15,22 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
 
+  // 根據語言設置標題和描述
+  const isChinese = locale === 'zh';
+
   return {
     title: {
-      default: 'HITCON Challenge',
-      template: '%s | HITCON Challenge',
+      default: isChinese ? 'HITCON 挑戰賽' : 'HITCON Challenge',
+      template: isChinese ? '%s | HITCON 挑戰賽' : '%s | HITCON Challenge',
     },
-    description: 'Security Challenge Platform',
+    description: isChinese ? '資安挑戰平台' : 'Security Challenge Platform',
     keywords: ['security', 'hacking', 'CTF', 'cybersecurity', 'challenge'],
     openGraph: {
       type: 'website',
       locale: locale === 'zh' ? 'zh_TW' : 'en_US',
-      title: 'HITCON Challenge',
-      description: 'Security Challenge Platform',
-      siteName: 'HITCON Challenge',
+      title: isChinese ? 'HITCON 挑戰賽' : 'HITCON Challenge',
+      description: isChinese ? '資安挑戰平台' : 'Security Challenge Platform',
+      siteName: isChinese ? 'HITCON 挑戰賽' : 'HITCON Challenge',
     },
     robots: {
       index: true,
@@ -67,9 +70,6 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <Navigation />
           <main className="flex-1">{children}</main>
-
-          {/* Footer - 條件性顯示 */}
-          {/* <ConditionalFooter /> */}
         </NextIntlClientProvider>
       </div>
     </SessionProvider>

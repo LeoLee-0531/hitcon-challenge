@@ -1,10 +1,13 @@
 'use client';
 
+import { useState } from 'react';
 import { SquareArrowOutUpRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import '@/styles/components/Challenges.css';
 
 interface Challenge {
   id: string;
-  stageId: string; // 新增：資料庫中的關卡 ID
+  stageId: string; // New: stage ID in database
   title: string;
   description: string;
   completed: boolean;
@@ -13,26 +16,49 @@ interface Challenge {
 }
 
 interface ChallengeMainProps {
-  selectedChallenge: Challenge;
+  selectedChallenge: Challenge | null;
+  isMobile: boolean;
   password: string;
   setPassword: (password: string) => void;
   handleSubmit: () => void;
-  isMobile: boolean;
+  isSubmitting: boolean;
   submitMessage: string;
   submitStatus: 'idle' | 'success' | 'error';
-  isSubmitting: boolean;
 }
 
 export default function ChallengeMain({
   selectedChallenge,
+  isMobile,
   password,
   setPassword,
   handleSubmit,
-  isMobile,
+  isSubmitting,
   submitMessage,
   submitStatus,
-  isSubmitting,
 }: ChallengeMainProps) {
+  const t = useTranslations('challenges');
+
+  if (!selectedChallenge) {
+    return (
+      <div
+        className="challenge-glass-container"
+        style={{
+          width: isMobile ? 'calc(100% - 32px)' : '',
+          height: isMobile ? 'auto' : '',
+          minHeight: isMobile ? '350px' : '',
+          padding: isMobile ? '24px 16px' : '',
+        }}
+      >
+        <div
+          className="font-bold title"
+          style={{ fontSize: isMobile ? '20px' : '' }}
+        >
+          {t('selectChallenge')}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className="challenge-glass-container"
@@ -70,13 +96,13 @@ export default function ChallengeMain({
       >
         <div className="goto-span">
           <SquareArrowOutUpRight className="h-5" />
-          <span>前往關卡</span>
+          <span>{t('goToChallenge')}</span>
         </div>
       </a>
 
       <input
         type="text"
-        placeholder="輸入 Flag : SITCON{...}"
+        placeholder={'Enter Flag: SITCON{...}'}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
@@ -101,7 +127,7 @@ export default function ChallengeMain({
           padding: isMobile ? '8px 16px' : '',
         }}
       >
-        {isSubmitting ? '送出中...' : '送出'}
+        {isSubmitting ? t('submitting') : t('submit')}
       </button>
 
       {submitMessage && (
