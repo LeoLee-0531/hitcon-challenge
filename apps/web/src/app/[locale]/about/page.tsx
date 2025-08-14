@@ -21,11 +21,13 @@ export default function AboutSITCONPage() {
                 rel="noopener noreferrer"
                 className="w-9 h-9 sm:w-10 sm:h-10 lg:w-13 lg:h-13 flex items-center justify-center rounded-full bg-[#0DF20D] shadow hover:opacity-80 transition"
               >
-                <img
-                  src="/hyperlink.png"
-                  alt={t('linkAlt')}
-                  className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8"
-                />
+                <svg
+                  className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 fill-current"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z" />
+                </svg>
               </a>
             </div>
             <span className="block mt-1 text-xl text-[#ACD997] font-medium">

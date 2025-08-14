@@ -63,7 +63,7 @@
     },
     "workerRecruitment": {
       "title": "SITCON 工人招募",
-      "description": "每個工作組別好像都很重要呢！\nSITCON 星人好像留了什麼訊息...\n! flag 內的英文字母都是大寫 !"
+      "description": "每個工作組別好像都很重要呢！\nSITCON 星人好像留了什麼訊息...\n! flag 內出現的英文字母都是小寫 !"
     },
     "elfText": {
       "title": "精靈文 @攤位",
@@ -98,6 +98,13 @@
     "networkError": "網路錯誤",
     "tryAgain": "請稍後再試"
   },
+  "frontpage": {
+    "title": "HITCON Challenge",
+    "subtitle": "駭客挑戰，限時開啟！",
+    "description": "挑戰 6 道關卡，贏得 SITCON 限定好禮！",
+    "location": "中央研究院 人文社會科學館區",
+    "con": "挑戰 6 道關卡，贏得 SITCON 限定好禮！"
+  },
   "about": {
     "title": "📢 SITCON 2026",
     "linkAlt": "SITCON 2026 連結",
@@ -116,29 +123,116 @@
     "joinDesc2": " 上討論。如果你有興趣參與，歡迎訂閱 SITCON 的郵件論壇並貢獻你的想法； 如果想成為明年年會的籌備團隊，可以查看 SITCON 工人招募頁面！",
     "joinDesc3": "若你想進一步了解 SITCON 年會籌備與討論內容，歡迎到 ",
     "joinDesc4": " 上查看 SITCON 2026 的籌備歷程。",
-    "footerNote": "＊這行文字內容好像被塞了些什麼神奇的東西"
+    "footerNote": "＊這行文字內容好像被塞了些什麼󠀁󠁓󠁉󠁔󠁃󠁏󠁎󠁻󠁗󠀰󠁷󠁟󠁌󠁌󠁍󠁟󠁣󠀴󠁮󠁟󠁓󠀳󠁥󠁟󠀷󠁨󠀱󠁳󠁽󠁿神奇的東西"
   },
   "recruitment": {
-    "title": "SITCON 2026\n工作人員招募資訊",
-    "subtitle": "歡迎加入籌備團隊！下方表格含截止日期、招募名額、表單連結與工作內容。",
+    "title": "SITCON 2026<br />工作人員招募資訊",
+    "subtitle": "歡迎加入籌備團隊！下表包含截止日期、招募人數、表單連結及工作內容。",
     "formBtn": "報名表單",
     "headcount": "招募人數",
     "duties": "工作內容",
-    "preferred": "推薦條件",
+    "preferred": "優先條件",
     "process": "招募流程",
-    "techStack": "技術 / 工具",
+    "techStack": "技術/工具",
     "notes": "備註",
     "colTeam": "組別",
     "colDeadline": "截止日期",
     "colHeadcount": "招募人數",
     "colDuties": "工作內容",
-    "colOthers": "推薦條件 / 流程 / 技術"
-  },
-  "frontpage": {
-    "title": "HITCON Challenge",
-    "subtitle": "駭客挑戰，限時開啟！",
-    "description": "挑戰七道關卡，贏得 SITCON 限定好禮！",
-    "location": "中央研究院 人文社會科學館區",
-    "con": "挑戰七道關卡，贏得 SITCON 限定好禮！"
+    "colOthers": "優先條件/流程/技術",
+    "noData": "—",
+    "teams": {
+      "logistics": {
+        "name": "場務組",
+        "headcount": "餐飲股 6人 機動股 25人 報到股 8人 物流股 2人",
+        "duties": [
+          "餐飲股：餐飲的訂購和運送",
+          "機動股：在其他股/組人力不足時協助",
+          "報到股：報到處門票的檢驗和東西發放",
+          "物流股：物品於會場和倉庫間的流動"
+        ],
+        "preferred": [
+          "場務組主要負責年會當天場地相關事務，只需有足夠熱忱和遇到突發情況的判斷能力，是 SITCON 工人入門門檻較低、且收人數最多的組別，非常歡迎新人加入！"
+        ],
+        "process": [],
+        "techStack": [],
+        "notes": ["* 實際工作內容依不同股別略有差異"]
+      },
+      "marketing": {
+        "name": "行銷組",
+        "headcount": "8 人",
+        "duties": [
+          "撰寫贊助提案",
+          "聯絡廠商與媒體",
+          "年會當日協助贊助商與媒體接待"
+        ],
+        "preferred": ["對行銷與商務往來有興趣", "擅長寫 Email、喜歡溝通與談判"],
+        "process": [],
+        "techStack": [],
+        "notes": []
+      },
+      "design": {
+        "name": "設計組",
+        "headcount": "10 人",
+        "duties": [
+          "年會主視覺、週邊等平面設計",
+          "製作動畫與社群圖像",
+          "與場務、開發、編輯密切合作設計需求"
+        ],
+        "preferred": [
+          "會使用 Illustrator / Figma / Photoshop 等設計軟體",
+          "有作品集尤佳"
+        ],
+        "process": [
+          "即日起 ~ 8/16（六） 報名截止",
+          "8/17（日）~ 8/19（二） 書審",
+          "8/20（三）前寄送通過 / 未通過信件",
+          "8/21（四）~ 8/28（四）面試",
+          "8/30（六）前寄送錄取 / 未錄取信件"
+        ],
+        "techStack": [],
+        "notes": []
+      },
+      "dev": {
+        "name": "開發組",
+        "headcount": "約 3 人",
+        "duties": [
+          "官網、CFP 系統、大地遊戲系統開發",
+          "使用技術（舉例）：HTML / CSS / JS；可能會用到：Astro、Fastify、Three.js、Figma"
+        ],
+        "preferred": [
+          "熟悉 Web 開發（不只能下 prompt，願意理解背後邏輯）",
+          "熟悉 Git 協作",
+          "願意投入時間精力一起幹大事"
+        ],
+        "process": [],
+        "techStack": [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "Astro",
+          "Fastify",
+          "Three.js",
+          "Figma"
+        ],
+        "notes": []
+      },
+      "record": {
+        "name": "紀錄組",
+        "headcount": "10 人",
+        "duties": [
+          "年會當天拍攝議程、互動、攤位等",
+          "活動前參與培訓，後期協助修圖與整理"
+        ],
+        "preferred": [
+          "有攝影經驗與基礎器材",
+          "具備構圖與調色概念",
+          "會使用 Lightroom / Photoshop 或剪輯軟體者尤佳"
+        ],
+        "process": [],
+        "techStack": [],
+        "notes": []
+      }
+    }
   }
 }
