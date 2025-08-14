@@ -165,9 +165,9 @@ function FooterSubMenuGrid({
   return (
     <ul>
       <p className="mb-4 font-bold">{title}</p>
-      <ul className="flex flex-row flex-nowrap gap-3 text-center max-[1050px]:flex-col max-[1050px]:gap-1">
+      <ul className="flex flex-row flex-nowrap gap-3 text-center max-[1150px]:flex-col max-[1150px]:gap-1">
         <li>
-          <ul className="flex flex-row flex-nowrap gap-3 text-center text-[14px] max-[1050px]:justify-between">
+          <ul className="flex flex-row flex-nowrap gap-3 text-center text-[14px] max-[1150px]:justify-between">
             {firstRow.map((link) => (
               <li key={link.href}>
                 <a
@@ -182,7 +182,7 @@ function FooterSubMenuGrid({
           </ul>
         </li>
         <li>
-          <ul className="flex flex-row flex-nowrap gap-3 text-center text-[14px] max-[1050px]:justify-between">
+          <ul className="flex flex-row flex-nowrap gap-3 text-center text-[14px] max-[1150px]:justify-between">
             {secondRow.map((link) => (
               <li key={link.href}>
                 <a

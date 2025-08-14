@@ -31,6 +31,7 @@ export default function Home() {
         <Banner isMobile={isMobile} />
         <EventDescription isMobile={isMobile} />
         <RewardDescription isMobile={isMobile} />
+        <div className="py-20"></div>
       </div>
     </>
   );

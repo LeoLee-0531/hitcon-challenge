@@ -2,10 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import '@/styles/components/FrontPage.css';
-import {
-  MapPin,
-  Calendar,
-} from "lucide-react";
+import { MapPin, Calendar } from 'lucide-react';
 
 interface HeroSectionProps {
   isMobile: boolean;

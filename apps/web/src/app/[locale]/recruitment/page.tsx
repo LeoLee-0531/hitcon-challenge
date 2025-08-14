@@ -1,6 +1,7 @@
 // app/recruit/page.tsx
 import React from 'react';
 import Link from 'next/link';
+import BaseFooter from '@/components/BaseFooter';
 import { useTranslations } from 'next-intl';
 
 type Team = {
@@ -70,203 +71,209 @@ export default function RecruitPage() {
   };
 
   return (
-    <div className="grid grid-cols-12">
-      <div className="xl:col-span-2 col-span-1" />
-      <div className="xl:col-span-8 col-span-10">
-        <main
-          id="top"
-          className="min-h-screen w-full bg-[#121712] text-white my-12"
-        >
-          <div className="mx-auto max-w-6xl px-4 py-8 mb-8">
-            {/* Header */}
-            <header className="mb-8 py-15 text-center">
-              <h1
-                className="text-3xl sm:text-4xl md:text-4.5xl font-bold"
-                dangerouslySetInnerHTML={{ __html: t('title') }}
-              />
-              <p className="mt-2 text-sm text-emerald-300/80">
-                {t('subtitle')}
-              </p>
-            </header>
+    <>
+      <div className="grid grid-cols-12">
+        <div className="xl:col-span-2 col-span-1" />
+        <div className="xl:col-span-8 col-span-10">
+          <main
+            id="top"
+            className="min-h-screen w-full bg-[#121712] text-white my-12"
+          >
+            <div className="mx-auto max-w-6xl px-4 py-8 mb-8">
+              {/* Header */}
+              <header className="mb-8 py-15 text-center">
+                <h1
+                  className="text-3xl sm:text-4xl md:text-4.5xl font-bold"
+                  dangerouslySetInnerHTML={{ __html: t('title') }}
+                />
+                <p className="mt-2 text-sm text-emerald-300/80">
+                  {t('subtitle')}
+                </p>
+              </header>
 
-            {/* Cards (mobile) */}
-            <section className="md:hidden space-y-4">
-              {TEAMS.map((team) => {
-                const teamInfo = getTeamInfo(team.id);
-                return (
-                  <article
-                    key={team.id}
-                    className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-2">
-                        <h2 className="text-lg font-semibold">
-                          {teamInfo.name}
-                        </h2>
+              {/* Cards (mobile) */}
+              <section className="md:hidden space-y-4">
+                {TEAMS.map((team) => {
+                  const teamInfo = getTeamInfo(team.id);
+                  return (
+                    <article
+                      key={team.id}
+                      className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur"
+                    >
+                      <div className="flex items-start justify-between gap-3">
                         <div className="flex items-center gap-2">
-                          {team.dancingManImgs && (
-                            <div className="flex">
-                              {team.dancingManImgs.map((src, idx) => (
-                                <img
-                                  key={idx}
-                                  src={src}
-                                  alt={`dancingMan-${team.id}-${idx}`}
-                                  className="h-6 object-contain rounded-md bg-black/10"
-                                />
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="flex items-start justify-between gap-1">
-                        <Badge>{team.deadline}</Badge>
-                        <ExternalLink href={team.formUrl}>
-                          {t('formBtn')}
-                        </ExternalLink>
-                      </div>
-                    </div>
-
-                    <div className="mt-3 grid grid-cols-1 gap-2">
-                      {teamInfo.headcount && (
-                        <Row label={t('headcount')}>
-                          <span className="text-gray-200">
-                            {teamInfo.headcount}
-                          </span>
-                        </Row>
-                      )}
-
-                      <Row label={t('duties')}>
-                        <BulletList items={teamInfo.duties} />
-                      </Row>
-
-                      {teamInfo.preferred && teamInfo.preferred.length > 0 && (
-                        <Row label={t('preferred')}>
-                          <BulletList items={teamInfo.preferred} />
-                        </Row>
-                      )}
-
-                      {teamInfo.process && teamInfo.process.length > 0 && (
-                        <Row label={t('process')}>
-                          <BulletList items={teamInfo.process} />
-                        </Row>
-                      )}
-
-                      {teamInfo.techStack && teamInfo.techStack.length > 0 && (
-                        <Row label={t('techStack')}>
-                          <TagList items={teamInfo.techStack} />
-                        </Row>
-                      )}
-
-                      {teamInfo.notes && teamInfo.notes.length > 0 && (
-                        <Row label={t('notes')}>
-                          <BulletList items={teamInfo.notes} />
-                        </Row>
-                      )}
-                    </div>
-                  </article>
-                );
-              })}
-            </section>
-
-            {/* Table (md+) */}
-            <section className="hidden md:block">
-              <div className="overflow-hidden rounded-xl border border-white/10">
-                <table className="w-full border-collapse">
-                  <thead className="bg-emerald-900/30">
-                    <tr>
-                      <Th className="w-[80px]">{t('colTeam')}</Th>
-                      <Th className="w-[100px]">{t('colDeadline')}</Th>
-                      <Th className="w-[110px]">{t('colHeadcount')}</Th>
-                      <Th>{t('colDuties')}</Th>
-                      <Th>{t('colOthers')}</Th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-white/10">
-                    {TEAMS.map((team, idx) => {
-                      const teamInfo = getTeamInfo(team.id);
-                      return (
-                        <tr
-                          key={team.id}
-                          className={
-                            idx % 2 === 0 ? 'bg-white/0' : 'bg-white/[0.03]'
-                          }
-                        >
-                          <Td>
-                            <div className="font-semibold">{teamInfo.name}</div>
-                            {/* dancingMan 圖片 */}
+                          <h2 className="text-lg font-semibold">
+                            {teamInfo.name}
+                          </h2>
+                          <div className="flex items-center gap-2">
                             {team.dancingManImgs && (
-                              <div className="flex mt-2 justify-center">
+                              <div className="flex">
                                 {team.dancingManImgs.map((src, idx) => (
                                   <img
                                     key={idx}
                                     src={src}
                                     alt={`dancingMan-${team.id}-${idx}`}
-                                    className="h-5 object-contain rounded-md bg-black/10"
+                                    className="h-6 object-contain rounded-md bg-black/10"
                                   />
                                 ))}
                               </div>
                             )}
-                          </Td>
-                          <Td>
-                            <div className="flex flex-col gap-2">
-                              <Badge>{team.deadline}</Badge>
-                              <ExternalLink href={team.formUrl}>
-                                {t('formBtn')}
-                              </ExternalLink>
-                            </div>
-                          </Td>
-                          <Td>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start justify-between gap-1">
+                          <Badge>{team.deadline}</Badge>
+                          <ExternalLink href={team.formUrl}>
+                            {t('formBtn')}
+                          </ExternalLink>
+                        </div>
+                      </div>
+
+                      <div className="mt-3 grid grid-cols-1 gap-2">
+                        {teamInfo.headcount && (
+                          <Row label={t('headcount')}>
                             <span className="text-gray-200">
-                              {teamInfo.headcount ?? t('noData')}
+                              {teamInfo.headcount}
                             </span>
-                          </Td>
-                          <Td>
-                            <BulletList items={teamInfo.duties} />
-                          </Td>
-                          <Td>
-                            <div className="space-y-3">
-                              {teamInfo.preferred &&
-                                teamInfo.preferred.length > 0 && (
-                                  <section>
-                                    <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
-                                      {t('preferred')}
-                                    </h4>
-                                    <BulletList items={teamInfo.preferred} />
-                                  </section>
-                                )}
-                              {teamInfo.process &&
-                                teamInfo.process.length > 0 && (
-                                  <section>
-                                    <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
-                                      {t('process')}
-                                    </h4>
-                                    <BulletList items={teamInfo.process} />
-                                  </section>
-                                )}
-                              {teamInfo.techStack &&
-                                teamInfo.techStack.length > 0 && (
-                                  <section>
-                                    <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
-                                      {t('techStack')}
-                                    </h4>
-                                    <TagList items={teamInfo.techStack} />
-                                  </section>
-                                )}
-                            </div>
-                          </Td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </section>
-          </div>
-        </main>
+                          </Row>
+                        )}
+
+                        <Row label={t('duties')}>
+                          <BulletList items={teamInfo.duties} />
+                        </Row>
+
+                        {teamInfo.preferred &&
+                          teamInfo.preferred.length > 0 && (
+                            <Row label={t('preferred')}>
+                              <BulletList items={teamInfo.preferred} />
+                            </Row>
+                          )}
+
+                        {teamInfo.process && teamInfo.process.length > 0 && (
+                          <Row label={t('process')}>
+                            <BulletList items={teamInfo.process} />
+                          </Row>
+                        )}
+
+                        {teamInfo.techStack &&
+                          teamInfo.techStack.length > 0 && (
+                            <Row label={t('techStack')}>
+                              <TagList items={teamInfo.techStack} />
+                            </Row>
+                          )}
+
+                        {teamInfo.notes && teamInfo.notes.length > 0 && (
+                          <Row label={t('notes')}>
+                            <BulletList items={teamInfo.notes} />
+                          </Row>
+                        )}
+                      </div>
+                    </article>
+                  );
+                })}
+              </section>
+
+              {/* Table (md+) */}
+              <section className="hidden md:block">
+                <div className="overflow-hidden rounded-xl border border-white/10">
+                  <table className="w-full border-collapse">
+                    <thead className="bg-emerald-900/30">
+                      <tr>
+                        <Th className="w-[80px]">{t('colTeam')}</Th>
+                        <Th className="w-[100px]">{t('colDeadline')}</Th>
+                        <Th className="w-[110px]">{t('colHeadcount')}</Th>
+                        <Th>{t('colDuties')}</Th>
+                        <Th>{t('colOthers')}</Th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/10">
+                      {TEAMS.map((team, idx) => {
+                        const teamInfo = getTeamInfo(team.id);
+                        return (
+                          <tr
+                            key={team.id}
+                            className={
+                              idx % 2 === 0 ? 'bg-white/0' : 'bg-white/[0.03]'
+                            }
+                          >
+                            <Td>
+                              <div className="font-semibold">
+                                {teamInfo.name}
+                              </div>
+                              {/* dancingMan 圖片 */}
+                              {team.dancingManImgs && (
+                                <div className="flex mt-2 justify-center">
+                                  {team.dancingManImgs.map((src, idx) => (
+                                    <img
+                                      key={idx}
+                                      src={src}
+                                      alt={`dancingMan-${team.id}-${idx}`}
+                                      className="h-5 object-contain rounded-md bg-black/10"
+                                    />
+                                  ))}
+                                </div>
+                              )}
+                            </Td>
+                            <Td>
+                              <div className="flex flex-col gap-2">
+                                <Badge>{team.deadline}</Badge>
+                                <ExternalLink href={team.formUrl}>
+                                  {t('formBtn')}
+                                </ExternalLink>
+                              </div>
+                            </Td>
+                            <Td>
+                              <span className="text-gray-200">
+                                {teamInfo.headcount ?? t('noData')}
+                              </span>
+                            </Td>
+                            <Td>
+                              <BulletList items={teamInfo.duties} />
+                            </Td>
+                            <Td>
+                              <div className="space-y-3">
+                                {teamInfo.preferred &&
+                                  teamInfo.preferred.length > 0 && (
+                                    <section>
+                                      <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
+                                        {t('preferred')}
+                                      </h4>
+                                      <BulletList items={teamInfo.preferred} />
+                                    </section>
+                                  )}
+                                {teamInfo.process &&
+                                  teamInfo.process.length > 0 && (
+                                    <section>
+                                      <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
+                                        {t('process')}
+                                      </h4>
+                                      <BulletList items={teamInfo.process} />
+                                    </section>
+                                  )}
+                                {teamInfo.techStack &&
+                                  teamInfo.techStack.length > 0 && (
+                                    <section>
+                                      <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
+                                        {t('techStack')}
+                                      </h4>
+                                      <TagList items={teamInfo.techStack} />
+                                    </section>
+                                  )}
+                              </div>
+                            </Td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+          </main>
+        </div>
       </div>
-      <div className="xl:col-span-2 col-span-1" />
-    </div>
+      <BaseFooter />
+    </>
   );
 }
 

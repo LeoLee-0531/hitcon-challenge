@@ -13,7 +13,7 @@ import {
   Zap,
   Brain,
   Smartphone,
-} from "lucide-react";
+} from 'lucide-react';
 interface EventDescriptionProps {
   isMobile: boolean;
 }
