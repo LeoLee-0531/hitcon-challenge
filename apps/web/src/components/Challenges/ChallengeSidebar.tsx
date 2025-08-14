@@ -1,6 +1,4 @@
 'use client';
-import { CircleCheck } from 'lucide-react';
-import { Circle } from 'lucide-react';
 
 import { useState } from 'react';
 

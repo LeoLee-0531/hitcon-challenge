@@ -3,18 +3,8 @@
 import { useTranslations } from 'next-intl';
 import '@/styles/components/FrontPage.css';
 import {
-  Menu,
-  X,
-  User,
   MapPin,
   Calendar,
-  Users,
-  Trophy,
-  ExternalLink,
-  Shield,
-  Zap,
-  Brain,
-  Smartphone,
 } from "lucide-react";
 
 interface HeroSectionProps {
