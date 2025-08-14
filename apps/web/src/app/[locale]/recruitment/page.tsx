@@ -164,7 +164,7 @@ export default function RecruitPage() {
                               <img
                                 key={idx}
                                 src={src}
-                                alt={`dancingMan-${team.id}-${idx}`}
+                                alt={`Dancing man mascot for ${team.name}`}
                                 className="h-6 object-contain rounded-md bg-black/10"
                               />
                             ))}
@@ -250,7 +250,7 @@ export default function RecruitPage() {
                                 <img
                                   key={idx}
                                   src={src}
-                                  alt={`dancingMan-${team.id}-${idx}`}
+                                  alt={`Dancing man icon for ${team.name}`}
                                   className="h-5 object-contain rounded-md bg-black/10"
                                 />
                               ))}
