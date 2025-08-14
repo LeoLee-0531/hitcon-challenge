@@ -179,7 +179,7 @@ export default function ChallengesPage() {
         description: t('pythonJail.description'),
         completed: false,
         current: false,
-        link: 'https://camp-python-jail-game.joingame.cc/',
+        link: 'https://very-nice-python-jail-game.nelsongx.me/',
       },
       {
         id: 'about-sitcon',
