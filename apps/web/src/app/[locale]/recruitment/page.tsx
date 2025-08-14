@@ -155,7 +155,7 @@ export default function RecruitPage() {
                                 key={idx}
                                 src={src}
                                 alt={`dancingMan-${team.id}-${idx}`}
-                                className="h-7 object-contain rounded-md bg-black/10"
+                                className="h-6 object-contain rounded-md bg-black/10"
                               />
                             ))}
                           </div>
@@ -163,7 +163,7 @@ export default function RecruitPage() {
                       </div>
                     </div>
 
-                    <div>
+                    <div className="flex items-start justify-between gap-1">
                       <Badge>{team.deadline}</Badge>
                       <ExternalLink href={team.formUrl}>{t('formBtn')}</ExternalLink>
                     </div>
@@ -206,14 +206,6 @@ export default function RecruitPage() {
                   </div>
                 </article>
               ))}
-              <div className="mt-6 text-center">
-                <Link
-                  href="#top"
-                  className="text-sm text-emerald-300 hover:text-emerald-200 underline underline-offset-2"
-                >
-                  {t('backToTop')}
-                </Link>
-              </div>
             </section>
 
             {/* Table (md+) */}
@@ -340,7 +332,7 @@ function Td({
 
 function Badge({ children }: React.PropsWithChildren) {
   return (
-    <span className="inline-flex items-center rounded-md bg-emerald-500/20 px-2 py-1 text-xs font-medium text-emerald-200 ring-1 ring-inset ring-emerald-400/30">
+    <span className="inline-flex items-center rounded-md bg-emerald-500/20 px-2 py-1 text-sm font-medium text-emerald-200 ring-1 ring-inset ring-emerald-400/30">
       {children}
     </span>
   );
