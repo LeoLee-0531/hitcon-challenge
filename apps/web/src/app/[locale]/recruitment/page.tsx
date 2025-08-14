@@ -8,12 +8,12 @@ type Team = {
   deadline: string;
   headcount?: string;
   formUrl: string;
-  description?: string;
   duties: string[];
   preferred?: string[];
   process?: string[];
   techStack?: string[]; // 給「開發組」的技術清單
   notes?: string[];
+  dancingManImgs?: string[];
 };
 
 const TEAMS: Team[] = [
@@ -34,6 +34,7 @@ const TEAMS: Team[] = [
       '場務組主要負責年會當天場地相關事務，只需有足夠熱忱和遇到突發情況的判斷能力，是 SITCON 工人入門門檻較低、且收人數最多的組別，非常歡迎新人加入！',
     ],
     notes: ['* 實際工作內容依不同股別略有差異'],
+    dancingManImgs: ['/dancingMan/11.png', '/dancingMan/12.png', '/dancingMan/13.png', '/dancingMan/14.png'],
   },
   {
     id: 'marketing',
@@ -43,6 +44,7 @@ const TEAMS: Team[] = [
     formUrl: 'https://forms.gle/qkao1Xc4VfSqWrft6',
     duties: ['撰寫贊助提案', '聯絡廠商與媒體', '年會當日協助贊助商與媒體接待'],
     preferred: ['對行銷與商務往來有興趣', '擅長寫 Email、喜歡溝通與談判'],
+    dancingManImgs: ['/dancingMan/21.png', '/dancingMan/22.png'],
   },
   {
     id: 'design',
@@ -66,6 +68,7 @@ const TEAMS: Team[] = [
       '8/21（四）~ 8/28（四）面試',
       '8/30（六）前寄送錄取 / 未錄取信件',
     ],
+    dancingManImgs: ['/dancingMan/31.png', '/dancingMan/32.png', '/dancingMan/33.png', '/dancingMan/34.png'],
   },
   {
     id: 'dev',
@@ -91,6 +94,7 @@ const TEAMS: Team[] = [
       'Three.js',
       'Figma',
     ],
+    dancingManImgs: ['/dancingMan/41.png', '/dancingMan/42.png'],
   },
   {
     id: 'record',
@@ -107,6 +111,7 @@ const TEAMS: Team[] = [
       '具備構圖與調色概念',
       '會使用 Lightroom / Photoshop 或剪輯軟體者尤佳',
     ],
+    dancingManImgs: ['/dancingMan/0300_2s.png'],
   },
 ];
 
@@ -139,7 +144,24 @@ export default function RecruitPage() {
                   className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur"
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <h2 className="text-lg font-semibold">{t.name}</h2>
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-lg font-semibold">{t.name}</h2>
+                      <div className="flex items-center gap-2">
+                        {t.dancingManImgs && (
+                          <div className="flex">
+                            {t.dancingManImgs.map((src, idx) => (
+                              <img
+                                key={idx}
+                                src={src}
+                                alt={`dancingMan-${t.id}-${idx}`}
+                                className="h-7 object-contain rounded-md bg-black/10"
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
                     <div>
                       <Badge>{t.deadline}</Badge>
                       <ExternalLink href={t.formUrl}>{'報名表單'}</ExternalLink>
@@ -216,6 +238,19 @@ export default function RecruitPage() {
                       >
                         <Td>
                           <div className="font-semibold">{t.name}</div>
+                          {/* dancingMan 圖片 */}
+                          {t.dancingManImgs && (
+                            <div className="flex mt-2 justify-center">
+                              {t.dancingManImgs.map((src, idx) => (
+                                <img
+                                  key={idx}
+                                  src={src}
+                                  alt={`dancingMan-${t.id}-${idx}`}
+                                  className="h-5 object-contain rounded-md bg-black/10"
+                                />
+                              ))}
+                            </div>
+                          )}
                         </Td>
                         <Td>
                           <div className="flex flex-col gap-2">
