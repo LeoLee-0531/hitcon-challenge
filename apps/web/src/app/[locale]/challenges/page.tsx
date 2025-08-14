@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 
 import ChallengeSidebar from '@/components/Challenges/ChallengeSidebar';
 import ChallengeMain from '@/components/Challenges/ChallengeMain';
@@ -30,6 +31,7 @@ interface Challenge {
 
 
 export default function ChallengesPage() {
+  const router = useRouter();
   const { data: session, status } = useSession();
   const t = useTranslations('challenges');
 
@@ -49,7 +51,7 @@ export default function ChallengesPage() {
     if (!session) {
       setShowLoginAlert(true);
       setTimeout(() => {
-        window.location.href = '/';
+        router.push('/');
       }, 2000);
     }
   }, [session, status]);

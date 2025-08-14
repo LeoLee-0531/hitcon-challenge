@@ -58,7 +58,6 @@ export default function ProfilePage() {
           });
         }
       }
-      setIsLoading(false);
     } catch (error) {
       console.error('獲取使用者資料失敗:', error);
     } finally {
@@ -463,5 +462,5 @@ export default function ProfilePage() {
         )}
       </main>
     </div>
-  )
+  );
 }
