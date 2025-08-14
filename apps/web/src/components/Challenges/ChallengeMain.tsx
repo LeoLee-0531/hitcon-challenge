@@ -1,6 +1,14 @@
 'use client';
 
-import type { Challenge } from '@/types/challenge';
+interface Challenge {
+  id: string;
+  stageId: string; // 新增：資料庫中的關卡 ID
+  title: string;
+  description: string;
+  completed: boolean;
+  current: boolean;
+  link: string;
+}
 
 interface ChallengeMainProps {
   selectedChallenge: Challenge;
@@ -10,6 +18,7 @@ interface ChallengeMainProps {
   isMobile: boolean;
   submitMessage: string;
   submitStatus: 'idle' | 'success' | 'error';
+  isSubmitting: boolean;
 }
 
 export default function ChallengeMain({
@@ -20,6 +29,7 @@ export default function ChallengeMain({
   isMobile,
   submitMessage,
   submitStatus,
+  isSubmitting,
 }: ChallengeMainProps) {
   return (
     <div
@@ -80,6 +90,7 @@ export default function ChallengeMain({
 
       <button
         onClick={handleSubmit}
+        disabled={isSubmitting}
         className="challenge-btn submit"
         style={{
           width: isMobile ? 'calc(100% - 32px)' : '',
@@ -88,7 +99,7 @@ export default function ChallengeMain({
           padding: isMobile ? '8px 16px' : '',
         }}
       >
-        送出
+        {isSubmitting ? '送出中...' : '送出'}
       </button>
 
       {submitMessage && (

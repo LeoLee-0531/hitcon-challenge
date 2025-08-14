@@ -1,11 +1,20 @@
 'use client';
 
 import { useState } from 'react';
-import type { Challenge } from '@/types/challenge';
+
+interface Challenge {
+  id: string;
+  stageId: string; // 新增：資料庫中的關卡 ID
+  title: string;
+  description: string;
+  completed: boolean;
+  current: boolean;
+  link: string;
+}
 
 interface ChallengeSidebarProps {
   challengesList: Challenge[];
-  selectedChallenge: Challenge;
+  selectedChallenge: Challenge | null;
   setSelectedChallenge: (challenge: Challenge) => void;
   isMobile: boolean;
 }
@@ -41,11 +50,11 @@ export default function ChallengeSidebar({
     return (
       <div className="sidebar-container-mobile">
         <div className="sidebar-row">
-          {challengesList.slice(0, 4).map((challenge) => (
+          {challengesList.slice(0, 3).map((challenge) => (
             <div
               key={challenge.id}
               className={`challenge-item-mobile ${
-                selectedChallenge.id === challenge.id ? 'challenge-active' : ''
+                selectedChallenge?.id === challenge.id ? 'challenge-active' : ''
               }`}
               onClick={() => setSelectedChallenge(challenge)}
             >
@@ -55,11 +64,11 @@ export default function ChallengeSidebar({
           ))}
         </div>
         <div className="sidebar-row">
-          {challengesList.slice(4).map((challenge) => (
+          {challengesList.slice(3).map((challenge) => (
             <div
               key={challenge.id}
               className={`challenge-item-mobile ${
-                selectedChallenge.id === challenge.id ? 'challenge-active' : ''
+                selectedChallenge?.id === challenge.id ? 'challenge-active' : ''
               }`}
               onClick={() => setSelectedChallenge(challenge)}
             >
