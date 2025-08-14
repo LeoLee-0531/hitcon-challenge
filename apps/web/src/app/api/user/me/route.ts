@@ -3,7 +3,7 @@ import { getServerAuth } from '@/utils/getServerAuth';
 
 export async function GET() {
   console.log('API route hit');
-  
+
   const { apiToken } = await getServerAuth();
   const baseURL = process.env.API_BASE_URL;
 

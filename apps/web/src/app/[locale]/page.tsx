@@ -25,8 +25,12 @@ export default function Home() {
 
   return (
     <>
-      <EnhancedAnimatedGrid />
-      <div className="flex flex-col gap-6 md:gap-[3.25rem] px-4 md:px-8">
+      {/* 背景動畫層 */}
+      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
+        <EnhancedAnimatedGrid />
+      </div>
+      {/* 主內容層 */}
+      <div className="relative z-10 flex flex-col gap-6 md:gap-[3.25rem] px-4 md:px-8">
         <HeroSection isMobile={isMobile} />
         <Banner isMobile={isMobile} />
         <EventDescription isMobile={isMobile} />
