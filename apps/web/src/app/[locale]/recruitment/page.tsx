@@ -35,7 +35,12 @@ const TEAMS: Team[] = [
       '場務組主要負責年會當天場地相關事務，只需有足夠熱忱和遇到突發情況的判斷能力，是 SITCON 工人入門門檻較低、且收人數最多的組別，非常歡迎新人加入！',
     ],
     notes: ['* 實際工作內容依不同股別略有差異'],
-    dancingManImgs: ['/dancingMan/11.png', '/dancingMan/12.png', '/dancingMan/13.png', '/dancingMan/14.png'],
+    dancingManImgs: [
+      '/dancingMan/11.png',
+      '/dancingMan/12.png',
+      '/dancingMan/13.png',
+      '/dancingMan/14.png',
+    ],
   },
   {
     id: 'marketing',
@@ -69,7 +74,12 @@ const TEAMS: Team[] = [
       '8/21（四）~ 8/28（四）面試',
       '8/30（六）前寄送錄取 / 未錄取信件',
     ],
-    dancingManImgs: ['/dancingMan/31.png', '/dancingMan/32.png', '/dancingMan/33.png', '/dancingMan/34.png'],
+    dancingManImgs: [
+      '/dancingMan/31.png',
+      '/dancingMan/32.png',
+      '/dancingMan/33.png',
+      '/dancingMan/34.png',
+    ],
   },
   {
     id: 'dev',
@@ -165,7 +175,9 @@ export default function RecruitPage() {
 
                     <div className="flex items-start justify-between gap-1">
                       <Badge>{team.deadline}</Badge>
-                      <ExternalLink href={team.formUrl}>{t('formBtn')}</ExternalLink>
+                      <ExternalLink href={team.formUrl}>
+                        {t('formBtn')}
+                      </ExternalLink>
                     </div>
                   </div>
 
