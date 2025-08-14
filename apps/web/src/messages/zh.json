@@ -54,7 +54,39 @@
     "congratulations": "恭喜",
     "completedText": "完成",
     "completedChallengesText": "關挑戰",
-    "thankYou": "感謝您的參與！"
+    "thankYou": "感謝您的參與！",
+  "challenges": {
+    "instagram": {
+      "title": "Instagram",
+      "description": "在 SITCON 的 Instagram 上似乎藏著什麼祕密...."
+    },
+    "workerRecruitment": {
+      "title": "SITCON 工人招募",
+      "description": "每個工作組別好像都很重要呢！\nSITCON 星人好像留了什麼訊息..."
+    },
+    "elfText": {
+      "title": "精靈文 @攤位",
+      "description": "生在台灣的小精靈把秘密藏在了紙條上\n或許會有精通古典密碼學的台灣人知道該如何解開\nP.S.請到 SITCON 攤位進行挑戰！"
+    },
+    "gitLeak": {
+      "title": "Git Leak",
+      "description": "搭著飛機來支援我們的 SITCON 工人好像出事了！\n但他們留了一個網站好像想告訴我們些什麼"
+    },
+    "pythonJail": {
+      "title": "Python Jail",
+      "description": "被困在 Python Jail 了，或許有什麼方法可以逃出牢籠拿到旗子"
+    },
+    "aboutSitcon": {
+      "title": "關於 SITCON",
+      "description": "文字中看不到的不代表不存在\n或許可以問問看 Claude 或 Gemini"
+    },
+    "goToChallenge": "前往關卡",
+    "submit": "送出",
+    "successMessage": "恭喜！Flag 正確！",
+    "errorMessage": "Flag 錯誤，請再試一次！",
+    "validationFailed": "驗證失敗，請稍後再試！",
+    "submitting": "送出中...",
+    "loginRequired": "請先登入後再進行關卡驗證"
   },
   "errors": {
     "notFound": "找不到頁面",
