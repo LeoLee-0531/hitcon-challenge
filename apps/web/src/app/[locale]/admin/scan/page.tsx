@@ -267,7 +267,7 @@ export default function ScanPanel() {
             <button
               className="bg-[#F20D0D] text-white px-4 py-2 rounded hover:bg-[#e80b0b] w-full border-2 border-[#F20D0D]"
               onClick={async () => {
-                if (!window.confirm('確定要重製兌換狀態？')) return;
+                if (!window.confirm(t('confirmReset'))) return;
                 try {
                   const res = await fetch(`/api/reward/reset`, {
                     method: 'POST',
@@ -295,7 +295,7 @@ export default function ScanPanel() {
 
           {/* 再掃一次 */}
           <button
-            className="bg-[#0DF20D] text黑 px-4 py-2 rounded hover:bg-[#0be80b] w-full"
+            className="bg-[#0DF20D] text-black px-4 py-2 rounded hover:bg-[#0be80b] w-full"
             onClick={() => {
               setShowModal(false);
               setUserData(null);

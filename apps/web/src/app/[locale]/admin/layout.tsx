@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import { getServerAuth } from '@/utils/getServerAuth';
-import { cookies } from 'next/headers';
 import React from 'react';
 
 export default async function AdminLayout({
