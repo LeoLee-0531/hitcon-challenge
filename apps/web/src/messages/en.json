@@ -30,6 +30,66 @@
     "featuredChallenges": "Featured Challenges",
     "recentActivity": "Recent Activity"
   },
+  "profile": {
+    "completedChallenges": "Completed Challenges",
+    "rewardLevel": "Reward Level",
+    "level1": "Level 1",
+    "level2": "Level 2",
+    "level3": "Level 3",
+    "level1Requirement": "Level 1: Complete 2 challenges",
+    "level2Requirement": "Level 2: Complete 4 challenges",
+    "level3Requirement": "Level 3: Complete 6 challenges",
+    "achieved": "Achieved",
+    "notAchieved": "Not Achieved",
+    "rewardLevelDescription": "Reward Level Description",
+    "minRequirementNote": "* Must complete at least 2 challenges to get rewards!",
+    "exchangeRules": "Exchange Rules",
+    "exchangeRulesDescription": "Regardless of which level you achieve, you can only claim one reward! But achieving higher levels gives you more choices!",
+    "level1Reward": "Level 1: You can choose \"Stickers\" as your reward.",
+    "level2Reward": "Level 2: You can choose \"Stickers\" or \"Keychains\" as your reward (choose one).",
+    "level3Reward": "Level 3: You can choose \"Stickers\", \"Keychains\", or \"Annual T-shirt\" as your reward (choose one).",
+    "generateQRCode": "Generate Exchange QR Code",
+    "generating": "Generating...",
+    "qrCodeNote": "* Return to the SITCON booth and show the QR Code to exchange for rewards",
+    "congratulations": "Congratulations",
+    "completedText": "completed",
+    "completedChallengesText": "challenges",
+    "thankYou": "Thank you for participating!"
+  },
+  "challenges": {
+    "instagram": {
+      "title": "Instagram",
+      "description": "There seems to be a secret hidden on SITCON's Instagram..."
+    },
+    "workerRecruitment": {
+      "title": "SITCON Recruitment",
+      "description": "Every working group is important!\nAliens from SITCON planet may leave some message...\n!! All letters in the flag are uppercase"
+    },
+    "elfText": {
+      "title": "Elf-bpmf @Booth",
+      "description": "The little Taiwanese elf hid secrets on paper notes. Taiwanese people who are proficient in classical cryptography will know how to solve it!\nP.S. Please come to the SITCON booth for the challenge!"
+    },
+    "gitLeak": {
+      "title": "Git Leak",
+      "description": "The SITCON workers who came by plane  seem to have some trouble! They left a website that seems to tell us something..."
+    },
+    "pythonJail": {
+      "title": "Python Jail",
+      "description": "Trapped in Python Jail, perhaps there's a way to escape from the jail and get the flag\n!! Please put the flag you see into our flag format and submit"
+    },
+    "aboutSitcon": {
+      "title": "About SITCON",
+      "description": "What you can't see in the text doesn't mean it doesn't exist. Perhaps you can ask Claude or Gemini for the secret."
+    },
+    "goToChallenge": "Go Challenge!",
+    "submit": "Submit",
+    "successMessage": "Congratulations! Flag is correct!",
+    "errorMessage": "Flag is incorrect, please try again!",
+    "validationFailed": "Validation failed, please try again later!",
+    "submitting": "Submitting...",
+    "loginRequired": "Please login first to verify the challenge",
+    "invalidFlagFormat": "Invalid flag format. Please use our flag format."
+  },
   "errors": {
     "notFound": "Page not found",
     "serverError": "Internal server error",
