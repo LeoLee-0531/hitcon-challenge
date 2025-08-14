@@ -102,7 +102,7 @@ export default function ChallengeMain({
 
       <input
         type="text"
-        placeholder={t('flagPlaceholder')}
+        placeholder={'Enter Flag: SITCON{...}'}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}

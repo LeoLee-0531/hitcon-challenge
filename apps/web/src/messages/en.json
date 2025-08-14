@@ -121,8 +121,7 @@
     "submitting": "Submitting...",
     "loginRequired": "Please login first to verify the challenge",
     "invalidFlagFormat": "Invalid flag format. Please use our flag format.",
-    "selectChallenge": "Please select a challenge",
-    "flagPlaceholder": "Enter Flag: SITCON{...}"
+    "selectChallenge": "Please select a challenge"
   },
   "errors": {
     "notFound": "Page not found",

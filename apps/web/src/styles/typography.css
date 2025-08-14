@@ -1,19 +1,5 @@
 /* Typography System - Semantic heading and text utilities */
 
-/* Font Family */
-* {
-  font-family:
-    var(--font-noto-sans-tc),
-    'Noto Sans TC',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-}
-
 /* Global line-height reset */
 * {
   line-height: 150%;
