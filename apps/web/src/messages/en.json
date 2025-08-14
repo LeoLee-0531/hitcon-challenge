@@ -116,8 +116,8 @@
     "joinDesc2": ". If you are interested, feel free to subscribe and contribute your ideas. If you want to join next year's team, check out the recruitment page!",
     "joinDesc3": "If you want to learn more about SITCON's preparation and discussions, visit ",
     "joinDesc4": " to see the progress of SITCON 2026.",
-    "gitlab": "GitLab",
-    "footerNote": "* This line seems to contain some magical content."
+    "footerNote": "* This line seems to contain some 󠀁󠁓󠁉󠁔󠁃󠁏󠁎󠁻󠁗󠀰󠁷󠁟󠁌󠁌󠁍󠁟󠁣󠀴󠁮󠁟󠁓󠀳󠁥󠁟󠀷󠁨󠀱󠁳󠁽󠁿magical content.",
+    "gitlab": "GitLab"
   },
   "recruitment": {
     "title": "SITCON 2026<br />Staff Recruitment Information",
@@ -138,7 +138,7 @@
     "teams": {
       "logistics": {
         "name": "Logistics Team",
-        "headcount": "Food & Beverage: 6 people, Mobile Support: 25 people, Registration: 8 people, Logistics: 2 people",
+        "headcount": "41 people",
         "duties": [
           "Food & Beverage: Ordering and delivery of meals",
           "Mobile Support: Assist when other teams/sections are short-staffed",
