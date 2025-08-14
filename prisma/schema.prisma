@@ -7,40 +7,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// 用戶表
+enum UserRole {
+  USER
+  ADMIN
+}
+
 model User {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  email        String   @unique
-  language     String   @default("zh") // zh, en
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  lastLoginAt  DateTime @default(now())
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?         @unique
+  emailVerified DateTime?
+  image         String?
+  role          UserRole  @default(USER)
 
   // 關聯
   progress    UserProgress[]
   rewardClaim RewardClaim?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("users")
 }
 
-// 關卡表
 model Stage {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   stageNumber Int    @unique // 1, 2, 3, 4, 5, 6, 7
   password    String // 通關密碼
 
-  // 中文內容
-  titleZh       String
-  descriptionZh String
-
-  // 英文內容
-  titleEn       String
-  descriptionEn String
-
-  // 外部連結
+  title       String
+  description String
   externalUrl String?
-
-  // 狀態
   isActive Boolean @default(true)
 
   createdAt DateTime @default(now())
@@ -76,15 +73,10 @@ model RewardLevel {
   level          Int    @unique // 1, 2, 3
   requiredPassed Int // 所需通關數: 3, 5, 7
 
-  // 中文內容
-  titleZh       String
-  descriptionZh String
-
-  // 英文內容
-  titleEn       String
-  descriptionEn String
-
+  title       String
+  description String
   isActive  Boolean  @default(true)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -102,19 +94,6 @@ model RewardClaim {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("reward_claims")
-}
-
-// 管理員表
-model Admin {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  username    String    @unique
-  password    String // 加密後的密碼
-  isActive    Boolean   @default(true)
-  lastLoginAt DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  @@map("admins")
 }
 
 // 活動統計快照表 (用於加速統計查詢)
