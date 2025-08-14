@@ -39,6 +39,7 @@
 .front-hero-icon {
   height: 1.25rem;
   width: 1.25rem;
+  color: var(--primary-20);
 }
 
 /* Banner */
@@ -90,6 +91,7 @@
 .event-list-icon {
   height: 1.5rem;
   width: 1.5rem;
+  color: var(--primary-30);
 }
 
 .event-list-content {
