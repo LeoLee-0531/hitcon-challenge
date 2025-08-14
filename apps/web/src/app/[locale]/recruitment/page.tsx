@@ -2,116 +2,74 @@
 import React from 'react';
 import Link from 'next/link';
 import BaseFooter from '@/components/BaseFooter';
+import { useTranslations } from 'next-intl';
 
 type Team = {
   id: string;
-  name: string;
   deadline: string;
-  headcount?: string;
   formUrl: string;
-  description?: string;
-  duties: string[];
-  preferred?: string[];
-  process?: string[];
-  techStack?: string[]; // 給「開發組」的技術清單
-  notes?: string[];
+  dancingManImgs?: string[];
 };
 
 const TEAMS: Team[] = [
   {
     id: 'logistics',
-    name: '場務組',
     deadline: '2025/08/29',
-    // headcount: "餐飲股 6 人、機動股 25 人、報到股 8 人、物流股 2 人",
-    headcount: '餐飲股 6人 機動股 25人 報到股 8人 物流股 2人',
     formUrl: 'https://forms.gle/wSrobrMkV1WwZsYv7',
-    duties: [
-      '餐飲股：餐飲的訂購和運送',
-      '機動股：在其他股/組人力不足時協助',
-      '報到股：報到處門票的檢驗和東西發放',
-      '物流股：物品於會場和倉庫間的流動',
+    dancingManImgs: [
+      '/dancingMan/11.png',
+      '/dancingMan/12.png',
+      '/dancingMan/13.png',
+      '/dancingMan/14.png',
     ],
-    preferred: [
-      '場務組主要負責年會當天場地相關事務，只需有足夠熱忱和遇到突發情況的判斷能力，是 SITCON 工人入門門檻較低、且收人數最多的組別，非常歡迎新人加入！',
-    ],
-    notes: ['* 實際工作內容依不同股別略有差異'],
   },
   {
     id: 'marketing',
-    name: '行銷組',
     deadline: '2025/08/18',
-    headcount: '8 人',
     formUrl: 'https://forms.gle/qkao1Xc4VfSqWrft6',
-    duties: ['撰寫贊助提案', '聯絡廠商與媒體', '年會當日協助贊助商與媒體接待'],
-    preferred: ['對行銷與商務往來有興趣', '擅長寫 Email、喜歡溝通與談判'],
+    dancingManImgs: ['/dancingMan/21.png', '/dancingMan/22.png'],
   },
   {
     id: 'design',
-    name: '設計組',
     deadline: '2025/08/22',
-    headcount: '10 人',
     formUrl: 'https://forms.gle/kTA4viUGP8Pvr2ic7',
-    duties: [
-      '年會主視覺、週邊等平面設計',
-      '製作動畫與社群圖像',
-      '與場務、開發、編輯密切合作設計需求',
-    ],
-    preferred: [
-      '會使用 Illustrator / Figma / Photoshop 等設計軟體',
-      '有作品集尤佳',
-    ],
-    process: [
-      '即日起 ~ 8/16（六） 報名截止',
-      '8/17（日）~ 8/19（二） 書審',
-      '8/20（三）前寄送通過 / 未通過信件',
-      '8/21（四）~ 8/28（四）面試',
-      '8/30（六）前寄送錄取 / 未錄取信件',
+    dancingManImgs: [
+      '/dancingMan/31.png',
+      '/dancingMan/32.png',
+      '/dancingMan/33.png',
+      '/dancingMan/34.png',
     ],
   },
   {
     id: 'dev',
-    name: '開發組',
     deadline: '2025/08/25',
-    headcount: '約 3 人',
     formUrl: 'https://forms.gle/o7he9cJio8ZMCJUo7',
-    duties: [
-      '官網、CFP 系統、大地遊戲系統開發',
-      '使用技術（舉例）：HTML / CSS / JS；可能會用到：Astro、Fastify、Three.js、Figma',
-    ],
-    preferred: [
-      '熟悉 Web 開發（不只能下 prompt，願意理解背後邏輯）',
-      '熟悉 Git 協作',
-      '願意投入時間精力一起幹大事',
-    ],
-    techStack: [
-      'HTML',
-      'CSS',
-      'JavaScript',
-      'Astro',
-      'Fastify',
-      'Three.js',
-      'Figma',
-    ],
+    dancingManImgs: ['/dancingMan/41.png', '/dancingMan/42.png'],
   },
   {
     id: 'record',
-    name: '紀錄組',
     deadline: '2025/08/20',
-    headcount: '10 人',
     formUrl: 'https://forms.gle/ymexPU8J99Hsc9AN9',
-    duties: [
-      '年會當天拍攝議程、互動、攤位等',
-      '活動前參與培訓，後期協助修圖與整理',
-    ],
-    preferred: [
-      '有攝影經驗與基礎器材',
-      '具備構圖與調色概念',
-      '會使用 Lightroom / Photoshop 或剪輯軟體者尤佳',
-    ],
+    dancingManImgs: ['/dancingMan/0300_2s.png'],
   },
 ];
 
 export default function RecruitPage() {
+  const t = useTranslations('recruitment');
+
+  // 函數：根據團隊ID獲取翻譯後的團隊信息
+  const getTeamInfo = (teamId: string) => {
+    return {
+      name: t(`teams.${teamId}.name`),
+      headcount: t(`teams.${teamId}.headcount`),
+      duties: t.raw(`teams.${teamId}.duties`),
+      preferred: t.raw(`teams.${teamId}.preferred`),
+      process: t.raw(`teams.${teamId}.process`),
+      techStack: t.raw(`teams.${teamId}.techStack`),
+      notes: t.raw(`teams.${teamId}.notes`),
+    };
+  };
+
   return (
     <>
       <div className="grid grid-cols-12">
@@ -124,77 +82,95 @@ export default function RecruitPage() {
             <div className="mx-auto max-w-6xl px-4 py-8 mb-8">
               {/* Header */}
               <header className="mb-8 py-15 text-center">
-                <h1 className="text-3xl sm:text-4xl md:text-4.5xl font-bold">
-                  SITCON 2026 <br />
-                  工作人員招募資訊
-                </h1>
+                <h1
+                  className="text-3xl sm:text-4xl md:text-4.5xl font-bold"
+                  dangerouslySetInnerHTML={{ __html: t('title') }}
+                />
                 <p className="mt-2 text-sm text-emerald-300/80">
-                  歡迎加入籌備團隊！下方表格含截止日期、招募名額、表單連結與工作內容。
+                  {t('subtitle')}
                 </p>
               </header>
 
               {/* Cards (mobile) */}
               <section className="md:hidden space-y-4">
-                {TEAMS.map((t) => (
-                  <article
-                    key={t.id}
-                    className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <h2 className="text-lg font-semibold">{t.name}</h2>
-                      <div>
-                        <Badge>{t.deadline}</Badge>
-                        <ExternalLink href={t.formUrl}>
-                          {'報名表單'}
-                        </ExternalLink>
+                {TEAMS.map((team) => {
+                  const teamInfo = getTeamInfo(team.id);
+                  return (
+                    <article
+                      key={team.id}
+                      className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-center gap-2">
+                          <h2 className="text-lg font-semibold">
+                            {teamInfo.name}
+                          </h2>
+                          <div className="flex items-center gap-2">
+                            {team.dancingManImgs && (
+                              <div className="flex">
+                                {team.dancingManImgs.map((src, idx) => (
+                                  <img
+                                    key={idx}
+                                    src={src}
+                                    alt={`dancingMan-${team.id}-${idx}`}
+                                    className="h-6 object-contain rounded-md bg-black/10"
+                                  />
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="flex items-start justify-between gap-1">
+                          <Badge>{team.deadline}</Badge>
+                          <ExternalLink href={team.formUrl}>
+                            {t('formBtn')}
+                          </ExternalLink>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="mt-3 grid grid-cols-1 gap-2">
-                      {t.headcount && (
-                        <Row label="招募人數">
-                          <span className="text-gray-200">{t.headcount}</span>
+                      <div className="mt-3 grid grid-cols-1 gap-2">
+                        {teamInfo.headcount && (
+                          <Row label={t('headcount')}>
+                            <span className="text-gray-200">
+                              {teamInfo.headcount}
+                            </span>
+                          </Row>
+                        )}
+
+                        <Row label={t('duties')}>
+                          <BulletList items={teamInfo.duties} />
                         </Row>
-                      )}
 
-                      <Row label="工作內容">
-                        <BulletList items={t.duties} />
-                      </Row>
+                        {teamInfo.preferred &&
+                          teamInfo.preferred.length > 0 && (
+                            <Row label={t('preferred')}>
+                              <BulletList items={teamInfo.preferred} />
+                            </Row>
+                          )}
 
-                      {t.preferred && t.preferred.length > 0 && (
-                        <Row label="推薦條件">
-                          <BulletList items={t.preferred} />
-                        </Row>
-                      )}
+                        {teamInfo.process && teamInfo.process.length > 0 && (
+                          <Row label={t('process')}>
+                            <BulletList items={teamInfo.process} />
+                          </Row>
+                        )}
 
-                      {t.process && t.process.length > 0 && (
-                        <Row label="招募流程">
-                          <BulletList items={t.process} />
-                        </Row>
-                      )}
+                        {teamInfo.techStack &&
+                          teamInfo.techStack.length > 0 && (
+                            <Row label={t('techStack')}>
+                              <TagList items={teamInfo.techStack} />
+                            </Row>
+                          )}
 
-                      {t.techStack && t.techStack.length > 0 && (
-                        <Row label="技術 / 工具">
-                          <TagList items={t.techStack} />
-                        </Row>
-                      )}
-
-                      {t.notes && t.notes.length > 0 && (
-                        <Row label="備註">
-                          <BulletList items={t.notes} />
-                        </Row>
-                      )}
-                    </div>
-                  </article>
-                ))}
-                <div className="mt-6 text-center">
-                  <Link
-                    href="#top"
-                    className="text-sm text-emerald-300 hover:text-emerald-200 underline underline-offset-2"
-                  >
-                    ⬆️ 回頂端
-                  </Link>
-                </div>
+                        {teamInfo.notes && teamInfo.notes.length > 0 && (
+                          <Row label={t('notes')}>
+                            <BulletList items={teamInfo.notes} />
+                          </Row>
+                        )}
+                      </div>
+                    </article>
+                  );
+                })}
               </section>
 
               {/* Table (md+) */}
@@ -203,87 +179,98 @@ export default function RecruitPage() {
                   <table className="w-full border-collapse">
                     <thead className="bg-emerald-900/30">
                       <tr>
-                        <Th className="w-[80px]">組別</Th>
-                        <Th className="w-[100px]">截止日期</Th>
-                        <Th className="w-[110px]">招募人數</Th>
-                        <Th>工作內容</Th>
-                        <Th>推薦條件 / 流程 / 技術</Th>
+                        <Th className="w-[80px]">{t('colTeam')}</Th>
+                        <Th className="w-[100px]">{t('colDeadline')}</Th>
+                        <Th className="w-[110px]">{t('colHeadcount')}</Th>
+                        <Th>{t('colDuties')}</Th>
+                        <Th>{t('colOthers')}</Th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-white/10">
-                      {TEAMS.map((t, idx) => (
-                        <tr
-                          key={t.id}
-                          className={
-                            idx % 2 === 0 ? 'bg-white/0' : 'bg-white/[0.03]'
-                          }
-                        >
-                          <Td>
-                            <div className="font-semibold">{t.name}</div>
-                          </Td>
-                          <Td>
-                            <div className="flex flex-col gap-2">
-                              <Badge>{t.deadline}</Badge>
-                              <ExternalLink href={t.formUrl}>
-                                {'報名表單'}
-                              </ExternalLink>
-                            </div>
-                          </Td>
-                          <Td>
-                            <span className="text-gray-200">
-                              {t.headcount ?? '—'}
-                            </span>
-                          </Td>
-                          <Td>
-                            <BulletList items={t.duties} />
-                          </Td>
-                          <Td>
-                            <div className="space-y-3">
-                              {t.preferred && t.preferred.length > 0 && (
-                                <section>
-                                  <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
-                                    推薦條件
-                                  </h4>
-                                  <BulletList items={t.preferred} />
-                                </section>
+                      {TEAMS.map((team, idx) => {
+                        const teamInfo = getTeamInfo(team.id);
+                        return (
+                          <tr
+                            key={team.id}
+                            className={
+                              idx % 2 === 0 ? 'bg-white/0' : 'bg-white/[0.03]'
+                            }
+                          >
+                            <Td>
+                              <div className="font-semibold">
+                                {teamInfo.name}
+                              </div>
+                              {/* dancingMan 圖片 */}
+                              {team.dancingManImgs && (
+                                <div className="flex mt-2 justify-center">
+                                  {team.dancingManImgs.map((src, idx) => (
+                                    <img
+                                      key={idx}
+                                      src={src}
+                                      alt={`dancingMan-${team.id}-${idx}`}
+                                      className="h-5 object-contain rounded-md bg-black/10"
+                                    />
+                                  ))}
+                                </div>
                               )}
-                              {t.process && t.process.length > 0 && (
-                                <section>
-                                  <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
-                                    招募流程
-                                  </h4>
-                                  <BulletList items={t.process} />
-                                </section>
-                              )}
-                              {t.techStack && t.techStack.length > 0 && (
-                                <section>
-                                  <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
-                                    技術 / 工具
-                                  </h4>
-                                  <TagList items={t.techStack} />
-                                </section>
-                              )}
-                            </div>
-                          </Td>
-                        </tr>
-                      ))}
+                            </Td>
+                            <Td>
+                              <div className="flex flex-col gap-2">
+                                <Badge>{team.deadline}</Badge>
+                                <ExternalLink href={team.formUrl}>
+                                  {t('formBtn')}
+                                </ExternalLink>
+                              </div>
+                            </Td>
+                            <Td>
+                              <span className="text-gray-200">
+                                {teamInfo.headcount ?? t('noData')}
+                              </span>
+                            </Td>
+                            <Td>
+                              <BulletList items={teamInfo.duties} />
+                            </Td>
+                            <Td>
+                              <div className="space-y-3">
+                                {teamInfo.preferred &&
+                                  teamInfo.preferred.length > 0 && (
+                                    <section>
+                                      <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
+                                        {t('preferred')}
+                                      </h4>
+                                      <BulletList items={teamInfo.preferred} />
+                                    </section>
+                                  )}
+                                {teamInfo.process &&
+                                  teamInfo.process.length > 0 && (
+                                    <section>
+                                      <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
+                                        {t('process')}
+                                      </h4>
+                                      <BulletList items={teamInfo.process} />
+                                    </section>
+                                  )}
+                                {teamInfo.techStack &&
+                                  teamInfo.techStack.length > 0 && (
+                                    <section>
+                                      <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
+                                        {t('techStack')}
+                                      </h4>
+                                      <TagList items={teamInfo.techStack} />
+                                    </section>
+                                  )}
+                              </div>
+                            </Td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
-
-                {/* <div className="mt-4 text-right">
-            <Link
-              href="#top"
-              className="text-sm text-emerald-300 hover:text-emerald-200 underline underline-offset-2"
-            >
-              ⬆️ 回頂端
-            </Link>
-          </div> */}
               </section>
             </div>
           </main>
         </div>
-        <div className="xl:col-span-2 col-span-1" />
       </div>
       <BaseFooter />
     </>
@@ -319,7 +306,7 @@ function Td({
 
 function Badge({ children }: React.PropsWithChildren) {
   return (
-    <span className="inline-flex items-center rounded-md bg-emerald-500/20 px-2 py-1 text-xs font-medium text-emerald-200 ring-1 ring-inset ring-emerald-400/30">
+    <span className="inline-flex items-center rounded-md bg-emerald-500/20 px-2 py-1 text-sm font-medium text-emerald-200 ring-1 ring-inset ring-emerald-400/30">
       {children}
     </span>
   );

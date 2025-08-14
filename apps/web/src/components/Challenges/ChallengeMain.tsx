@@ -69,7 +69,7 @@ export default function ChallengeMain({
         className="challenge-btn goto"
       >
         <div className="goto-span">
-          <SquareArrowOutUpRight className="h-5"/>
+          <SquareArrowOutUpRight className="h-5" />
           <span>前往關卡</span>
         </div>
       </a>

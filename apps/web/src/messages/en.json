@@ -63,7 +63,7 @@
     },
     "workerRecruitment": {
       "title": "SITCON Recruitment",
-      "description": "Every working group is important!\nAliens from SITCON planet may leave some message...\n! All letters in the flag are uppercase !"
+      "description": "Every working group is important!\nAliens from SITCON planet may leave some message...\n! All letters that appear in the flag are lowercase !"
     },
     "elfText": {
       "title": "Elf-bpmf @Booth",
@@ -97,6 +97,140 @@
     "validationError": "Validation error",
     "networkError": "Network error",
     "tryAgain": "Please try again later"
+  },
+  "about": {
+    "title": "📢 SITCON 2026",
+    "linkAlt": "SITCON 2026 link",
+    "venue": "@ Academia Sinica Humanities and Social Sciences Building",
+    "date": "2026 / 3 / 28 ( Sat. )",
+    "aboutTitle": "About SITCON",
+    "aboutDesc1": "Students’ Information Technology Conference (SITCON) was initiated in 2012, organized by students for students, dedicated to information education and open source spirit.",
+    "aboutDesc2": "We hope to inspire more students to enter the world of information, gather at the conference, exchange ideas, and practice the concept of 'learning by doing, teaching and learning together'.",
+    "cocTitle": "Code of Conduct",
+    "cocDesc1": "SITCON welcomes participants from all backgrounds and identities, and encourages diversity. To ensure everyone enjoys the event, all participants are required to read the conference ",
+    "cocLinkText": "Code of Conduct",
+    "cocDesc2": ", and help create a friendly environment together.",
+    "joinTitle": "Join the Community",
+    "joinDesc1": "SITCON is an open community. Many preparation matters are discussed publicly on the ",
+    "joinMailText": "mailing list",
+    "joinDesc2": ". If you are interested, feel free to subscribe and contribute your ideas. If you want to join next year's team, check out the recruitment page!",
+    "joinDesc3": "If you want to learn more about SITCON's preparation and discussions, visit ",
+    "joinDesc4": " to see the progress of SITCON 2026.",
+    "footerNote": "* This line seems to contain some 󠀁󠁓󠁉󠁔󠁃󠁏󠁎󠁻󠁗󠀰󠁷󠁟󠁌󠁌󠁍󠁟󠁣󠀴󠁮󠁟󠁓󠀳󠁥󠁟󠀷󠁨󠀱󠁳󠁽󠁿magical content.",
+    "gitlab": "GitLab"
+  },
+  "recruitment": {
+    "title": "SITCON 2026<br />Staff Recruitment Information",
+    "subtitle": "Welcome to join the organizing team! The table below includes deadlines, headcount, form links, and job details.",
+    "formBtn": "Application Form",
+    "headcount": "Headcount",
+    "duties": "Duties",
+    "preferred": "Preferred Qualifications",
+    "process": "Recruitment Process",
+    "techStack": "Tech / Tools",
+    "notes": "Notes",
+    "colTeam": "Team",
+    "colDeadline": "Deadline",
+    "colHeadcount": "Headcount",
+    "colDuties": "Duties",
+    "colOthers": "Preferred / Process / Tech",
+    "noData": "—",
+    "teams": {
+      "logistics": {
+        "name": "Logistics Team",
+        "headcount": "41 people",
+        "duties": [
+          "Food & Beverage: Ordering and delivery of meals",
+          "Mobile Support: Assist when other teams/sections are short-staffed",
+          "Registration: Ticket verification and item distribution at check-in",
+          "Logistics: Item flow between venue and warehouse"
+        ],
+        "preferred": [
+          "The Logistics Team is mainly responsible for venue-related matters during the annual conference. Only requires sufficient enthusiasm and judgment ability in emergency situations. It's the team with the lowest entry threshold and highest recruitment numbers for SITCON workers. Newcomers are very welcome!"
+        ],
+        "process": [],
+        "techStack": [],
+        "notes": ["* Actual work content varies slightly by different sections"]
+      },
+      "marketing": {
+        "name": "Marketing Team",
+        "headcount": "8 people",
+        "duties": [
+          "Write sponsorship proposals",
+          "Contact vendors and media",
+          "Assist with sponsor and media reception during the annual conference"
+        ],
+        "preferred": [
+          "Interest in marketing and business communication",
+          "Good at writing emails, enjoys communication and negotiation"
+        ],
+        "process": [],
+        "techStack": [],
+        "notes": []
+      },
+      "design": {
+        "name": "Design Team",
+        "headcount": "10 people",
+        "duties": [
+          "Annual conference visual design, merchandise and other graphic design",
+          "Create animations and social media graphics",
+          "Work closely with logistics, development, and editorial teams on design requirements"
+        ],
+        "preferred": [
+          "Proficient in Illustrator / Figma / Photoshop and other design software",
+          "Portfolio preferred"
+        ],
+        "process": [
+          "Now ~ 8/16 (Sat) Application deadline",
+          "8/17 (Sun) ~ 8/19 (Tue) Document review",
+          "8/20 (Wed) Send pass/fail letters",
+          "8/21 (Thu) ~ 8/28 (Thu) Interviews",
+          "8/30 (Sat) Send acceptance/rejection letters"
+        ],
+        "techStack": [],
+        "notes": []
+      },
+      "dev": {
+        "name": "Development Team",
+        "headcount": "About 3 people",
+        "duties": [
+          "Official website, CFP system, treasure hunt system development",
+          "Technologies used (examples): HTML / CSS / JS; May use: Astro, Fastify, Three.js, Figma"
+        ],
+        "preferred": [
+          "Familiar with Web development (not just using prompts, willing to understand the underlying logic)",
+          "Familiar with Git collaboration",
+          "Willing to invest time and energy to accomplish big things together"
+        ],
+        "process": [],
+        "techStack": [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "Astro",
+          "Fastify",
+          "Three.js",
+          "Figma"
+        ],
+        "notes": []
+      },
+      "record": {
+        "name": "Documentation Team",
+        "headcount": "10 people",
+        "duties": [
+          "Photograph sessions, interactions, booths, etc. during the annual conference",
+          "Participate in training before the event, assist with photo editing and organization afterward"
+        ],
+        "preferred": [
+          "Photography experience and basic equipment",
+          "Understanding of composition and color grading",
+          "Proficiency in Lightroom / Photoshop or video editing software preferred"
+        ],
+        "process": [],
+        "techStack": [],
+        "notes": []
+      }
+    }
   },
   "frontpage": {
     "title": "HITCON Challenge",

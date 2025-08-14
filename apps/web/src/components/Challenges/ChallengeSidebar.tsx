@@ -29,7 +29,7 @@ function ChallengeIcon({ completed }: { completed: boolean }) {
       ? '/incompleteHover.svg'
       : '/incomplete.svg';
 
- return (
+  return (
     <img
       className="sidebar-icon"
       src={src}
@@ -39,8 +39,6 @@ function ChallengeIcon({ completed }: { completed: boolean }) {
     />
   );
 }
-
-
 
 export default function ChallengeSidebar({
   challengesList,
