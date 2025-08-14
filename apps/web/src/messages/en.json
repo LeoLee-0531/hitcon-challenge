@@ -54,7 +54,8 @@
     "congratulations": "Congratulations",
     "completedText": "completed",
     "completedChallengesText": "challenges",
-    "thankYou": "Thank you for participating!",
+    "thankYou": "Thank you for participating!"
+  },
   "challenges": {
     "instagram": {
       "title": "Instagram",

@@ -32,7 +32,8 @@ export default function ProfilePage() {
   // 從 API 資料計算進度
   const currentUserData = userData || defaultUserData;
   const progressPercentage =
-    (currentUserData.completedChallenges / currentUserData.totalChallenges) * 100;
+    (currentUserData.completedChallenges / currentUserData.totalChallenges) *
+    100;
 
   // 獲取使用者資料
   const fetchUserData = async () => {
@@ -53,12 +54,13 @@ export default function ProfilePage() {
           console.log('API回傳的完整資料:', result.data);
           console.log('API回傳的user_id:', result.data.user_id);
           console.log('API回傳的user_id類型:', typeof result.data.user_id);
-          
+
           // 計算等級 (每完成 2 個關卡升一級)
-          const completedCount = result.data.progress?.filter((p: any) => p.passed).length || 0;
+          const completedCount =
+            result.data.progress?.filter((p: any) => p.passed).length || 0;
           // 根據完成的關卡數計算等級：每完成2關升一級
           const calculatedLevel = Math.floor(completedCount / 2);
-          
+
           setUserData({
             id: result.data.user_id,
             username: result.data.name || 'NonameUser',
@@ -103,8 +105,8 @@ export default function ProfilePage() {
       // 模擬 QR code 生成過程
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-             // 生成 QR code，內容是使用者 ID
-       console.log('生成 QR code，使用者 ID:', currentUserData.id);
+      // 生成 QR code，內容是使用者 ID
+      console.log('生成 QR code，使用者 ID:', currentUserData.id);
       setQrCodeGenerated(true);
     } catch (error) {
       console.error('生成 QR code 失敗:', error);
@@ -127,26 +129,26 @@ export default function ProfilePage() {
       >
         {/* Avatar & Name */}
         <div className="flex flex-col items-center mb-8">
-                     <Image
-             src={currentUserData.avatar}
-             alt="avatar"
-             width={128}
-             height={128}
-             className="rounded-full border-4 border-[#232B20]"
-             style={{
-               width: isMobile ? '80px' : '128px',
-               height: isMobile ? '80px' : '128px',
-               borderWidth: isMobile ? '2px' : '4px',
-             }}
-           />
-           <div
-             className="text-[22px] font-bold text-white mt-4"
-             style={{
-               fontSize: isMobile ? '16px' : '22px',
-             }}
-           >
-             {currentUserData.username}
-           </div>
+          <Image
+            src={currentUserData.avatar}
+            alt="avatar"
+            width={128}
+            height={128}
+            className="rounded-full border-4 border-[#232B20]"
+            style={{
+              width: isMobile ? '80px' : '128px',
+              height: isMobile ? '80px' : '128px',
+              borderWidth: isMobile ? '2px' : '4px',
+            }}
+          />
+          <div
+            className="text-[22px] font-bold text-white mt-4"
+            style={{
+              fontSize: isMobile ? '16px' : '22px',
+            }}
+          >
+            {currentUserData.username}
+          </div>
         </div>
 
         {/* Progress Section */}
@@ -163,7 +165,8 @@ export default function ProfilePage() {
               fontSize: isMobile ? '18px' : '24px',
             }}
           >
-                         {currentUserData.completedChallenges}/{currentUserData.totalChallenges}
+            {currentUserData.completedChallenges}/
+            {currentUserData.totalChallenges}
           </div>
           <div
             className="text-[#8FCC8F] mb-4 text-[14px]"
@@ -183,31 +186,32 @@ export default function ProfilePage() {
               <span>{t('rewardLevel')}</span>
             </div>
             <div className="relative w-full h-2 bg-gray-700 rounded-full">
-                             {/* milestone 標籤（進度條上方） */}
-               <div
-                 className="absolute w-full"
-                 style={{ top: '-25px', height: '16px', pointerEvents: 'none' }}
-               >
-                 <span className="absolute left-1/3 top-0 -translate-x-1/2 text-white text-xs">
-                   {t('level1')}
-                 </span>
-                 <span className="absolute left-2/3 top-0 -translate-x-1/2 text-white text-xs">
-                   {t('level2')}
-                 </span>
-                 <span className="absolute right-0 top-0 text-white text-xs">
-                   {t('level3')}
-                 </span>
-               </div>
+              {/* milestone 標籤（進度條上方） */}
+              <div
+                className="absolute w-full"
+                style={{ top: '-25px', height: '16px', pointerEvents: 'none' }}
+              >
+                <span className="absolute left-1/3 top-0 -translate-x-1/2 text-white text-xs">
+                  {t('level1')}
+                </span>
+                <span className="absolute left-2/3 top-0 -translate-x-1/2 text-white text-xs">
+                  {t('level2')}
+                </span>
+                <span className="absolute right-0 top-0 text-white text-xs">
+                  {t('level3')}
+                </span>
+              </div>
               {/* 6個關卡進度條 */}
               <div className="flex w-full h-2">
                 {/* 動態生成進度條 */}
-                             {Array.from(
-                   { length: currentUserData.totalChallenges },
-                   (_, index) => {
-                     const isCompleted =
-                       index < currentUserData.completedChallenges;
-                     const isFirst = index === 0;
-                     const isLast = index === currentUserData.totalChallenges - 1;
+                {Array.from(
+                  { length: currentUserData.totalChallenges },
+                  (_, index) => {
+                    const isCompleted =
+                      index < currentUserData.completedChallenges;
+                    const isFirst = index === 0;
+                    const isLast =
+                      index === currentUserData.totalChallenges - 1;
 
                     return (
                       <div
@@ -221,53 +225,53 @@ export default function ProfilePage() {
                   }
                 )}
               </div>
-                                            {/* 分隔線 */}
-                <div className="absolute top-0 left-1/6 w-px h-2 bg-white"></div>
-                <div className="absolute top-[-1px] left-2/6 w-0.5 h-3 bg-white"></div>
-                <div className="absolute top-0 left-3/6 w-px h-2 bg-white"></div>
-                <div className="absolute top-[-1px] left-4/6 w-0.5 h-3 bg-white"></div>
-                <div className="absolute top-0 left-5/6 w-px h-2 bg-white"></div>
+              {/* 分隔線 */}
+              <div className="absolute top-0 left-1/6 w-px h-2 bg-white"></div>
+              <div className="absolute top-[-1px] left-2/6 w-0.5 h-3 bg-white"></div>
+              <div className="absolute top-0 left-3/6 w-px h-2 bg-white"></div>
+              <div className="absolute top-[-1px] left-4/6 w-0.5 h-3 bg-white"></div>
+              <div className="absolute top-0 left-5/6 w-px h-2 bg-white"></div>
               {/* 數字標籤（進度條下方） */}
               <div
                 className="absolute w-full"
                 style={{ top: '14px', height: '14px', pointerEvents: 'none' }}
               >
-                                 <span
-                   className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
-                   style={{ left: '8.33%', lineHeight: '14px' }}
-                 >
-                   1
-                 </span>
-                 <span
-                   className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
-                   style={{ left: '25%', lineHeight: '14px' }}
-                 >
-                   2
-                 </span>
-                 <span
-                   className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
-                   style={{ left: '41.67%', lineHeight: '14px' }}
-                 >
-                   3
-                 </span>
-                 <span
-                   className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
-                   style={{ left: '58.33%', lineHeight: '14px' }}
-                 >
-                   4
-                 </span>
-                 <span
-                   className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
-                   style={{ left: '75%', lineHeight: '14px' }}
-                 >
-                   5
-                 </span>
-                 <span
-                   className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
-                   style={{ left: '91.67%', lineHeight: '14px' }}
-                 >
-                   6
-                 </span>
+                <span
+                  className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
+                  style={{ left: '8.33%', lineHeight: '14px' }}
+                >
+                  1
+                </span>
+                <span
+                  className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
+                  style={{ left: '25%', lineHeight: '14px' }}
+                >
+                  2
+                </span>
+                <span
+                  className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
+                  style={{ left: '41.67%', lineHeight: '14px' }}
+                >
+                  3
+                </span>
+                <span
+                  className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
+                  style={{ left: '58.33%', lineHeight: '14px' }}
+                >
+                  4
+                </span>
+                <span
+                  className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
+                  style={{ left: '75%', lineHeight: '14px' }}
+                >
+                  5
+                </span>
+                <span
+                  className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
+                  style={{ left: '91.67%', lineHeight: '14px' }}
+                >
+                  6
+                </span>
               </div>
             </div>
           </div>
@@ -440,18 +444,18 @@ export default function ProfilePage() {
             <div className="relative z-10">
               <div className="text-center">
                 <div className="bg-white p-4 rounded-lg inline-block">
-                                     <QRCodeSVG
-                     value={currentUserData.id}
-                     size={isMobile ? 150 : 200}
-                     level="M"
-                     includeMargin={true}
-                   />
-                 </div>
-                 <div className="text-white text-lg font-bold mt-2">
-                   {t('congratulations')} {currentUserData.username}{' '}
-                   {t('completedText')} {currentUserData.completedChallenges}{' '}
-                   {t('completedChallengesText')}
-                 </div>
+                  <QRCodeSVG
+                    value={currentUserData.id}
+                    size={isMobile ? 150 : 200}
+                    level="M"
+                    includeMargin={true}
+                  />
+                </div>
+                <div className="text-white text-lg font-bold mt-2">
+                  {t('congratulations')} {currentUserData.username}{' '}
+                  {t('completedText')} {currentUserData.completedChallenges}{' '}
+                  {t('completedChallengesText')}
+                </div>
                 <div className="text-white text-lg mt-2">{t('thankYou')}</div>
               </div>
             </div>
