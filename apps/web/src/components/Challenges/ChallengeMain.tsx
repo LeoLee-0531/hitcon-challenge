@@ -57,7 +57,7 @@ export default function ChallengeMain({
         className="challenge-btn goto"
       >
         <div className="goto-span">
-          <span className="material-icons">open_in_new</span>
+          <span className="material-icons"></span>
           <span>前往關卡</span>
         </div>
       </a>
