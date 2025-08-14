@@ -304,7 +304,7 @@ export default function ChallengesPage() {
       }
     } catch (error) {
       setSubmitStatus('error');
-      setSubmitMessage('驗證失敗，請稍後再試！');
+      setSubmitMessage(t('validationFailed'));
       setPassword('');
     } finally {
       setIsSubmitting(false);

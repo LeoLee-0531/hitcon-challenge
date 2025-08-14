@@ -22,7 +22,7 @@ export default function HeroSection({ isMobile }: HeroSectionProps) {
       <div className="front-hero-div flex-center flex-wrap ">
         <div className="flex-center">
           <img className="front-hero-icon" src="/calander.svg"></img>
-          <div className='front-hero-content font-[\"Geist\"]'>8/15–8/16</div>
+          <div className="front-hero-content">8/15–8/16</div>
         </div>
 
         <div className="flex-center">
