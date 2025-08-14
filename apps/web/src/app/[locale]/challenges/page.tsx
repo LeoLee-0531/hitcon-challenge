@@ -354,7 +354,9 @@ export default function ChallengesPage() {
       <div className="fixed left-0 right-0 bottom-0 top-[100px] overflow-hidden">
         <div className="h-full w-full overflow-hidden">
           <div className="flex items-center justify-center min-h-screen">
-            <div className={isMobile ? 'layout-mobile ' : 'layout-desktop pb-4'}>
+            <div
+              className={isMobile ? 'layout-mobile ' : 'layout-desktop pb-4'}
+            >
               <ChallengeSidebar
                 challengesList={challengesList}
                 selectedChallenge={selectedChallenge}
