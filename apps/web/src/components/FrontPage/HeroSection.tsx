@@ -2,6 +2,20 @@
 
 import { useTranslations } from 'next-intl';
 import '@/styles/components/FrontPage.css';
+import {
+  Menu,
+  X,
+  User,
+  MapPin,
+  Calendar,
+  Users,
+  Trophy,
+  ExternalLink,
+  Shield,
+  Zap,
+  Brain,
+  Smartphone,
+} from "lucide-react";
 
 interface HeroSectionProps {
   isMobile: boolean;
@@ -21,12 +35,12 @@ export default function HeroSection({ isMobile }: HeroSectionProps) {
 
       <div className="front-hero-div flex-center flex-wrap ">
         <div className="flex-center">
-          <img className="front-hero-icon" src="/calander.svg"></img>
+          <Calendar className="front-hero-icon " />
           <div className="front-hero-content">8/15–8/16</div>
         </div>
 
         <div className="flex-center">
-          <img className="front-hero-icon" src="/map.svg"></img>
+          <MapPin className="front-hero-icon " />
           <div className="front-hero-content">中央研究院 人文社會科學館</div>
         </div>
       </div>

@@ -1,4 +1,6 @@
 'use client';
+import { CircleCheck } from 'lucide-react';
+import { Circle } from 'lucide-react';
 
 import { useState } from 'react';
 
@@ -29,7 +31,7 @@ function ChallengeIcon({ completed }: { completed: boolean }) {
       ? '/incompleteHover.svg'
       : '/incomplete.svg';
 
-  return (
+ return (
     <img
       className="sidebar-icon"
       src={src}
@@ -39,6 +41,8 @@ function ChallengeIcon({ completed }: { completed: boolean }) {
     />
   );
 }
+
+
 
 export default function ChallengeSidebar({
   challengesList,
