@@ -71,7 +71,7 @@ export const getStageStatistics = async (
 
       return {
         stage_id: stage.id,
-        stage_title: stage.titleZh, // 預設使用中文標題
+        stage_title: stage.title, // 預設使用中文標題
         passed_count: passedCount,
         pass_rate: parseFloat(passRate.toFixed(3)),
       };

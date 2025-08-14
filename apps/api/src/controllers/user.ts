@@ -1,3 +1,12 @@
+import type { Response, Request } from 'express';
+import { prisma } from '../lib/prisma';
+import { sendSuccess, sendError } from '../utils/response';
+import { ERROR_CODES, ERROR_MESSAGES } from '../constants/errors';
+import type { AuthenticatedRequest } from '../types';
+import { generateUserToken } from '../lib/jwt';
+
+import { OAuth2Client } from 'google-auth-library';
+
 // 取得目前使用者基本資料（id, email, role）
 export const getUserMe = async (
   req: AuthenticatedRequest,
@@ -25,14 +34,6 @@ export const getUserMe = async (
     );
   }
 };
-import type { Response, Request } from 'express';
-import { prisma } from '../lib/prisma';
-import { sendSuccess, sendError } from '../utils/response';
-import { ERROR_CODES, ERROR_MESSAGES } from '../constants/errors';
-import type { AuthenticatedRequest } from '../types';
-import { generateUserToken } from '../lib/jwt';
-
-import { OAuth2Client } from 'google-auth-library';
 
 export const loginUser = async (
   req: Request<object, object, { id_token: string }>,
