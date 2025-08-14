@@ -51,8 +51,8 @@ export default function ProfilePage() {
         if (result.success && result.data) {
           // 顯示API回傳的資料
           console.log('API回傳的完整資料:', result.data);
-          console.log('API回傳的ID:', result.data.id);
-          console.log('API回傳的ID類型:', typeof result.data.id);
+          console.log('API回傳的user_id:', result.data.user_id);
+          console.log('API回傳的user_id類型:', typeof result.data.user_id);
           
           // 計算等級 (每完成 2 個關卡升一級)
           const completedCount = result.data.progress?.filter((p: any) => p.passed).length || 0;
@@ -60,7 +60,7 @@ export default function ProfilePage() {
           const calculatedLevel = Math.floor(completedCount / 2);
           
           setUserData({
-            id: result.data.id,
+            id: result.data.user_id,
             username: result.data.name || 'NonameUser',
             avatar: result.data.image || '/avatar.png',
             completedChallenges: completedCount,
