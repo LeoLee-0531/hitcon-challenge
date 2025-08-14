@@ -37,5 +37,25 @@
     "validationError": "Validation error",
     "networkError": "Network error",
     "tryAgain": "Please try again later"
+  },
+  "about": {
+    "title": "📢 SITCON 2026",
+    "linkAlt": "SITCON 2026 link",
+    "venue": "@ Academia Sinica Humanities and Social Sciences Building",
+    "date": "2026 / 3 / 28 ( Sat. )",
+    "aboutTitle": "About SITCON",
+    "aboutDesc1": "Students’ Information Technology Conference (SITCON) was initiated in 2012, organized by students for students, dedicated to information education and open source spirit.",
+    "aboutDesc2": "We hope to inspire more students to enter the world of information, gather at the conference, exchange ideas, and practice the concept of 'learning by doing, teaching and learning together'.",
+    "cocTitle": "Code of Conduct",
+    "cocDesc1": "SITCON welcomes participants from all backgrounds and identities, and encourages diversity. To ensure everyone enjoys the event, all participants are required to read the conference ",
+    "cocLinkText": "Code of Conduct",
+    "cocDesc2": ", and help create a friendly environment together.",
+    "joinTitle": "Join the Community",
+    "joinDesc1": "SITCON is an open community. Many preparation matters are discussed publicly on the ",
+    "joinMailText": "mailing list",
+    "joinDesc2": ". If you are interested, feel free to subscribe and contribute your ideas. If you want to join next year's team, check out the recruitment page!",
+    "joinDesc3": "If you want to learn more about SITCON's preparation and discussions, visit ",
+    "joinDesc4": " to see the progress of SITCON 2026.",
+    "footerNote": "* This line seems to contain some magical content."
   }
 }
