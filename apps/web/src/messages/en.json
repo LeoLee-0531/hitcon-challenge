@@ -65,39 +65,19 @@
     "thankYou": "Thank you for participating!"
   },
   "admin": {
-    "scanParticipantQRCode": "Scan Participant QR Code",
-    "scanQRCode": "Scan QR Code",
-    "pleaseScanFirst": "Please scan participant QR Code first",
-    "participantProfile": "Participant Profile",
-    "completedChallenges": "Completed Challenges",
-    "rewardLevel": "Reward Level",
-    "level1": "Level 1",
-    "level2": "Level 2",
-    "level3": "Level 3",
-    "rewardLevelDescription": "Reward Level Description",
-    "level1Reward": "Level 1: You can get \"Stickers\"",
-    "level2Reward": "Level 2: You can get \"Stickers\" or \"Keychains\"",
-    "level3Reward": "Level 3: You can get \"Stickers\", \"Keychains\", or \"Annual T-shirt\"",
-    "achieved": "Achieved",
-    "notAchieved": "Not Achieved",
-    "redeemReward": "Redeem Reward!",
-    "rewardRedeemed": "Reward redeemed successfully!"
+    "scanParticipantQRCode": "Scan QR Code",
+    "scanQRCode": "Scan QR Code"
   },
   "scan": {
-    "qrCodeScanner": "QR Code Scanner",
-    "backToAdmin": "Back to Admin Page",
     "alignQRCode": "Please align the participant's QR Code with the scanning frame",
     "autoRedirect": "You will be automatically redirected to the admin page after successful scanning",
-    "scannerStartFailed": "Scanner startup failed",
-    "retry": "Retry",
-    "scanSuccess": "Scan successful!",
-    "redirecting": "Redirecting to admin page...",
-    "scanResult": "Scan result:",
     "putQRCodeInFrame": "Place the QR Code inside the scanning frame",
     "ensureClear": "Ensure the QR Code is clearly visible, avoid glare and shadows",
     "noCameraFound": "No camera found",
-    "cannotStartCamera": "Cannot start camera, please check permission settings",
-    "stoppingScanner": "Stopping old scanner:",
-    "startingScannerFailed": "Failed to start scanner:"
+    "cameraAccessError": "Cannot start camera, please check permission settings",
+    "selectCamera": "Select Camera",
+    "scanAgain": "Scan Again",
+    "claimReward": "Claim Reward",
+    "resetReward": "Reset Reward"
   }
 }

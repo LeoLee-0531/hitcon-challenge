@@ -1,115 +1,231 @@
-'use client';
+"use client";
 import { useState, useEffect, useRef } from 'react';
+import { useSession } from 'next-auth/react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
-import { Html5Qrcode } from 'html5-qrcode';
 import { useTranslations } from 'next-intl';
+import { Html5Qrcode } from 'html5-qrcode';
 
-// 響應式設計斷點
-const MOBILE_BREAKPOINT = 1024;
-
-export default function ScanPage() {
+export default function ScanPanel() {
   const t = useTranslations('scan');
-  const [isMobile, setIsMobile] = useState(false);
+  const { data: session, status } = useSession();
+
+  const router = useRouter();
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const router = useRouter();
+  const [userData, setUserData] = useState<any | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [cameras, setCameras] = useState<any[]>([]);
+  const [selectedCameraId, setSelectedCameraId] = useState<string | null>(null);
   const scannerRef = useRef<HTMLDivElement>(null);
   const html5QrCodeRef = useRef<Html5Qrcode | null>(null);
 
+  // 掛載時自動啟動掃描器，卸載時停止
   useEffect(() => {
-    const checkScreenSize = () => {
-      const width = window.innerWidth;
-      setIsMobile(width < MOBILE_BREAKPOINT);
-    };
-
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-
-    return () => window.removeEventListener('resize', checkScreenSize);
+    // 掛載時取得攝像頭列表
+    Html5Qrcode.getCameras().then((devices) => {
+      setCameras(devices);
+      // 預設選擇後置或第一個攝像頭
+      const defaultCamera =
+        devices.find(
+          (camera) =>
+            camera.label.toLowerCase().includes('back') ||
+            camera.label.toLowerCase().includes('後置') ||
+            camera.label.toLowerCase().includes('rear')
+        )?.id || devices[0]?.id;
+      setSelectedCameraId(defaultCamera || null);
+    });
   }, []);
 
-  // 啟動掃描器
+  // cameraId 變動時啟動掃描器
   useEffect(() => {
-    if (scannerRef.current && !html5QrCodeRef.current) {
-      startScanner();
-    }
-
+    if (!selectedCameraId || !scannerRef.current) return;
+    const timer = setTimeout(() => {
+      startScanner(selectedCameraId);
+    }, 0);
     return () => {
-      if (html5QrCodeRef.current && isScanning) {
+      clearTimeout(timer);
+      if (html5QrCodeRef.current) {
         html5QrCodeRef.current.stop().catch(console.error);
       }
     };
-  }, [isScanning]);
+  }, [selectedCameraId]);
 
-  const startScanner = async () => {
-    try {
-      // 如果已經有掃描器在運行，先停止它
-      if (html5QrCodeRef.current && isScanning) {
-        try {
-          await html5QrCodeRef.current.stop();
-        } catch (err) {
-          console.log(t('stoppingScanner'), err);
+  // 掃描成功處理
+  const handleScanSuccess = async (data: string) => {
+    if (isProcessing) return;
+    setIsProcessing(true);
+    setScanResult(data);
+    if (html5QrCodeRef.current && isScanning) {
+      html5QrCodeRef.current.stop().catch((err) => {
+        if (err && typeof err.message === 'string' && err.message.includes('scanner is not running or paused')) {
+          // 忽略此錯誤
+          return;
         }
-      }
-
-      const html5QrCode = new Html5Qrcode('qr-reader');
-      html5QrCodeRef.current = html5QrCode;
-
-      const cameras = await Html5Qrcode.getCameras();
-      if (cameras && cameras.length > 0) {
-        // 選擇後置相機（如果有的話）
-        const cameraId =
-          cameras.find(
-            (camera) =>
-              camera.label.toLowerCase().includes('back') ||
-              camera.label.toLowerCase().includes('後置') ||
-              camera.label.toLowerCase().includes('rear')
-          )?.id || cameras[0].id;
-
-        await html5QrCode.start(
-          { deviceId: cameraId },
-          {
-            fps: 10,
-            aspectRatio: 1.0,
-            disableFlip: false,
-          },
-          (decodedText) => {
-            handleScanSuccess(decodedText);
-          },
-          (errorMessage) => {
-            // 忽略掃描錯誤，繼續掃描
-          }
-        );
-        setIsScanning(true);
+        console.error(err);
+      });
+      setIsScanning(false);
+    }
+    // 呼叫 API 取得使用者資料
+    try {
+      const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+      const token = session?.apiToken || '';
+      console.log('final token: ', token);
+      const res = await fetch(`${baseURL}/api/reward/status?user_id=${encodeURIComponent(data)}`, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : '',
+        },
+      });
+      const result = await res.json();
+      if (result.success) {
+        setUserData(result.data);
+        setShowModal(true);
       } else {
-        setError(t('noCameraFound'));
+        alert('查詢失敗');
       }
     } catch (err) {
-      console.error(t('startingScannerFailed'), err);
-      setError(t('cannotStartCamera'));
-      setIsScanning(false);
+      alert('API 錯誤');
+      console.error(err);
+    } finally {
+      // 無論成功或失敗都重設 isProcessing，確保可以再次掃描
+      setIsProcessing(false);
     }
   };
 
-  // 處理掃描成功
-  const handleScanSuccess = (data: string) => {
-    if (!isProcessing) {
-      setIsProcessing(true);
-      setScanResult(data);
+  // Modal 元件
+  // TODO: Modal 樣式優化
+  const UserModal = ({ data, onClose }: { data: any, onClose: () => void }) => (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+      <div className="bg-[#181c18] rounded-lg p-8 w-[90vw] max-w-md shadow-lg relative">
+        <button
+          className="absolute top-2 right-2 text-gray-400 hover:text-white text-xl"
+          onClick={onClose}
+        >×</button>
+        <div className="space-y-2 text-white">
+          <div><span className="text-gray-400">名稱:</span> {data.name ?? '未提供'}</div>
+          <div><span className="text-gray-400">通過關卡數:</span> {data.passed_count}</div>
+          <div><span className="text-gray-400">已領獎:</span> {data.reward_claimed ? '是' : '否'}</div>
+          {data.claimed_at && (
+            <div><span className="text-gray-400">領獎時間:</span> {new Date(data.claimed_at).toLocaleString()}</div>
+          )}
+        </div>
+        <div className="mt-6 flex flex-col gap-2 items-center">
+          {/* 領取獎勵按鈕 */}
+          {!data.reward_claimed ? (
+            <button
+              className="bg-[#0DF20D] text-black px-4 py-2 rounded hover:bg-[#0be80b] w-full"
+              onClick={async () => {
+                try {
+                  const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+                  const token = session?.apiToken || '';
+                  const res = await fetch(`${baseURL}/api/admin/reward/claim`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      Authorization: token ? `Bearer ${token}` : '',
+                    },
+                    body: JSON.stringify({ user_id: data.user_id }),
+                  });
+                  const result = await res.json();
+                  if (result.success) {
+                    alert('兌換成功');
+                    setShowModal(false);
+                    setUserData(null);
+                    handleRestart();
+                  } else {
+                    alert(result.message || '兌換失敗');
+                  }
+                } catch (err) {
+                  alert('API 錯誤');
+                  console.error(err);
+                }
+              }}
+            >{t('claimReward')}</button>
+          ) : (
+            <button
+              className="bg-[#F20D0D] text-white px-4 py-2 rounded hover:bg-[#e80b0b] w-full border-2 border-[#F20D0D]"
+              onClick={async () => {
+                if (!window.confirm('確定要重製兌換狀態？')) return;
+                try {
+                  const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+                  const token = session?.apiToken || '';
+                  const res = await fetch(`${baseURL}/api/admin/reward/reset`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      Authorization: token ? `Bearer ${token}` : '',
+                    },
+                    body: JSON.stringify({ user_id: data.user_id }),
+                  });
+                  const result = await res.json();
+                  if (result.success) {
+                    alert('重製成功');
+                    setShowModal(false);
+                    setUserData(null);
+                    handleRestart();
+                  } else {
+                    alert(result.message || '重製失敗');
+                  }
+                } catch (err) {
+                  alert('API 錯誤');
+                  console.error(err);
+                }
+              }}
+            >{t("resetReward")}</button>
+          )}
+          <button
+            className="bg-[#0DF20D] text-black px-4 py-2 rounded hover:bg-[#0be80b] w-full"
+            onClick={() => {
+              setShowModal(false);
+              setUserData(null);
+              handleRestart();
+            }}
+          >{t('scanAgain')}</button>
+        </div>
+      </div>
+    </div>
+  );
 
-      // 停止掃描器
-      if (html5QrCodeRef.current && isScanning) {
-        html5QrCodeRef.current.stop().catch(console.error);
-        setIsScanning(false);
+  // 啟動掃描器
+  const startScanner = async (cameraId?: string | null) => {
+    try {
+      if (html5QrCodeRef.current) {
+        try {
+          await html5QrCodeRef.current.stop();
+        } catch (err: any) {
+          // 只在非「scanner is not running or paused」時才顯示錯誤
+          // 完全忽略 'scanner is not running or paused' 錯誤，不顯示在 console
+        }
       }
-
-      // 顯示掃描成功訊息
-      setTimeout(() => {
-        // 跳轉回管理頁面，帶上掃描到的用戶ID
-        router.push(`/admin?userid=${encodeURIComponent(data)}`);
-      }, 1500);
+      if (!scannerRef.current) {
+        throw new Error('Scanner DOM element not mounted');
+      }
+      if (!cameraId) {
+        setIsScanning(false);
+        return;
+      }
+      const html5QrCode = new Html5Qrcode('qr-reader');
+      html5QrCodeRef.current = html5QrCode;
+      await html5QrCode.start(
+        { deviceId: cameraId },
+        {
+          fps: 10,
+          aspectRatio: 1.0,
+          disableFlip: false,
+        },
+        handleScanSuccess,
+        () => { }
+      );
+      setIsScanning(true);
+    } catch (err: any) {
+      let errorMsg = t('cameraAccessError');
+      if (err && err.message) {
+        errorMsg += `\n${err.message}`;
+      }
+      alert(errorMsg);
+      setIsScanning(false);
+      console.error('開啟掃描時發生錯誤：', err);
     }
   };
 
@@ -121,159 +237,109 @@ export default function ScanPage() {
   // 重新開始掃描
   const handleRestart = async () => {
     setScanResult(null);
-    setError(null);
     setIsProcessing(false);
     setIsScanning(false);
-
-    // 重新啟動掃描器
-    if (html5QrCodeRef.current && isScanning) {
+    if (html5QrCodeRef.current) {
       try {
         await html5QrCodeRef.current.stop();
       } catch (err) {
         console.error('停止掃描器失敗:', err);
       }
+      html5QrCodeRef.current = null;
     }
-
-    // 重置掃描器引用
-    html5QrCodeRef.current = null;
-
     setTimeout(() => {
-      startScanner();
+      startScanner(selectedCameraId);
     }, 100);
   };
 
-  return (
-    <div className="min-h-screen bg-[#121712] flex flex-col items-center py-8">
-      {/* Header */}
-      <div
-        className="w-full max-w-[960px] flex flex-col mb-8"
-        style={{
-          paddingLeft: isMobile ? '16px' : '32px',
-          paddingRight: isMobile ? '16px' : '32px',
-        }}
-      >
-        <div className="mb-6">
-          <h2 className="text-white text-2xl font-bold mb-4 text-left">
-            {t('qrCodeScanner')}
-          </h2>
-          <div className="text-center">
-            <button
-              onClick={handleBack}
-              className="bg-[#BEE3BE] text-black px-8 py-3 rounded-[9999px] font-semibold hover:bg-gray-600 transition text-lg"
-            >
-              {t('backToAdmin')}
-            </button>
-          </div>
-        </div>
+  if (status === 'loading') {
+    // 不執行 API 請求
+    return;
+  }
 
-        <div className="text-center topmargin-20">
+  return (
+    <>
+      {/* Header */}
+      <div className="w-full max-w-[960px] flex flex-col mb-8 px-4 md:px-8">
+        <div className="text-center mt-5">
           <div className="text-[#8FCC8F] text-lg mb-2">{t('alignQRCode')}</div>
           <div className="text-gray-400 text-sm">{t('autoRedirect')}</div>
+          {/* 相機權限/存取失敗提示 */}
+          {!isScanning && !scanResult && (
+            <div className="text-red-400 text-sm mt-2">{t('cameraAccessError')}</div>
+          )}
+          {/* 攝像頭選擇下拉選單 */}
+          {cameras.length > 0 && (
+            <div className="mt-4 flex flex-col items-center">
+              <label htmlFor="camera-select" className="text-gray-400 mb-1">{t('selectCamera')}</label>
+              <select
+                id="camera-select"
+                className="bg-[#181c18] text-white border border-[#0DF20D] rounded px-2 py-1"
+                value={selectedCameraId || ''}
+                onChange={e => setSelectedCameraId(e.target.value)}
+              >
+                {cameras.map(cam => (
+                  <option key={cam.id} value={cam.id}>{cam.label || cam.id}</option>
+                ))}
+              </select>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Main Content */}
-      <main
-        className="w-full max-w-[960px] bg-[#121712] flex flex-col items-center px-4"
-        style={{
-          paddingLeft: isMobile ? '16px' : '32px',
-          paddingRight: isMobile ? '16px' : '32px',
-        }}
-      >
-        {error ? (
-          // 錯誤狀態
-          <div className="text-center py-20">
-            <div className="text-6xl mb-4">❌</div>
-            <div className="text-white text-xl mb-4">
-              {t('scannerStartFailed')}
-            </div>
-            <div className="text-gray-400 mb-6">{error}</div>
-            <button
-              onClick={handleRestart}
-              className="bg-[#0DF20D] text-black px-6 py-3 rounded-lg font-semibold hover:bg-[#0BE60B] transition"
-            >
-              {t('retry')}
-            </button>
-          </div>
-        ) : scanResult ? (
-          // 掃描成功狀態
-          <div className="text-center py-20">
-            <div className="text-6xl mb-4">✅</div>
-            <div className="text-white text-xl mb-4">{t('scanSuccess')}</div>
-            <div className="text-[#8FCC8F] mb-6">{t('redirecting')}</div>
-            <div className="bg-[#232B20] rounded-lg p-4 mb-6 max-w-md mx-auto">
-              <div className="text-gray-400 text-sm mb-2">
-                {t('scanResult')}
-              </div>
-              <div className="text-white text-sm break-all">{scanResult}</div>
-            </div>
-            <div className="animate-pulse">
-              <div className="w-6 h-6 border-2 border-[#0DF20D] border-t-transparent rounded-full mx-auto animate-spin"></div>
-            </div>
-          </div>
-        ) : (
-          // 掃描中狀態
-          <div className="w-full max-w-[640px] flex justify-center">
-            <div className="relative flex flex-col items-center">
-              {/* 掃描器容器 */}
-              <div
-                className="relative overflow-hidden rounded-lg border-2 border-[#0DF20D]"
-                style={{
-                  width: isMobile ? '300px' : '400px',
-                  height: isMobile ? '300px' : '400px',
-                }}
-              >
-                <div
-                  id="qr-reader"
-                  ref={scannerRef}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    aspectRatio: '1 / 1',
-                  }}
-                />
+      <main className="w-full max-w-[960px] bg-[#121712] flex flex-col items-center px-4 md:px-8">
+        {/* 掃描中狀態 */}
+        <div className="w-full max-w-[640px] flex justify-center">
+          <div className="relative flex flex-col items-center">
+            {/* 掃描器容器 */}
+            <div className="relative overflow-hidden rounded-lg border-2 border-[#0DF20D] w-[300px] h-[300px] md:w-[400px] md:h-[400px] aspect-square">
+              <div id="qr-reader" ref={scannerRef} className="w-full h-full aspect-square" />
 
-                {/* 隱藏 html5-qrcode 的內建掃描框，保持相機正常亮度 */}
-                <style jsx>{`
-                  #qr-reader {
-                    position: relative;
-                  }
-                  #qr-reader video {
-                    border-radius: 8px;
-                    filter: none !important;
-                  }
-                  /* 隱藏內建的白色掃描框 */
-                  #qr-reader div[style*='border: 2px solid white'],
-                  #qr-reader
-                    div[style*='border: 2px solid rgb(255, 255, 255)'] {
-                    display: none !important;
-                  }
-                `}</style>
+              {/* 隱藏 html5-qrcode 的內建掃描框，保持相機正常亮度 */}
+              <style jsx>{`
+                #qr-reader {
+                  position: relative;
+                }
+                #qr-reader video {
+                  border-radius: 8px;
+                  filter: none !important;
+                }
+                /* 隱藏內建的白色掃描框 */
+                #qr-reader div[style*='border: 2px solid white'],
+                #qr-reader
+                  div[style*='border: 2px solid rgb(255, 255, 255)'] {
+                  display: none !important;
+                }
+              `}</style>
 
-                {/* 掃描框指示器覆蓋層 */}
-                <div className="absolute inset-0 pointer-events-none">
-                  {/* 四個角落的掃描指示器 */}
-                  <div className="absolute top-4 left-4 w-8 h-8 border-l-4 border-t-4 border-[#0DF20D]"></div>
-                  <div className="absolute top-4 right-4 w-8 h-8 border-r-4 border-t-4 border-[#0DF20D]"></div>
-                  <div className="absolute bottom-4 left-4 w-8 h-8 border-l-4 border-b-4 border-[#0DF20D]"></div>
-                  <div className="absolute bottom-4 right-4 w-8 h-8 border-r-4 border-b-4 border-[#0DF20D]"></div>
+              {/* 掃描框指示器覆蓋層 */}
+              <div className="absolute inset-0 pointer-events-none">
+                {/* 四個角落的掃描指示器 */}
+                <div className="absolute top-4 left-4 w-8 h-8 border-l-4 border-t-4 border-[#0DF20D]"></div>
+                <div className="absolute top-4 right-4 w-8 h-8 border-r-4 border-t-4 border-[#0DF20D]"></div>
+                <div className="absolute bottom-4 left-4 w-8 h-8 border-l-4 border-b-4 border-[#0DF20D]"></div>
+                <div className="absolute bottom-4 right-4 w-8 h-8 border-r-4 border-b-4 border-[#0DF20D]"></div>
 
-                  {/* 掃描線動畫 */}
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#0DF20D] to-transparent animate-pulse"></div>
-                </div>
-              </div>
-
-              {/* 掃描說明 */}
-              <div className="mt-6 text-center">
-                <div className="text-white text-lg mb-2">
-                  {t('putQRCodeInFrame')}
-                </div>
-                <div className="text-gray-400 text-sm">{t('ensureClear')}</div>
+                {/* 掃描線動畫 */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#0DF20D] to-transparent animate-pulse"></div>
               </div>
             </div>
+
+            {/* 掃描說明 */}
+            <div className="mt-6 text-center">
+              <div className="text-white text-lg mb-2">
+                {t('putQRCodeInFrame')}
+              </div>
+              <div className="text-gray-400 text-sm">{t('ensureClear')}</div>
+            </div>
           </div>
+        </div>
+        {/* Modal 顯示使用者資料 */}
+        {showModal && userData && (
+          <UserModal data={userData} onClose={() => { setShowModal(false); setUserData(null); handleRestart(); }} />
         )}
       </main>
-    </div>
+    </>
   );
 }

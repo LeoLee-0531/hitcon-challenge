@@ -65,39 +65,19 @@
     "thankYou": "感謝您的參與！"
   },
   "admin": {
-    "scanParticipantQRCode": "掃描參與者 QR Code",
-    "scanQRCode": "掃描 QR Code",
-    "pleaseScanFirst": "請先掃描參與者 QR Code",
-    "participantProfile": "參與者資料",
-    "completedChallenges": "通過關卡",
-    "rewardLevel": "獎勵等級",
-    "level1": "第一級",
-    "level2": "第二級",
-    "level3": "第三級",
-    "rewardLevelDescription": "獎勵等級說明",
-    "level1Reward": "第一級:可選擇「貼紙」作為獎品",
-    "level2Reward": "第二級:可選擇「貼紙」或「鑰匙圈」作為獎品 (二擇一)",
-    "level3Reward": "第三級:可選擇「貼紙」、「鑰匙圈」或「年會T-shirt」作為獎品 (三擇一)",
-    "achieved": "已達成",
-    "notAchieved": "未達成",
-    "redeemReward": "兌換獎品!",
-    "rewardRedeemed": "獎品兌換成功！"
+    "scanParticipantQRCode": "掃描 QR Code",
+    "scanQRCode": "掃描 QR Code"
   },
   "scan": {
-    "qrCodeScanner": "QR Code 掃描器",
-    "backToAdmin": "返回管理頁面",
     "alignQRCode": "請將參與者的 QR Code 對準掃描框",
     "autoRedirect": "掃描成功後將自動跳轉回管理頁面",
-    "scannerStartFailed": "掃描器啟動失敗",
-    "retry": "重新嘗試",
-    "scanSuccess": "掃描成功！",
-    "redirecting": "正在跳轉回管理頁面...",
-    "scanResult": "掃描結果：",
     "putQRCodeInFrame": "將 QR Code 放入掃描框內",
     "ensureClear": "確保 QR Code 清晰可見，避免反光和陰影",
     "noCameraFound": "未找到可用的相機",
-    "cannotStartCamera": "無法啟動相機，請檢查權限設定",
-    "stoppingScanner": "停止舊掃描器:",
-    "startingScannerFailed": "啟動掃描器失敗:"
+    "cameraAccessError": "無法啟動相機，請檢查權限設定",
+    "selectCamera": "選擇相機",
+    "scanAgain": "重新掃描",
+    "claimReward": "領取獎勵",
+    "resetReward": "重置兌換"
   }
 }

@@ -1,11 +1,11 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const authOptions = {
   providers: [Google],
-  session: { strategy: 'jwt' },
+  session: { strategy: 'jwt' as const },
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account }: { token: any; account?: any }) {
       // 初次登入
       if (account && account.id_token) {
         try {
@@ -47,7 +47,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: any; token: any }) {
       if (token.apiToken) {
         session.apiToken = token.apiToken as string;
       }
@@ -57,4 +57,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
   },
-});
+};
+
+export const { handlers, signIn, signOut, auth } = NextAuth(authOptions);
