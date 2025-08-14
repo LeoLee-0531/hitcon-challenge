@@ -87,7 +87,8 @@
     "errorMessage": "Flag 錯誤，請再試一次！",
     "validationFailed": "驗證失敗，請稍後再試！",
     "submitting": "送出中...",
-    "loginRequired": "請先登入後再進行關卡驗證"
+    "loginRequired": "請先登入後再進行關卡驗證",
+    "invalidFlagFormat": "無效的 flag 格式，請使用 SITCON{...} 格式。"
   },
   "errors": {
     "notFound": "找不到頁面",
