@@ -17,8 +17,7 @@ export default function EventDescription({ isMobile }: EventDescriptionProps) {
         <div className="event-title font-bold">活動說明</div>
         <p className="event-content font-light">
           在 HITCON 攤位，SITCON 將帶來一場結合技術、趣味與創意的「闖關挑戰」！
-          總共七道關卡，從現場尋找 Flag 到破解 Prompt Injection、Python Jail
-          等，關關精彩！
+          總共 6 道關卡，從 Git Leak、 Crypto 到 Python Jail 等，關關精彩！
         </p>
       </div>
       <div>
@@ -39,7 +38,7 @@ export default function EventDescription({ isMobile }: EventDescriptionProps) {
           <div className="event-list-content">
             <img className="event-icon" src="/prize.svg"></img>
             <p className="event-content font-normal ">
-              完成 3、5、7 關可獲得不同等級獎勵
+              完成 2、4、6 關可獲得不同等級獎勵
             </p>
           </div>
         </div>

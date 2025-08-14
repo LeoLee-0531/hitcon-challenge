@@ -25,15 +25,15 @@ export default function RewardDescription({
           className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center gap-4`}
         >
           <div className="reward-glass-container">
-            <p className="reward-3 reward-level font-bold">3 關</p>
+            <p className="reward-3 reward-level font-bold">2 關</p>
             <p className="reward-3 reward-prize font-bold">一級獎</p>
           </div>
           <div className="reward-glass-container">
-            <p className="reward-5 reward-level font-bold">5 關</p>
+            <p className="reward-5 reward-level font-bold">4 關</p>
             <p className="reward-5 reward-prize font-bold">二級獎</p>
           </div>
           <div className="reward-glass-container">
-            <p className="reward-7 reward-level font-bold">7 關</p>
+            <p className="reward-7 reward-level font-bold">6 關</p>
             <p className="reward-7 reward-prize font-bold">三級獎</p>
           </div>
         </div>

@@ -14,7 +14,7 @@ export default function Banner({ isMobile }: BannerProps) {
       <div
         className={`banner-content font-bold ${isMobile ? 'text-base' : ''}`}
       >
-        挑戰七道關卡，贏得 SITCON 限定好禮！
+        挑戰 6 道關卡，贏得 SITCON 限定好禮！
       </div>
     </div>
   );
