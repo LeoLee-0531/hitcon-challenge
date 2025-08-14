@@ -3,29 +3,86 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useTranslations } from 'next-intl';
+import { useSession } from 'next-auth/react';
+import { apiFetch } from '@/utils/apiFetch';
+import { env } from '@/config/env';
 
 // 響應式設計斷點
 const MOBILE_BREAKPOINT = 1024; // 使用標準的桌面斷點 (lg)
 
 export default function ProfilePage() {
   const t = useTranslations('profile');
+  const { data: session } = useSession();
   const [isMobile, setIsMobile] = useState(false);
   const [qrCodeGenerated, setQrCodeGenerated] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [userData, setUserData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // 假的使用者資料，之後可以從 localStorage 取得
-  const fakeUserData = {
-    id: 'user-123',
-    username: '小美',
+  // 使用者資料結構
+  const defaultUserData = {
+    id: '',
+    username: '',
     avatar: '/avatar.png',
-    completedChallenges: 3,
-    totalChallenges: 7,
-    level: 1, // 1-3 級
+    completedChallenges: 0,
+    totalChallenges: 6,
+    level: 0,
   };
 
-  // 從假資料計算進度
+  // 從 API 資料計算進度
+  const currentUserData = userData || defaultUserData;
   const progressPercentage =
-    (fakeUserData.completedChallenges / fakeUserData.totalChallenges) * 100;
+    (currentUserData.completedChallenges / currentUserData.totalChallenges) * 100;
+
+  // 獲取使用者資料
+  const fetchUserData = async () => {
+    if (!session?.apiToken) return;
+
+    try {
+      const response = await apiFetch(`${env.API_BASE_URL}/api/user/profile`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${session.apiToken}`,
+        },
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.data) {
+          // 顯示API回傳的資料
+          console.log('API回傳的完整資料:', result.data);
+          console.log('API回傳的ID:', result.data.id);
+          console.log('API回傳的ID類型:', typeof result.data.id);
+          
+          // 計算等級 (每完成 2 個關卡升一級)
+          const completedCount = result.data.progress?.filter((p: any) => p.passed).length || 0;
+          // 根據完成的關卡數計算等級：每完成2關升一級
+          const calculatedLevel = Math.floor(completedCount / 2);
+          
+          setUserData({
+            id: result.data.id,
+            username: result.data.name || 'NonameUser',
+            avatar: result.data.image || '/avatar.png',
+            completedChallenges: completedCount,
+            totalChallenges: 6,
+            level: calculatedLevel,
+          });
+        }
+      }
+    } catch (error) {
+      console.error('獲取使用者資料失敗:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (session?.apiToken) {
+      fetchUserData();
+    } else {
+      setIsLoading(false);
+    }
+  }, [session?.apiToken]);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -46,8 +103,8 @@ export default function ProfilePage() {
       // 模擬 QR code 生成過程
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // 生成 QR code，內容是使用者 ID
-      console.log('生成 QR code，使用者 ID:', fakeUserData.id);
+             // 生成 QR code，內容是使用者 ID
+       console.log('生成 QR code，使用者 ID:', currentUserData.id);
       setQrCodeGenerated(true);
     } catch (error) {
       console.error('生成 QR code 失敗:', error);
@@ -70,26 +127,26 @@ export default function ProfilePage() {
       >
         {/* Avatar & Name */}
         <div className="flex flex-col items-center mb-8">
-          <Image
-            src={fakeUserData.avatar}
-            alt="avatar"
-            width={128}
-            height={128}
-            className="rounded-full border-4 border-[#232B20]"
-            style={{
-              width: isMobile ? '80px' : '128px',
-              height: isMobile ? '80px' : '128px',
-              borderWidth: isMobile ? '2px' : '4px',
-            }}
-          />
-          <div
-            className="text-[22px] font-bold text-white mt-4"
-            style={{
-              fontSize: isMobile ? '16px' : '22px',
-            }}
-          >
-            {fakeUserData.username}
-          </div>
+                     <Image
+             src={currentUserData.avatar}
+             alt="avatar"
+             width={128}
+             height={128}
+             className="rounded-full border-4 border-[#232B20]"
+             style={{
+               width: isMobile ? '80px' : '128px',
+               height: isMobile ? '80px' : '128px',
+               borderWidth: isMobile ? '2px' : '4px',
+             }}
+           />
+           <div
+             className="text-[22px] font-bold text-white mt-4"
+             style={{
+               fontSize: isMobile ? '16px' : '22px',
+             }}
+           >
+             {currentUserData.username}
+           </div>
         </div>
 
         {/* Progress Section */}
@@ -106,7 +163,7 @@ export default function ProfilePage() {
               fontSize: isMobile ? '18px' : '24px',
             }}
           >
-            {fakeUserData.completedChallenges}/{fakeUserData.totalChallenges}
+                         {currentUserData.completedChallenges}/{currentUserData.totalChallenges}
           </div>
           <div
             className="text-[#8FCC8F] mb-4 text-[14px]"
@@ -126,31 +183,31 @@ export default function ProfilePage() {
               <span>{t('rewardLevel')}</span>
             </div>
             <div className="relative w-full h-2 bg-gray-700 rounded-full">
-              {/* milestone 標籤（進度條上方） */}
-              <div
-                className="absolute w-full"
-                style={{ top: '-25px', height: '16px', pointerEvents: 'none' }}
-              >
-                <span className="absolute left-3/7 top-0 -translate-x-1/2 text-white text-xs">
-                  {t('level1')}
-                </span>
-                <span className="absolute left-5/7 top-0 -translate-x-1/2 text-white text-xs">
-                  {t('level2')}
-                </span>
-                <span className="absolute right-0 top-0 text-white text-xs">
-                  {t('level3')}
-                </span>
-              </div>
-              {/* 7個關卡進度條 */}
+                             {/* milestone 標籤（進度條上方） */}
+               <div
+                 className="absolute w-full"
+                 style={{ top: '-25px', height: '16px', pointerEvents: 'none' }}
+               >
+                 <span className="absolute left-1/3 top-0 -translate-x-1/2 text-white text-xs">
+                   {t('level1')}
+                 </span>
+                 <span className="absolute left-2/3 top-0 -translate-x-1/2 text-white text-xs">
+                   {t('level2')}
+                 </span>
+                 <span className="absolute right-0 top-0 text-white text-xs">
+                   {t('level3')}
+                 </span>
+               </div>
+              {/* 6個關卡進度條 */}
               <div className="flex w-full h-2">
                 {/* 動態生成進度條 */}
-                {Array.from(
-                  { length: fakeUserData.totalChallenges },
-                  (_, index) => {
-                    const isCompleted =
-                      index < fakeUserData.completedChallenges;
-                    const isFirst = index === 0;
-                    const isLast = index === fakeUserData.totalChallenges - 1;
+                             {Array.from(
+                   { length: currentUserData.totalChallenges },
+                   (_, index) => {
+                     const isCompleted =
+                       index < currentUserData.completedChallenges;
+                     const isFirst = index === 0;
+                     const isLast = index === currentUserData.totalChallenges - 1;
 
                     return (
                       <div
@@ -164,60 +221,53 @@ export default function ProfilePage() {
                   }
                 )}
               </div>
-              {/* 分隔線 */}
-              <div className="absolute top-0 left-1/7 w-px h-2 bg-white"></div>
-              <div className="absolute top-0 left-2/7 w-px h-2 bg-white"></div>
-              <div className="absolute top-[-1px] left-3/7 w-0.5 h-3 bg-white"></div>
-              <div className="absolute top-0 left-4/7 w-px h-2 bg-white"></div>
-              <div className="absolute top-[-1px] left-5/7 w-0.5 h-3 bg-white"></div>
-              <div className="absolute top-0 left-6/7 w-px h-2 bg-white"></div>
+                                            {/* 分隔線 */}
+                <div className="absolute top-0 left-1/6 w-px h-2 bg-white"></div>
+                <div className="absolute top-[-1px] left-2/6 w-0.5 h-3 bg-white"></div>
+                <div className="absolute top-0 left-3/6 w-px h-2 bg-white"></div>
+                <div className="absolute top-[-1px] left-4/6 w-0.5 h-3 bg-white"></div>
+                <div className="absolute top-0 left-5/6 w-px h-2 bg-white"></div>
               {/* 數字標籤（進度條下方） */}
               <div
                 className="absolute w-full"
                 style={{ top: '14px', height: '14px', pointerEvents: 'none' }}
               >
-                <span
-                  className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
-                  style={{ left: '7.14%', lineHeight: '14px' }}
-                >
-                  1
-                </span>
-                <span
-                  className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
-                  style={{ left: '21.43%', lineHeight: '14px' }}
-                >
-                  2
-                </span>
-                <span
-                  className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
-                  style={{ left: '35.71%', lineHeight: '14px' }}
-                >
-                  3
-                </span>
-                <span
-                  className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
-                  style={{ left: '50%', lineHeight: '14px' }}
-                >
-                  4
-                </span>
-                <span
-                  className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
-                  style={{ left: '64.29%', lineHeight: '14px' }}
-                >
-                  5
-                </span>
-                <span
-                  className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
-                  style={{ left: '78.57%', lineHeight: '14px' }}
-                >
-                  6
-                </span>
-                <span
-                  className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
-                  style={{ left: '92.86%', lineHeight: '14px' }}
-                >
-                  7
-                </span>
+                                 <span
+                   className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
+                   style={{ left: '8.33%', lineHeight: '14px' }}
+                 >
+                   1
+                 </span>
+                 <span
+                   className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
+                   style={{ left: '25%', lineHeight: '14px' }}
+                 >
+                   2
+                 </span>
+                 <span
+                   className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
+                   style={{ left: '41.67%', lineHeight: '14px' }}
+                 >
+                   3
+                 </span>
+                 <span
+                   className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
+                   style={{ left: '58.33%', lineHeight: '14px' }}
+                 >
+                   4
+                 </span>
+                 <span
+                   className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
+                   style={{ left: '75%', lineHeight: '14px' }}
+                 >
+                   5
+                 </span>
+                 <span
+                   className="absolute -translate-x-1/2 text-gray-300 opacity-70 text-[10px] select-none"
+                   style={{ left: '91.67%', lineHeight: '14px' }}
+                 >
+                   6
+                 </span>
               </div>
             </div>
           </div>
@@ -244,7 +294,7 @@ export default function ProfilePage() {
           </div>
           {/* 動態渲染獎勵等級說明 */}
           {(() => {
-            const userLevel = fakeUserData.level; // 假資料，之後可從 API 取得
+            const userLevel = currentUserData.level;
             const levels = [
               { label: t('level1Requirement'), achieved: userLevel >= 1 },
               { label: t('level2Requirement'), achieved: userLevel >= 2 },
@@ -390,18 +440,18 @@ export default function ProfilePage() {
             <div className="relative z-10">
               <div className="text-center">
                 <div className="bg-white p-4 rounded-lg inline-block">
-                  <QRCodeSVG
-                    value={fakeUserData.id}
-                    size={isMobile ? 150 : 200}
-                    level="M"
-                    includeMargin={true}
-                  />
-                </div>
-                <div className="text-white text-lg font-bold mt-2">
-                  {t('congratulations')} {fakeUserData.username}{' '}
-                  {t('completedText')} {fakeUserData.completedChallenges}{' '}
-                  {t('completedChallengesText')}
-                </div>
+                                     <QRCodeSVG
+                     value={currentUserData.id}
+                     size={isMobile ? 150 : 200}
+                     level="M"
+                     includeMargin={true}
+                   />
+                 </div>
+                 <div className="text-white text-lg font-bold mt-2">
+                   {t('congratulations')} {currentUserData.username}{' '}
+                   {t('completedText')} {currentUserData.completedChallenges}{' '}
+                   {t('completedChallengesText')}
+                 </div>
                 <div className="text-white text-lg mt-2">{t('thankYou')}</div>
               </div>
             </div>
