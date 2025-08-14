@@ -94,7 +94,7 @@ export default function AboutSITCONPage() {
                 rel="noreferrer noopener"
                 className="text-[#0DF20D] font-semibold underline hover:opacity-80 transition"
               >
-                GitLab
+                {t('gitlab')}
               </a>
               {t('joinDesc4')}
             </p>
