@@ -1,5 +1,7 @@
 'use client';
 
+import { SquareArrowOutUpRight } from 'lucide-react';
+
 interface Challenge {
   id: string;
   stageId: string; // 新增：資料庫中的關卡 ID
@@ -67,7 +69,7 @@ export default function ChallengeMain({
         className="challenge-btn goto"
       >
         <div className="goto-span">
-          <span className="material-icons"></span>
+          <SquareArrowOutUpRight className="h-5"/>
           <span>前往關卡</span>
         </div>
       </a>
