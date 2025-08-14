@@ -11,6 +11,10 @@ import { env } from '@/config/env';
 // 響應式設計斷點
 const MOBILE_BREAKPOINT = 1024; // 使用標準的桌面斷點 (lg)
 
+// 安全設定常數
+const FLAG_MAX_LENGTH = 150; // Flag 輸入的最大長度限制
+const FLAG_PATTERN = /^SITCON\{.*\}$/; // Flag 格式驗證正則表達式
+
 interface Challenge {
   id: string;
   stageId: string; // 新增：資料庫中的關卡 ID
@@ -38,9 +42,8 @@ export default function ChallengesPage() {
     // 移除多餘空白
     const trimmed = strInput.trim();
     // 限制長度 (防止過長輸入攻擊)
-    const maxLength = 150;
-    return trimmed.length > maxLength
-      ? trimmed.substring(0, maxLength)
+    return trimmed.length > FLAG_MAX_LENGTH
+      ? trimmed.substring(0, FLAG_MAX_LENGTH)
       : trimmed;
   };
 
@@ -49,8 +52,7 @@ export default function ChallengesPage() {
     // 檢查是否為空
     if (!flag) return false;
     // 檢查是否包含 SITCON{...} 格式
-    const flagPattern = /^SITCON\{.*\}$/;
-    return flagPattern.test(flag);
+    return FLAG_PATTERN.test(flag);
   };
   const [isMobile, setIsMobile] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
