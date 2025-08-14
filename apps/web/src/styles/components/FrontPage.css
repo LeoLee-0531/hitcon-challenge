@@ -196,10 +196,6 @@
     font-size: var(--size-md);
   }
 
-  .event-list {
-    gap: 2.5rem;
-  }
-
   .reward-title {
     font-size: var(--size-ha);
     padding-bottom: 2rem;

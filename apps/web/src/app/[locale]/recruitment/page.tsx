@@ -1,6 +1,7 @@
 // app/recruit/page.tsx
 import React from 'react';
 import Link from 'next/link';
+import BaseFooter from '@/components/BaseFooter';
 
 type Team = {
   id: string;
@@ -112,162 +113,165 @@ const TEAMS: Team[] = [
 
 export default function RecruitPage() {
   return (
-    <div className="grid grid-cols-12">
-      <div className="xl:col-span-2 col-span-1" />
-      <div className="xl:col-span-8 col-span-10">
-        <main
-          id="top"
-          className="min-h-screen w-full bg-[#121712] text-white my-12"
-        >
-          <div className="mx-auto max-w-6xl px-4 py-8 mb-8">
-            {/* Header */}
-            <header className="mb-8 py-15 text-center">
-              <h1 className="text-3xl sm:text-4xl md:text-4.5xl font-bold">
-                SITCON 2026 <br />
-                工作人員招募資訊
-              </h1>
-              <p className="mt-2 text-sm text-emerald-300/80">
-                歡迎加入籌備團隊！下方表格含截止日期、招募名額、表單連結與工作內容。
-              </p>
-            </header>
+    <>
+      <div className="grid grid-cols-12">
+        <div className="xl:col-span-2 col-span-1" />
+        <div className="xl:col-span-8 col-span-10">
+          <main
+            id="top"
+            className="min-h-screen w-full bg-[#121712] text-white my-12"
+          >
+            <div className="mx-auto max-w-6xl px-4 py-8 mb-8">
+              {/* Header */}
+              <header className="mb-8 py-15 text-center">
+                <h1 className="text-3xl sm:text-4xl md:text-4.5xl font-bold">
+                  SITCON 2026 <br />
+                  工作人員招募資訊
+                </h1>
+                <p className="mt-2 text-sm text-emerald-300/80">
+                  歡迎加入籌備團隊！下方表格含截止日期、招募名額、表單連結與工作內容。
+                </p>
+              </header>
 
-            {/* Cards (mobile) */}
-            <section className="md:hidden space-y-4">
-              {TEAMS.map((t) => (
-                <article
-                  key={t.id}
-                  className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <h2 className="text-lg font-semibold">{t.name}</h2>
-                    <div>
-                      <Badge>{t.deadline}</Badge>
-                      <ExternalLink href={t.formUrl}>{'報名表單'}</ExternalLink>
+              {/* Cards (mobile) */}
+              <section className="md:hidden space-y-4">
+                {TEAMS.map((t) => (
+                  <article
+                    key={t.id}
+                    className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <h2 className="text-lg font-semibold">{t.name}</h2>
+                      <div>
+                        <Badge>{t.deadline}</Badge>
+                        <ExternalLink href={t.formUrl}>
+                          {'報名表單'}
+                        </ExternalLink>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="mt-3 grid grid-cols-1 gap-2">
-                    {t.headcount && (
-                      <Row label="招募人數">
-                        <span className="text-gray-200">{t.headcount}</span>
+                    <div className="mt-3 grid grid-cols-1 gap-2">
+                      {t.headcount && (
+                        <Row label="招募人數">
+                          <span className="text-gray-200">{t.headcount}</span>
+                        </Row>
+                      )}
+
+                      <Row label="工作內容">
+                        <BulletList items={t.duties} />
                       </Row>
-                    )}
 
-                    <Row label="工作內容">
-                      <BulletList items={t.duties} />
-                    </Row>
+                      {t.preferred && t.preferred.length > 0 && (
+                        <Row label="推薦條件">
+                          <BulletList items={t.preferred} />
+                        </Row>
+                      )}
 
-                    {t.preferred && t.preferred.length > 0 && (
-                      <Row label="推薦條件">
-                        <BulletList items={t.preferred} />
-                      </Row>
-                    )}
+                      {t.process && t.process.length > 0 && (
+                        <Row label="招募流程">
+                          <BulletList items={t.process} />
+                        </Row>
+                      )}
 
-                    {t.process && t.process.length > 0 && (
-                      <Row label="招募流程">
-                        <BulletList items={t.process} />
-                      </Row>
-                    )}
+                      {t.techStack && t.techStack.length > 0 && (
+                        <Row label="技術 / 工具">
+                          <TagList items={t.techStack} />
+                        </Row>
+                      )}
 
-                    {t.techStack && t.techStack.length > 0 && (
-                      <Row label="技術 / 工具">
-                        <TagList items={t.techStack} />
-                      </Row>
-                    )}
+                      {t.notes && t.notes.length > 0 && (
+                        <Row label="備註">
+                          <BulletList items={t.notes} />
+                        </Row>
+                      )}
+                    </div>
+                  </article>
+                ))}
+                <div className="mt-6 text-center">
+                  <Link
+                    href="#top"
+                    className="text-sm text-emerald-300 hover:text-emerald-200 underline underline-offset-2"
+                  >
+                    ⬆️ 回頂端
+                  </Link>
+                </div>
+              </section>
 
-                    {t.notes && t.notes.length > 0 && (
-                      <Row label="備註">
-                        <BulletList items={t.notes} />
-                      </Row>
-                    )}
-                  </div>
-                </article>
-              ))}
-              <div className="mt-6 text-center">
-                <Link
-                  href="#top"
-                  className="text-sm text-emerald-300 hover:text-emerald-200 underline underline-offset-2"
-                >
-                  ⬆️ 回頂端
-                </Link>
-              </div>
-            </section>
-
-            {/* Table (md+) */}
-            <section className="hidden md:block">
-              <div className="overflow-hidden rounded-xl border border-white/10">
-                <table className="w-full border-collapse">
-                  <thead className="bg-emerald-900/30">
-                    <tr>
-                      <Th className="w-[80px]">組別</Th>
-                      <Th className="w-[100px]">截止日期</Th>
-                      <Th className="w-[110px]">招募人數</Th>
-                      <Th>工作內容</Th>
-                      <Th>推薦條件 / 流程 / 技術</Th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-white/10">
-                    {TEAMS.map((t, idx) => (
-                      <tr
-                        key={t.id}
-                        className={
-                          idx % 2 === 0 ? 'bg-white/0' : 'bg-white/[0.03]'
-                        }
-                      >
-                        <Td>
-                          <div className="font-semibold">{t.name}</div>
-                        </Td>
-                        <Td>
-                          <div className="flex flex-col gap-2">
-                            <Badge>{t.deadline}</Badge>
-                            <ExternalLink href={t.formUrl}>
-                              {'報名表單'}
-                            </ExternalLink>
-                          </div>
-                        </Td>
-                        <Td>
-                          <span className="text-gray-200">
-                            {t.headcount ?? '—'}
-                          </span>
-                        </Td>
-                        <Td>
-                          <BulletList items={t.duties} />
-                        </Td>
-                        <Td>
-                          <div className="space-y-3">
-                            {t.preferred && t.preferred.length > 0 && (
-                              <section>
-                                <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
-                                  推薦條件
-                                </h4>
-                                <BulletList items={t.preferred} />
-                              </section>
-                            )}
-                            {t.process && t.process.length > 0 && (
-                              <section>
-                                <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
-                                  招募流程
-                                </h4>
-                                <BulletList items={t.process} />
-                              </section>
-                            )}
-                            {t.techStack && t.techStack.length > 0 && (
-                              <section>
-                                <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
-                                  技術 / 工具
-                                </h4>
-                                <TagList items={t.techStack} />
-                              </section>
-                            )}
-                          </div>
-                        </Td>
+              {/* Table (md+) */}
+              <section className="hidden md:block">
+                <div className="overflow-hidden rounded-xl border border-white/10">
+                  <table className="w-full border-collapse">
+                    <thead className="bg-emerald-900/30">
+                      <tr>
+                        <Th className="w-[80px]">組別</Th>
+                        <Th className="w-[100px]">截止日期</Th>
+                        <Th className="w-[110px]">招募人數</Th>
+                        <Th>工作內容</Th>
+                        <Th>推薦條件 / 流程 / 技術</Th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody className="divide-y divide-white/10">
+                      {TEAMS.map((t, idx) => (
+                        <tr
+                          key={t.id}
+                          className={
+                            idx % 2 === 0 ? 'bg-white/0' : 'bg-white/[0.03]'
+                          }
+                        >
+                          <Td>
+                            <div className="font-semibold">{t.name}</div>
+                          </Td>
+                          <Td>
+                            <div className="flex flex-col gap-2">
+                              <Badge>{t.deadline}</Badge>
+                              <ExternalLink href={t.formUrl}>
+                                {'報名表單'}
+                              </ExternalLink>
+                            </div>
+                          </Td>
+                          <Td>
+                            <span className="text-gray-200">
+                              {t.headcount ?? '—'}
+                            </span>
+                          </Td>
+                          <Td>
+                            <BulletList items={t.duties} />
+                          </Td>
+                          <Td>
+                            <div className="space-y-3">
+                              {t.preferred && t.preferred.length > 0 && (
+                                <section>
+                                  <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
+                                    推薦條件
+                                  </h4>
+                                  <BulletList items={t.preferred} />
+                                </section>
+                              )}
+                              {t.process && t.process.length > 0 && (
+                                <section>
+                                  <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
+                                    招募流程
+                                  </h4>
+                                  <BulletList items={t.process} />
+                                </section>
+                              )}
+                              {t.techStack && t.techStack.length > 0 && (
+                                <section>
+                                  <h4 className="mb-1 text-xs font-semibold text-emerald-300/90">
+                                    技術 / 工具
+                                  </h4>
+                                  <TagList items={t.techStack} />
+                                </section>
+                              )}
+                            </div>
+                          </Td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
-              {/* <div className="mt-4 text-right">
+                {/* <div className="mt-4 text-right">
             <Link
               href="#top"
               className="text-sm text-emerald-300 hover:text-emerald-200 underline underline-offset-2"
@@ -275,12 +279,14 @@ export default function RecruitPage() {
               ⬆️ 回頂端
             </Link>
           </div> */}
-            </section>
-          </div>
-        </main>
+              </section>
+            </div>
+          </main>
+        </div>
+        <div className="xl:col-span-2 col-span-1" />
       </div>
-      <div className="xl:col-span-2 col-span-1" />
-    </div>
+      <BaseFooter />
+    </>
   );
 }
 

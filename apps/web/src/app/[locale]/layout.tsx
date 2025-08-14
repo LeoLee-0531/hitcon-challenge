@@ -69,7 +69,7 @@ export default async function LocaleLayout({
           <main className="flex-1">{children}</main>
 
           {/* Footer - 條件性顯示 */}
-          <ConditionalFooter />
+          {/* <ConditionalFooter /> */}
         </NextIntlClientProvider>
       </div>
     </SessionProvider>
