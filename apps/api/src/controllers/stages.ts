@@ -9,8 +9,6 @@ export const getAllStages = async (
   res: Response
 ): Promise<void> => {
   try {
-    const language = (req.query.language as string) || 'zh';
-
     const stages = await prisma.stage.findMany({
       where: { isActive: true },
       orderBy: { stageNumber: 'asc' },
@@ -18,9 +16,8 @@ export const getAllStages = async (
 
     const stageData = stages.map((stage) => ({
       stage_id: stage.id,
-      stage_title: language === 'zh' ? stage.titleZh : stage.titleEn,
-      description:
-        language === 'zh' ? stage.descriptionZh : stage.descriptionEn,
+      stage_title: stage.title,
+      description: stage.description,
       external_url: stage.externalUrl,
     }));
 

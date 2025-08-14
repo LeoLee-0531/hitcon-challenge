@@ -15,7 +15,7 @@ export const getRewardStatus = async (
     let targetUserId: string;
 
     // 如果是管理員且提供了 user_id，查詢指定使用者
-    if (req.admin && req.query.user_id) {
+    if (req.user?.role === 'ADMIN' && req.query.user_id) {
       targetUserId = req.query.user_id as string;
     } else if (req.user) {
       targetUserId = req.user.id;
@@ -56,7 +56,7 @@ export const getRewardStatus = async (
 
     sendSuccess(res, {
       user_id: user.id,
-      nickname: user.nickname,
+      name: user.name,
       passed_count: passedCount,
       reward_claimed: rewardClaimed,
       claimed_at: claimedAt,
@@ -79,7 +79,7 @@ export const claimReward = async (
   try {
     const { user_id }: RewardClaimPayload = req.body;
 
-    if (!req.admin) {
+    if (!req.user || req.user.role !== 'ADMIN') {
       sendError(
         res,
         ERROR_CODES.UNAUTHORIZED,
@@ -88,7 +88,7 @@ export const claimReward = async (
       return;
     }
 
-    const adminId = req.admin.id;
+    const adminId = req.user.id;
 
     // 查找使用者及其進度
     const user = await prisma.user.findUnique({
@@ -143,7 +143,7 @@ export const claimReward = async (
 
     sendSuccess(res, {
       user_id: user.id,
-      nickname: user.nickname,
+      name: user.name,
       passed_count: passedCount,
       reward_claimed: true,
       claimed_at: rewardClaim.claimedAt,
@@ -164,6 +164,15 @@ export const resetReward = async (
   res: Response
 ): Promise<void> => {
   try {
+    if (!req.user || req.user.role !== 'ADMIN') {
+      sendError(
+        res,
+        ERROR_CODES.UNAUTHORIZED,
+        ERROR_MESSAGES[ERROR_CODES.UNAUTHORIZED]
+      );
+      return;
+    }
+
     const { user_id }: RewardClaimPayload = req.body;
 
     // 查找使用者及其進度
@@ -198,7 +207,7 @@ export const resetReward = async (
 
     sendSuccess(res, {
       user_id: user.id,
-      nickname: user.nickname,
+      name: user.name,
       passed_count: passedCount,
       reward_claimed: false,
       claimed_at: null,
