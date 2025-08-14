@@ -28,7 +28,39 @@
     "getStarted": "Get Started",
     "learnMore": "Learn More",
     "featuredChallenges": "Featured Challenges",
-    "recentActivity": "Recent Activity"
+    "recentActivity": "Recent Activity",
+    "hero": {
+      "title": "SITCON X HITCON 2025",
+      "subtitle": "Hacker Challenge, Limited Time Only!",
+      "date": "8/15–8/16",
+      "location": "Academia Sinica Humanities and Social Sciences Building"
+    },
+    "banner": {
+      "content": "Complete 6 challenges to win SITCON exclusive rewards!"
+    },
+    "eventDescription": {
+      "title": "Event Description",
+      "content": "At the HITCON booth, SITCON will bring you a \"Challenge Quest\" that combines technology, fun, and creativity! There are 6 challenges in total, from Git Leak and Crypto to Python Jail - each one is exciting!",
+      "participationTitle": "How to Participate",
+      "login": "Use Google account to login and participate",
+      "flag": "Enter the correct Flag for each challenge to pass",
+      "rewards": "Complete 2, 4, and 6 challenges to receive different level rewards"
+    },
+    "rewardDescription": {
+      "title": "Reward Information",
+      "content": "After successfully completing challenges, you can exchange for rewards at the SITCON booth! Limited quantities available, first come first served!",
+      "levelSystemTitle": "Reward Level System",
+      "level1": "2 Challenges",
+      "level1Prize": "Level 1 Prize",
+      "level2": "4 Challenges",
+      "level2Prize": "Level 2 Prize",
+      "level3": "6 Challenges",
+      "level3Prize": "Level 3 Prize",
+      "limitNote": "One reward per person, cannot be claimed multiple times",
+      "exchangeProcessTitle": "Reward Exchange Process",
+      "step1": "Go to SITCON booth and ask staff to scan the QR code on your profile page",
+      "step2": "After staff confirmation, you can collect your reward on site!"
+    }
   },
   "profile": {
     "completedChallenges": "Completed Challenges",
@@ -88,7 +120,9 @@
     "validationFailed": "Validation failed, please try again later!",
     "submitting": "Submitting...",
     "loginRequired": "Please login first to verify the challenge",
-    "invalidFlagFormat": "Invalid flag format. Please use our flag format."
+    "invalidFlagFormat": "Invalid flag format. Please use our flag format.",
+    "selectChallenge": "Please select a challenge",
+    "flagPlaceholder": "Enter Flag: SITCON{...}"
   },
   "errors": {
     "notFound": "Page not found",
@@ -97,6 +131,10 @@
     "validationError": "Validation error",
     "networkError": "Network error",
     "tryAgain": "Please try again later"
+  },
+  "footer": {
+    "pastEvents": "Past Events",
+    "contact": "Contact Us"
   },
   "about": {
     "title": "📢 SITCON 2026",

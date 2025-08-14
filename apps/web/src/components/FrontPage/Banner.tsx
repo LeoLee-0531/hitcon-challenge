@@ -8,13 +8,13 @@ interface BannerProps {
 }
 
 export default function Banner({ isMobile }: BannerProps) {
-  const t = useTranslations('');
+  const t = useTranslations('home.banner');
   return (
     <div className="flex-center">
       <div
         className={`banner-content font-bold ${isMobile ? 'text-base' : ''}`}
       >
-        挑戰 6 道關卡，贏得 SITCON 限定好禮！
+        {t('content')}
       </div>
     </div>
   );

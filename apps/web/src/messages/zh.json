@@ -28,7 +28,39 @@
     "getStarted": "開始挑戰",
     "learnMore": "了解更多",
     "featuredChallenges": "精選挑戰",
-    "recentActivity": "最近活動"
+    "recentActivity": "最近活動",
+    "hero": {
+      "title": "SITCON X HITCON 2025",
+      "subtitle": "駭客挑戰，限時開啟！",
+      "date": "8/15–8/16",
+      "location": "中央研究院 人文社會科學館"
+    },
+    "banner": {
+      "content": "挑戰 6 道關卡，贏得 SITCON 限定好禮！"
+    },
+    "eventDescription": {
+      "title": "活動說明",
+      "content": "在 HITCON 攤位，SITCON 將帶來一場結合技術、趣味與創意的「闖關挑戰」！總共 6 道關卡，從 Git Leak、 Crypto 到 Python Jail 等，關關精彩！",
+      "participationTitle": "參加方式",
+      "login": "使用 Google 帳號登入參加活動",
+      "flag": "每關輸入正確的 Flag 即可通關",
+      "rewards": "完成 2、4、6 關可獲得不同等級獎勵"
+    },
+    "rewardDescription": {
+      "title": "兌獎說明",
+      "content": "挑戰成功後，即可至 SITCON 攤位兌換獎勵！獎品有限，兌完為止！",
+      "levelSystemTitle": "獎勵分級制度",
+      "level1": "2 關",
+      "level1Prize": "一級獎",
+      "level2": "4 關",
+      "level2Prize": "二級獎",
+      "level3": "6 關",
+      "level3Prize": "三級獎",
+      "limitNote": "每人限領一次獎勵，不可重複領取",
+      "exchangeProcessTitle": "兌獎流程",
+      "step1": "到 SITCON 攤位請工作人員掃描在個人頁面的 QR code",
+      "step2": "待工作人員確認完畢後，即可現場領獎！"
+    }
   },
   "profile": {
     "completedChallenges": "通過關卡",
@@ -88,7 +120,9 @@
     "validationFailed": "驗證失敗，請稍後再試！",
     "submitting": "送出中...",
     "loginRequired": "請先登入後再進行關卡驗證",
-    "invalidFlagFormat": "無效的 flag 格式，請使用輸入框提示的 flag 格式。"
+    "invalidFlagFormat": "無效的 flag 格式，請使用輸入框提示的 flag 格式。",
+    "selectChallenge": "請選擇關卡",
+    "flagPlaceholder": "輸入 Flag : SITCON{...}"
   },
   "errors": {
     "notFound": "找不到頁面",
@@ -97,6 +131,10 @@
     "validationError": "驗證錯誤",
     "networkError": "網路錯誤",
     "tryAgain": "請稍後再試"
+  },
+  "footer": {
+    "pastEvents": "歷年網站",
+    "contact": "聯絡我們"
   },
   "admin": {
     "scanParticipantQRCode": "掃描 QR Code",
