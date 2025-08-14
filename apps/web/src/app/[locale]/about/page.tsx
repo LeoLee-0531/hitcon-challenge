@@ -57,6 +57,8 @@ export default function AboutSITCONPage() {
               {t('cocDesc1')}
               <a
                 href="https://sitcon.org/code-of-conduct/"
+                target="_blank"
+                rel="noreferrer noopener"
                 className="text-[#0DF20D] font-semibold underline hover:opacity-80 transition"
               >
                 {t('cocLinkText')}
@@ -74,6 +76,8 @@ export default function AboutSITCONPage() {
               {t('joinDesc1')}
               <a
                 href="https://groups.google.com/g/sitcon-general/"
+                target="_blank"
+                rel="noreferrer noopener"
                 className="text-[#0DF20D] font-semibold underline hover:opacity-80 transition"
               >
                 {t('joinMailText')}
@@ -84,6 +88,8 @@ export default function AboutSITCONPage() {
               {t('joinDesc3')}
               <a
                 href="https://gitlab.com/sitcon-tw"
+                target="_blank"
+                rel="noreferrer noopener"
                 className="text-[#0DF20D] font-semibold underline hover:opacity-80 transition"
               >
                 GitLab
