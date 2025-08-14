@@ -36,7 +36,9 @@
     "unauthorized": "未經授權的存取",
     "validationError": "驗證錯誤",
     "networkError": "網路錯誤",
-    "tryAgain": "請稍後再試"
+    "tryAgain": "請稍後再試",
+    "queryFailed": "查詢失敗",
+    "apiError": "API 錯誤"
   },
   "profile": {
     "completedChallenges": "通過關卡",
@@ -78,6 +80,11 @@
     "selectCamera": "選擇相機",
     "scanAgain": "重新掃描",
     "claimReward": "領取獎勵",
-    "resetReward": "重置兌換"
+    "resetReward": "重置兌換",
+    "claimSuccess": "兌換成功",
+    "claimFailed": "兌換失敗",
+    "confirmReset": "確定要重製兌換狀態？",
+    "resetSuccess": "重置成功",
+    "resetFailed": "重置失敗"
   }
 }

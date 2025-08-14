@@ -36,7 +36,9 @@
     "unauthorized": "Unauthorized access",
     "validationError": "Validation error",
     "networkError": "Network error",
-    "tryAgain": "Please try again later"
+    "tryAgain": "Please try again later",
+    "queryFailed": "Query failed",
+    "apiError": "API Error"
   },
   "profile": {
     "completedChallenges": "Completed Challenges",
@@ -78,6 +80,13 @@
     "selectCamera": "Select Camera",
     "scanAgain": "Scan Again",
     "claimReward": "Claim Reward",
-    "resetReward": "Reset Reward"
+    "resetReward": "Reset Reward",
+    "claimSuccess": "Claim Success",
+    "claimFailed": "Claim Failed",
+    "confirmReset": "Are you sure you want to reset the exchange status?",
+    "resetSuccess": "Reset Success",
+    "resetFailed": "Reset Failed",
+    "queryFailed": "Query failed",
+    "apiError": "API Error"
   }
 }
