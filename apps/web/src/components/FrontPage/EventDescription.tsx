@@ -2,7 +2,18 @@
 
 import { useTranslations } from 'next-intl';
 import '@/styles/components/FrontPage.css';
-
+import {
+  Menu,
+  X,
+  User,
+  Users,
+  Trophy,
+  ExternalLink,
+  Shield,
+  Zap,
+  Brain,
+  Smartphone,
+} from "lucide-react";
 interface EventDescriptionProps {
   isMobile: boolean;
 }
@@ -24,19 +35,19 @@ export default function EventDescription({ isMobile }: EventDescriptionProps) {
         <div className="event-title font-bold">參加方式</div>
         <div className="event-list">
           <div className="event-list-content">
-            <img className="event-icon" src="/head.svg"></img>
+            <User className="event-list-icon " />
             <p className="event-content font-normal ">
               使用 Google 帳號登入參加活動
             </p>
           </div>
           <div className="event-list-content">
-            <img className="event-icon" src="/flag.svg"></img>
+            <Shield className="event-list-icon " />
             <p className="event-content font-normal ">
               每關輸入正確的 Flag 即可通關
             </p>
           </div>
           <div className="event-list-content">
-            <img className="event-icon" src="/prize.svg"></img>
+            <Trophy className="event-list-icon " />
             <p className="event-content font-normal ">
               完成 2、4、6 關可獲得不同等級獎勵
             </p>

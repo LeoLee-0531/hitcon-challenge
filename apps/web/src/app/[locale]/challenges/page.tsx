@@ -318,7 +318,7 @@ export default function ChallengesPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className={isMobile ? 'layout-mobile ' : 'layout-desktop'}>
+      <div className={isMobile ? 'layout-mobile ' : 'layout-desktop pb-4'}>
         <ChallengeSidebar
           challengesList={challengesList}
           selectedChallenge={selectedChallenge}

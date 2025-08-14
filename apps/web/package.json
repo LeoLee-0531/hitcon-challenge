@@ -17,6 +17,7 @@
     "googleapis": "^155.0.0",
     "html5-qrcode": "^2.3.8",
     "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.539.0",
     "next": "15.4.2",
     "next-auth": "5.0.0-beta.29",
     "next-intl": "^4.3.4",
