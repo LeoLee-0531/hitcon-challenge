@@ -62,11 +62,10 @@ export default async function LocaleLayout({
       <div
         lang={locale}
         dir="ltr"
-        className="pt-[100px] bg-primary min-h-screen"
+        className="antialiased flex flex-col min-h-screen pt-[100px] bg-primary"
       >
         <NextIntlClientProvider messages={messages}>
           <Navigation />
-
           <main className="flex-1">{children}</main>
 
           {/* Footer - 條件性顯示 */}

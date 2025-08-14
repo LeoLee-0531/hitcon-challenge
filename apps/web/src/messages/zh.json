@@ -63,7 +63,7 @@
     },
     "workerRecruitment": {
       "title": "SITCON 工人招募",
-      "description": "每個工作組別好像都很重要呢！\nSITCON 星人好像留了什麼訊息...\n!! flag 內的英文字母都是大寫"
+      "description": "每個工作組別好像都很重要呢！\nSITCON 星人好像留了什麼訊息...\n! flag 內的英文字母都是大寫 !"
     },
     "elfText": {
       "title": "精靈文 @攤位",
@@ -75,7 +75,7 @@
     },
     "pythonJail": {
       "title": "Python Jail",
-      "description": "被困在 Python Jail 了，或許有什麼方法可以逃出牢籠拿到旗子\n!! 請把看到的 flag 依照輸入框提示格式送出"
+      "description": "被困在 Python Jail 了，或許有什麼方法可以逃出牢籠拿到旗子\n! 請把看到的 flag 依照輸入框提示格式送出 !"
     },
     "aboutSitcon": {
       "title": "關於 SITCON",
@@ -97,5 +97,12 @@
     "validationError": "驗證錯誤",
     "networkError": "網路錯誤",
     "tryAgain": "請稍後再試"
+  },
+  "frontpage": {
+    "title": "HITCON Challenge",
+    "subtitle": "駭客挑戰，限時開啟！",
+    "description": "挑戰七道關卡，贏得 SITCON 限定好禮！",
+    "location": "中央研究院 人文社會科學館區",
+    "con": "挑戰七道關卡，贏得 SITCON 限定好禮！"
   }
 }
