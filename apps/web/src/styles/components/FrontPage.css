@@ -129,9 +129,15 @@
   font-size: 1rem;
 }
 
-.reward-3 { color: var(--primary-10); }
-.reward-5 { color: var(--primary-60); }
-.reward-7 { color: var(--primary-70); }
+.reward-3 {
+  color: var(--primary-10);
+}
+.reward-5 {
+  color: var(--primary-60);
+}
+.reward-7 {
+  color: var(--primary-70);
+}
 
 .reward-list-content {
   display: flex;

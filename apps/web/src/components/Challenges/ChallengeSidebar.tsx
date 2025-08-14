@@ -13,8 +13,12 @@ interface ChallengeSidebarProps {
 function ChallengeIcon({ completed }: { completed: boolean }) {
   const [hovered, setHovered] = useState(false);
   const src = completed
-    ? hovered ? '/completeHover.svg' : '/complete.svg'
-    : hovered ? '/incompleteHover.svg' : '/incomplete.svg';
+    ? hovered
+      ? '/completeHover.svg'
+      : '/complete.svg'
+    : hovered
+      ? '/incompleteHover.svg'
+      : '/incomplete.svg';
 
   return (
     <img
@@ -77,7 +81,9 @@ export default function ChallengeSidebar({
           onClick={() => setSelectedChallenge(challenge)}
         >
           <ChallengeIcon completed={challenge.completed} />
-          <span className="font-bold sidebar-text-desktop">{challenge.title}</span>
+          <span className="font-bold sidebar-text-desktop">
+            {challenge.title}
+          </span>
           {index < challengesList.length - 1 && (
             <div className="sidebar-line-desktop" />
           )}

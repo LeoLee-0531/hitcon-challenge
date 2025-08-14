@@ -1,4 +1,3 @@
-
 import type { Challenge } from '@/types/challenge';
 
 const challenges: Challenge[] = [

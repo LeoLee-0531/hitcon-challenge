@@ -12,14 +12,19 @@ const MOBILE_BREAKPOINT = 1024;
 
 export default function ChallengesPage() {
   const [challengesList, setChallengesList] = useState<Challenge[]>(challenges);
-  const [selectedChallenge, setSelectedChallenge] = useState<Challenge>(challenges[0]);
+  const [selectedChallenge, setSelectedChallenge] = useState<Challenge>(
+    challenges[0]
+  );
   const [password, setPassword] = useState('');
   const [isMobile, setIsMobile] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<
+    'idle' | 'success' | 'error'
+  >('idle');
 
   useEffect(() => {
-    const checkScreenSize = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    const checkScreenSize = () =>
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
     return () => window.removeEventListener('resize', checkScreenSize);
@@ -57,22 +62,24 @@ export default function ChallengesPage() {
     }, 5000);
   };
   return (
-    <div className={isMobile ? 'layout-mobile' : 'layout-desktop'}>
-      <ChallengeSidebar
-        challengesList={challengesList}
-        selectedChallenge={selectedChallenge}
-        setSelectedChallenge={setSelectedChallenge}
-        isMobile={isMobile}
-      />
-      <ChallengeMain
-        selectedChallenge={selectedChallenge}
-        password={password}
-        setPassword={setPassword}
-        handleSubmit={handleSubmit}
-        isMobile={isMobile}
-        submitMessage={submitMessage}
-        submitStatus={submitStatus}
-      />
+    <div className="flex items-center justify-center min-h-screen gap-6 p-4 flex-col md:flex-row">
+      <div className={isMobile ? 'layout-mobile ' : 'layout-desktop'}>
+        <ChallengeSidebar
+          challengesList={challengesList}
+          selectedChallenge={selectedChallenge}
+          setSelectedChallenge={setSelectedChallenge}
+          isMobile={isMobile}
+        />
+        <ChallengeMain
+          selectedChallenge={selectedChallenge}
+          password={password}
+          setPassword={setPassword}
+          handleSubmit={handleSubmit}
+          isMobile={isMobile}
+          submitMessage={submitMessage}
+          submitStatus={submitStatus}
+        />
+      </div>
     </div>
   );
 }

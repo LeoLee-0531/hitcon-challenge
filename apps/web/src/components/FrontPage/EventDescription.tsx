@@ -10,7 +10,9 @@ interface EventDescriptionProps {
 export default function EventDescription({ isMobile }: EventDescriptionProps) {
   const t = useTranslations('');
   return (
-    <div className={`glass-container shadow-md ${isMobile ? 'w-full p-4' : ''}`}>
+    <div
+      className={`glass-container shadow-md ${isMobile ? 'w-full p-4' : ''}`}
+    >
       <div>
         <div className="event-title font-bold">活動說明</div>
         <p className="event-content font-light">

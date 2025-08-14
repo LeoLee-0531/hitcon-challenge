@@ -99,9 +99,10 @@ export default function ChallengeMain({
             padding: '8px',
             borderRadius: '8px',
             width: isMobile ? 'calc(100% - 32px)' : 'min(448px, 100%)',
-            backgroundColor: submitStatus === 'success'
-              ? 'rgba(34, 197, 94, 0.25)'
-              : 'rgba(239, 68, 68, 0.25)',
+            backgroundColor:
+              submitStatus === 'success'
+                ? 'rgba(34, 197, 94, 0.25)'
+                : 'rgba(239, 68, 68, 0.25)',
             color: submitStatus === 'success' ? '#22c55e' : '#ef4444',
             fontSize: isMobile ? '12px' : '14px',
             border: `1px solid ${

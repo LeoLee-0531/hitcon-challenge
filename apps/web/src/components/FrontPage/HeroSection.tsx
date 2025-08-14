@@ -11,7 +11,9 @@ export default function HeroSection({ isMobile }: HeroSectionProps) {
   const t = useTranslations('');
   return (
     <div className="front-hero flex-col-center">
-      <div className={`front-hero-title font-bold ${isMobile ? 'text-center' : ''}`}>
+      <div
+        className={`front-hero-title font-bold ${isMobile ? 'text-center' : ''}`}
+      >
         SITCON X HITCON 2025
       </div>
 

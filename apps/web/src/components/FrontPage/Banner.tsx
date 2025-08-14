@@ -11,7 +11,9 @@ export default function Banner({ isMobile }: BannerProps) {
   const t = useTranslations('');
   return (
     <div className="flex-center">
-      <div className={`banner-content font-bold ${isMobile ? 'text-base' : ''}`}>
+      <div
+        className={`banner-content font-bold ${isMobile ? 'text-base' : ''}`}
+      >
         挑戰七道關卡，贏得 SITCON 限定好禮！
       </div>
     </div>

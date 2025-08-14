@@ -16,7 +16,8 @@ export default function Home() {
   const tCommon = useTranslations('common');
 
   useEffect(() => {
-    const checkScreenSize = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    const checkScreenSize = () =>
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
     return () => window.removeEventListener('resize', checkScreenSize);

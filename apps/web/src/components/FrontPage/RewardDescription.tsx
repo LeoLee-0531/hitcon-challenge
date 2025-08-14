@@ -7,7 +7,9 @@ interface RewardDescriptionProps {
   isMobile: boolean;
 }
 
-export default function RewardDescription({ isMobile }: RewardDescriptionProps) {
+export default function RewardDescription({
+  isMobile,
+}: RewardDescriptionProps) {
   const t = useTranslations('');
   return (
     <div className="glass-container shadow-md">
@@ -19,7 +21,9 @@ export default function RewardDescription({ isMobile }: RewardDescriptionProps) 
       </div>
       <div>
         <div className="reward-title font-bold">獎勵分級制度</div>
-        <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center gap-4`}>
+        <div
+          className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center gap-4`}
+        >
           <div className="reward-glass-container">
             <p className="reward-3 reward-level font-bold">3 關</p>
             <p className="reward-3 reward-prize font-bold">一級獎</p>
