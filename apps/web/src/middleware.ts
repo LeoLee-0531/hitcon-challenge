@@ -2,8 +2,6 @@ import createMiddleware from 'next-intl/middleware';
 import { locales, defaultLocale } from './i18n/config';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { auth } from '@/auth';
-import { useSession } from 'next-auth/react';
 
 const intlMiddleware = createMiddleware({
   // 支援的語言列表
@@ -17,19 +15,31 @@ const intlMiddleware = createMiddleware({
 });
 
 export function middleware(request: NextRequest) {
-  // const session = request.cookies.get('session')?.value;
-  // const { pathname } = request.nextUrl;
-  // const locale = pathname.split('/')[1]; // 取得語言前綴（如 'en' 或 'zh'）
+  // 讀取 NEXT_LOCALE cookie
+  const localeCookie = request.cookies.get('NEXT_LOCALE')?.value;
+  const { pathname, search } = request.nextUrl;
 
-  // let loginPath = '/login';
-  // if (locale === 'en' || locale === 'zh') {
-  //   loginPath = `/${locale}/login`;
-  // }
+  // 檢查目前路徑是否有語言前綴，並取得目前路徑語言
+  const matchedLocale = locales.find(
+    (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`)
+  );
 
-  // TODO: 設定語言後會自動跳轉回預設語言
+  // 只有在沒有語言前綴時才根據 cookie 導向
+  if (
+    !matchedLocale &&
+    localeCookie &&
+    locales.includes(localeCookie as (typeof locales)[number]) &&
+    pathname !== '/'
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${localeCookie}${pathname}`;
+    url.search = search;
+    return NextResponse.redirect(url);
+  }
+
+  // 執行原本的 intlMiddleware
   const intlResponse = intlMiddleware(request);
   if (intlResponse) return intlResponse;
-
   return NextResponse.next();
 }
 
