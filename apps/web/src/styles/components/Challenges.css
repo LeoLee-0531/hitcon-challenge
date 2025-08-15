@@ -14,6 +14,7 @@
   align-items: center;
   width: 100%;
   padding: 16px;
+  padding-bottom: 32px; /* 增加底部間距 */
   gap: 24px;
   min-height: calc(100vh - 180px);
 }
@@ -158,7 +159,7 @@
 
 .goto {
   font-size: 14px;
-  width: 35%;
+  width: 70%; /* 從 50% 增加到 70% */
 }
 
 .goto-span {
@@ -190,4 +191,17 @@
   width: min(448px, 100%);
   height: 56px;
   font-size: 16px;
+}
+
+/* Reward Section */
+.reward-title {
+  font-size: var(--size-ha);
+  padding-bottom: 2rem;
+}
+
+.reward-glass-container {
+  width: 13.5rem;
+  height: 8rem;
+  padding: 1rem;
+  margin-bottom: 0;
 }

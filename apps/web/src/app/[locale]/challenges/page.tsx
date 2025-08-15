@@ -216,6 +216,29 @@ export default function ChallengesPage() {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
+  // 鎖定整頁捲動（最高優先，避免被其他 overflow-* 類別覆蓋）
+  useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+
+    const prevHtmlOverflow = html.style.overflow;
+    const prevBodyOverflow = body.style.overflow;
+    const prevHtmlH = html.style.height;
+    const prevBodyH = body.style.height;
+
+    html.style.overflow = 'hidden';
+    body.style.overflow = 'hidden';
+    html.style.height = '100%';
+    body.style.height = '100%';
+
+    return () => {
+      html.style.overflow = prevHtmlOverflow;
+      body.style.overflow = prevBodyOverflow;
+      html.style.height = prevHtmlH;
+      body.style.height = prevBodyH;
+    };
+  }, []);
+
   const handleSubmit = async () => {
     if (!selectedChallenge) return;
 
@@ -323,27 +346,36 @@ export default function ChallengesPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className={isMobile ? 'layout-mobile ' : 'layout-desktop pb-4'}>
-        <ChallengeSidebar
-          challengesList={challengesList}
-          selectedChallenge={selectedChallenge}
-          setSelectedChallenge={setSelectedChallenge}
-          isMobile={isMobile}
-        />
-        {selectedChallenge && (
-          <ChallengeMain
-            selectedChallenge={selectedChallenge}
-            password={password}
-            setPassword={setPassword}
-            handleSubmit={handleSubmit}
-            isMobile={isMobile}
-            submitMessage={submitMessage}
-            submitStatus={submitStatus}
-            isSubmitting={isSubmitting}
-          />
-        )}
+    <>
+      {/* 以 fixed 方式鋪滿視窗，並避開 layout 的 pt-[100px] */}
+      <div className="fixed left-0 right-0 bottom-0 top-[100px] overflow-auto">
+        <div className="h-full w-full overflow-auto">
+          <div className="flex items-center justify-center min-h-screen">
+            <div
+              className={isMobile ? 'layout-mobile ' : 'layout-desktop pb-4'}
+            >
+              <ChallengeSidebar
+                challengesList={challengesList}
+                selectedChallenge={selectedChallenge}
+                setSelectedChallenge={setSelectedChallenge}
+                isMobile={isMobile}
+              />
+              {selectedChallenge && (
+                <ChallengeMain
+                  selectedChallenge={selectedChallenge}
+                  password={password}
+                  setPassword={setPassword}
+                  handleSubmit={handleSubmit}
+                  isMobile={isMobile}
+                  submitMessage={submitMessage}
+                  submitStatus={submitStatus}
+                  isSubmitting={isSubmitting}
+                />
+              )}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

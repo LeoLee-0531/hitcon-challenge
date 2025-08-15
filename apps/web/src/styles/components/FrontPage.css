@@ -121,14 +121,34 @@
   padding: 0.75rem;
   margin-bottom: 0.5rem;
   gap: 0.5rem;
+  text-align: center;
+  min-height: 5rem;
+  position: relative;
 }
 
 .reward-level {
   font-size: 1.125rem;
+  line-height: 1.2;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  min-height: 1.5rem;
 }
 
 .reward-prize {
   font-size: 1rem;
+  line-height: 1.2;
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  min-height: 1.5rem;
 }
 
 .reward-3 {
@@ -204,23 +224,52 @@
   }
 
   .reward-glass-container {
-    width: 13.5rem;
+    width: 15rem;
     height: 8rem;
     padding: 1rem;
     margin-bottom: 0;
+    min-height: 8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 
   .reward-level {
     font-size: var(--size-lg);
-    height: var(--size-lg);
+    height: auto;
+    line-height: 1.2;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2rem;
   }
 
   .reward-prize {
-    font-size: var(--size-md);
-    height: var(--size-md);
+    font-size: 1.125rem;
+    height: auto;
+    line-height: 1.2;
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-width: 100%;
+    padding: 0 0.5rem;
+    min-height: 2rem;
   }
 
   .reward-list {
+    gap: 2rem;
+  }
+
+  /* Reward container gap for desktop */
+  .reward-container {
     gap: 2rem;
   }
 }

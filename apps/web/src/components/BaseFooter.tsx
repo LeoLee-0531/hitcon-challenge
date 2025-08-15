@@ -1,5 +1,6 @@
 // components/BaseFooter.tsx
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import FacebookLogo from './logos/facebook';
 import FlickrLogo from './logos/flickr';
 import InstagramLogo from './logos/instagram';
@@ -9,6 +10,8 @@ import YoutubeLogo from './logos/youtube';
 import SitconLogo from './logos/sitcon';
 
 export default function BaseFooter() {
+  const t = useTranslations('footer');
+
   return (
     <footer className="space-y-7 bg-[#121712] px-5 pb-7 pt-4 text-white mobile:px-10 mobile:py-16 mobile:pt-16">
       {/* Divider */}
@@ -18,7 +21,7 @@ export default function BaseFooter() {
       <div className="grid grid-cols-12 gap-2">
         <div className="col-span-2" />
         <div className="col-span-8 flex justify-between max-[700px]:block">
-          {/* 桌機/平板顯示 PastEvents + Contact，手機顯示 Contact + PastEvents */}
+          {/* Desktop/tablet shows PastEvents + Contact, mobile shows Contact + PastEvents */}
           <div className="max-[700px]:hidden flex justify-between w-full">
             <span>
               <PastEvents />
@@ -43,9 +46,11 @@ export default function BaseFooter() {
 }
 
 function PastEvents() {
+  const t = useTranslations('footer');
+
   return (
     <FooterSubMenuGrid
-      title="歷年網站"
+      title={t('pastEvents')}
       links={[
         { text: '2013', href: 'https://sitcon.org/2013' },
         { text: '2014', href: 'https://sitcon.org/2014' },
@@ -65,9 +70,11 @@ function PastEvents() {
 }
 
 function Contact() {
+  const t = useTranslations('footer');
+
   return (
     <FooterSubMenu
-      title="聯絡我們"
+      title={t('contact')}
       links={[
         { text: 'contact@sitcon.org', href: 'mailto:contact@sitcon.org' },
       ]}

@@ -9,26 +9,26 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ isMobile }: HeroSectionProps) {
-  const t = useTranslations('');
+  const t = useTranslations('home.hero');
   return (
     <div className="front-hero flex-col-center">
       <div
         className={`front-hero-title font-bold ${isMobile ? 'text-center' : ''}`}
       >
-        SITCON X HITCON 2025
+        {t('title')}
       </div>
 
-      <div className="front-hero-subtitle font-bold">駭客挑戰，限時開啟！</div>
+      <div className="front-hero-subtitle font-bold">{t('subtitle')}</div>
 
       <div className="front-hero-div flex-center flex-wrap ">
         <div className="flex-center">
           <Calendar className="front-hero-icon " />
-          <div className="front-hero-content">8/15–8/16</div>
+          <div className="front-hero-content">{t('date')}</div>
         </div>
 
         <div className="flex-center">
           <MapPin className="front-hero-icon " />
-          <div className="front-hero-content">中央研究院 人文社會科學館</div>
+          <div className="front-hero-content">{t('location')}</div>
         </div>
       </div>
     </div>

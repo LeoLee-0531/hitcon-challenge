@@ -37,7 +37,8 @@ export default function ScanPanel() {
   // 安全停止掃描器：集中處理 stop、狀態與可忽略錯誤
   const safeStop = useCallback(async () => {
     // 若沒有實例、不是在跑、或已經在停止中，直接跳過
-    if (!html5QrCodeRef.current || !runningRef.current || stoppingRef.current) return;
+    if (!html5QrCodeRef.current || !runningRef.current || stoppingRef.current)
+      return;
 
     stoppingRef.current = true;
     try {
@@ -51,7 +52,9 @@ export default function ScanPanel() {
           err !== null &&
           'message' in err &&
           typeof (err as { message?: unknown }).message === 'string' &&
-          (err as { message: string }).message.includes('scanner is not running or paused')
+          (err as { message: string }).message.includes(
+            'scanner is not running or paused'
+          )
         )
       ) {
         console.error('停止掃描器時發生非預期錯誤：', err);
@@ -76,8 +79,14 @@ export default function ScanPanel() {
 
       // 呼叫後端取得使用者資料
       try {
-        const res = await fetch(`/api/reward/status?user_id=${encodeURIComponent(data)}`);
-        const result = (await res.json()) as { success: boolean; data?: UserData; message?: string };
+        const res = await fetch(
+          `/api/reward/status?user_id=${encodeURIComponent(data)}`
+        );
+        const result = (await res.json()) as {
+          success: boolean;
+          data?: UserData;
+          message?: string;
+        };
         if (result.success && result.data) {
           setUserData(result.data);
           setShowModal(true);
@@ -182,7 +191,11 @@ export default function ScanPanel() {
         const defaultCamera =
           devices.find((camera) => {
             const label = camera.label?.toLowerCase?.() ?? '';
-            return label.includes('back') || label.includes('後置') || label.includes('rear');
+            return (
+              label.includes('back') ||
+              label.includes('後置') ||
+              label.includes('rear')
+            );
           })?.id ?? devices[0]?.id;
 
         setSelectedCameraId(defaultCamera ?? null);
@@ -220,14 +233,17 @@ export default function ScanPanel() {
             <span className="text-gray-400">名稱:</span> {data.name ?? '未提供'}
           </div>
           <div>
-            <span className="text-gray-400">通過關卡數:</span> {data.passed_count}
+            <span className="text-gray-400">通過關卡數:</span>{' '}
+            {data.passed_count}
           </div>
           <div>
-            <span className="text-gray-400">已領獎:</span> {data.reward_claimed ? '是' : '否'}
+            <span className="text-gray-400">已領獎:</span>{' '}
+            {data.reward_claimed ? '是' : '否'}
           </div>
           {data.claimed_at && (
             <div>
-              <span className="text-gray-400">領獎時間:</span> {new Date(data.claimed_at).toLocaleString()}
+              <span className="text-gray-400">領獎時間:</span>{' '}
+              {new Date(data.claimed_at).toLocaleString()}
             </div>
           )}
         </div>
@@ -245,7 +261,10 @@ export default function ScanPanel() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: data.user_id }),
                   });
-                  const result = (await res.json()) as { success: boolean; message?: string };
+                  const result = (await res.json()) as {
+                    success: boolean;
+                    message?: string;
+                  };
                   if (result.success) {
                     alert(t('claimSuccess'));
                     setShowModal(false);
@@ -274,7 +293,10 @@ export default function ScanPanel() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: data.user_id }),
                   });
-                  const result = (await res.json()) as { success: boolean; message?: string };
+                  const result = (await res.json()) as {
+                    success: boolean;
+                    message?: string;
+                  };
                   if (result.success) {
                     alert(t('resetSuccess'));
                     setShowModal(false);
@@ -319,7 +341,9 @@ export default function ScanPanel() {
 
           {/* 相機權限/存取失敗提示（未掃描時顯示） */}
           {!isScanning && !scanResult && (
-            <div className="text-red-400 text-sm mt-2">{t('cameraAccessError')}</div>
+            <div className="text-red-400 text-sm mt-2">
+              {t('cameraAccessError')}
+            </div>
           )}
 
           {/* 攝影機下拉選單 */}
@@ -351,7 +375,11 @@ export default function ScanPanel() {
           <div className="relative flex flex-col items-center">
             {/* 掃描器容器（html5-qrcode 會將 video 與 canvas 插入這個 div） */}
             <div className="relative overflow-hidden rounded-lg border-2 border-[#0DF20D] w-[300px] h-[300px] md:w-[400px] md:h-[400px] aspect-square">
-              <div id="qr-reader" ref={scannerRef} className="w-full h-full aspect-square" />
+              <div
+                id="qr-reader"
+                ref={scannerRef}
+                className="w-full h-full aspect-square"
+              />
 
               {/* 隱藏 html5-qrcode 的內建掃描框，並避免影像變暗 */}
               <style jsx>{`
@@ -381,7 +409,9 @@ export default function ScanPanel() {
 
             {/* 說明文字 */}
             <div className="mt-6 text-center">
-              <div className="text-white text-lg mb-2">{t('putQRCodeInFrame')}</div>
+              <div className="text-white text-lg mb-2">
+                {t('putQRCodeInFrame')}
+              </div>
               <div className="text-gray-400 text-sm">{t('ensureClear')}</div>
             </div>
           </div>

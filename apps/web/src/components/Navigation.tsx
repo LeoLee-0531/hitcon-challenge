@@ -167,11 +167,11 @@ export default function Navigation() {
 
       {/* 手機版手風琴導覽列 */}
       <div
-        className={`md:hidden fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`md:hidden fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300 nav-mobile-overlay ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setIsMobileMenuOpen(false)}
         aria-hidden={!isMobileMenuOpen}
       />
-      <div className="md:hidden fixed top-0 w-full p-4 sm:p-6">
+      <div className="md:hidden fixed top-0 w-full p-4 sm:p-6 nav-mobile-menu">
         <div
           className={`overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
         >
