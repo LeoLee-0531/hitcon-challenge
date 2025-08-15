@@ -1,30 +1,3 @@
-// 取得目前使用者基本資料（id, email, role）
-export const getUserMe = async (
-  req: AuthenticatedRequest,
-  res: Response
-): Promise<void> => {
-  try {
-    if (!req.user) {
-      sendError(
-        res,
-        ERROR_CODES.UNAUTHORIZED,
-        ERROR_MESSAGES[ERROR_CODES.UNAUTHORIZED]
-      );
-      return;
-    }
-
-    const { id, name, email, role } = req.user;
-    sendSuccess(res, { id, name, email, role });
-  } catch (error) {
-    console.error('取得使用者基本資料錯誤:', error);
-    sendError(
-      res,
-      ERROR_CODES.INTERNAL_ERROR,
-      ERROR_MESSAGES[ERROR_CODES.INTERNAL_ERROR],
-      500
-    );
-  }
-};
 import type { Response, Request } from 'express';
 import { prisma } from '../lib/prisma';
 import { sendSuccess, sendError } from '../utils/response';

@@ -86,7 +86,8 @@
     "congratulations": "Congratulations",
     "completedText": "completed",
     "completedChallengesText": "challenges",
-    "thankYou": "Thank you for participating!"
+    "thankYou": "Thank you for participating!",
+    "logout": "Logout"
   },
   "challenges": {
     "instagram": {
