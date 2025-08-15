@@ -29,21 +29,18 @@ interface Challenge {
   link: string;
 }
 
+
 export default function ChallengesPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const t = useTranslations('challenges');
 
   const [challengesList, setChallengesList] = useState<Challenge[]>([]);
-  const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(
-    null
-  );
+  const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
   const [password, setPassword] = useState('');
   const [isMobile, setIsMobile] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
-  const [submitStatus, setSubmitStatus] = useState<
-    'idle' | 'success' | 'error'
-  >('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [isSubmitting, setIsSubmitting] = useState(false);
   // 登入提醒狀態
   const [showLoginAlert, setShowLoginAlert] = useState(false);
@@ -206,10 +203,10 @@ export default function ChallengesPage() {
 
   // 當 session 改變時，獲取用戶進度（只在登入狀態改變時）
   useEffect(() => {
-    if (session?.apiToken && challengesList.length > 0) {
+    if (session && challengesList.length > 0) {
       fetchUserProgress();
     }
-  }, [session?.apiToken, challengesList.length, fetchUserProgress]);
+  }, [session, challengesList.length, fetchUserProgress]);
 
   useEffect(() => {
     const checkScreenSize = () =>
@@ -249,7 +246,7 @@ export default function ChallengesPage() {
     if (isSubmitting) return;
 
     // 檢查用戶是否已登入
-    if (!session?.apiToken) {
+    if (!session) {
       setSubmitStatus('error');
       setSubmitMessage(t('loginRequired'));
       return;
@@ -268,20 +265,10 @@ export default function ChallengesPage() {
     try {
       setIsSubmitting(true);
       // 調用後端 API 驗證關卡密碼
-      const apiUrl = `${env.API_BASE_URL}/api/stages/verify`;
-
-      const response = await apiFetch(apiUrl, {
+      const response = await fetch('/api/stages/verify', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(session?.apiToken && {
-            Authorization: `Bearer ${session.apiToken}`,
-          }),
-        },
-        body: JSON.stringify({
-          stage_id: selectedChallenge.stageId,
-          password: sanitizedPassword,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ stage_id: selectedChallenge.stageId, password: sanitizedPassword }),
       });
 
       if (response.ok) {
@@ -303,8 +290,8 @@ export default function ChallengesPage() {
             // 安全地處理錯誤訊息
             const errorMsg =
               result.error &&
-              typeof result.error === 'object' &&
-              'message' in result.error
+                typeof result.error === 'object' &&
+                'message' in result.error
                 ? String(result.error.message)
                 : t('errorMessage');
             setSubmitMessage(errorMsg);
@@ -322,8 +309,8 @@ export default function ChallengesPage() {
           // 安全地處理錯誤訊息
           const errorMsg =
             errorData.error &&
-            typeof errorData.error === 'object' &&
-            'message' in errorData.error
+              typeof errorData.error === 'object' &&
+              'message' in errorData.error
               ? String(errorData.error.message)
               : t('errorMessage');
           setSubmitMessage(errorMsg);

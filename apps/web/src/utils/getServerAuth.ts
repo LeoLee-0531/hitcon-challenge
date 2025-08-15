@@ -7,7 +7,7 @@ const COOKIE_NAMES = ['authjs.session-token', '__Secure-authjs.session-token'];
 export async function getServerAuth() {
   const session = await auth();
   const cookieHeader = (await headers()).get('cookie') ?? '';
-  const req = new Request(process.env.AUTH_URL ?? 'http://localhost', {
+  const req = new Request(process.env.FRONTEND_URL ?? 'http://localhost', {
     headers: { cookie: cookieHeader },
   });
   const secret = process.env.AUTH_SECRET;

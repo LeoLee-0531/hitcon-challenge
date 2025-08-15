@@ -26,6 +26,7 @@ export function middleware(request: NextRequest) {
   //   loginPath = `/${locale}/login`;
   // }
 
+  // TODO: 設定語言後會自動跳轉回預設語言
   const intlResponse = intlMiddleware(request);
   if (intlResponse) return intlResponse;
 
