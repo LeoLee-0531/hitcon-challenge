@@ -76,15 +76,15 @@ export default function ProfilePage() {
   useEffect(() => {
     fetchUserData();
 
-    // const checkScreenSize = () => {
-    //   const width = window.innerWidth;
-    //   setIsMobile(width < MOBILE_BREAKPOINT);
-    // };
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < MOBILE_BREAKPOINT);
+    };
 
-    // checkScreenSize();
-    // window.addEventListener('resize', checkScreenSize);
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
 
-    // return () => window.removeEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
   const generateQRCode = async () => {
@@ -118,18 +118,20 @@ export default function ProfilePage() {
       >
         {/* Avatar & Name */}
         <div className="flex flex-col items-center mb-8">
-          <Image
-            src={currentUserData.avatar}
-            alt="avatar"
-            width={128}
-            height={128}
-            className="rounded-full border-4 border-[#232B20]"
-            style={{
-              width: isMobile ? '80px' : '128px',
-              height: isMobile ? '80px' : '128px',
-              borderWidth: isMobile ? '2px' : '4px',
-            }}
-          />
+          {currentUserData.avatar ? (
+            <Image
+              src={currentUserData.avatar}
+              alt="avatar"
+              width={128}
+              height={128}
+              className="rounded-full border-4 border-[#232B20]"
+              style={{
+                width: isMobile ? '80px' : '128px',
+                height: isMobile ? '80px' : '128px',
+                borderWidth: isMobile ? '2px' : '4px',
+              }}
+            />
+          ) : null}
           <div
             className="text-[22px] font-bold text-white mt-4"
             style={{
@@ -145,7 +147,7 @@ export default function ProfilePage() {
             style={{ fontSize: isMobile ? '12px' : '14px' }}
             onClick={() => signOut({ callbackUrl: '/' })}
           >
-          {/* TODO: 沒有登入的使用者會被導回首頁 */}
+            {/* TODO: 沒有登入的使用者會被導回首頁 */}
             {t('logout')}
           </button>
         </div>
