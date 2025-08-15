@@ -145,7 +145,7 @@ export default function ProfilePage() {
             style={{ fontSize: isMobile ? '12px' : '14px' }}
             onClick={() => signOut({ callbackUrl: '/' })}
           >
-          {/* TODO: 沒有登入的使用者會被導回首頁 */}
+            {/* TODO: 沒有登入的使用者會被導回首頁 */}
             {t('logout')}
           </button>
         </div>
@@ -335,7 +335,13 @@ export default function ProfilePage() {
                         className="w-12 h-12 rounded-full flex items-center justify-center"
                         style={{ background: '#1F2937' }}
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="white">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          fill="white"
+                        >
                           <path d="M12 17c2.76 0 5-2.24 5-5V7h-2V5H9v2H7v5c0 2.76 2.24 5 5 5zm-7-7V7h2v3c0 3.53 2.61 6.43 6 6.92V21h-2v-2H7v2H5v-2H3v-2h2v-2H3v-2h2v-2H3zm16 0v2h-2v2h2v2h-2v2h2v2h-2v2h-2v-2h-2v2h-2v-2c3.39-.49 6-3.39 6-6.92V7h2v3z" />
                         </svg>
                       </div>

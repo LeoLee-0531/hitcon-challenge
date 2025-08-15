@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 9999;
 }
 
 .nav-content {
@@ -96,4 +96,13 @@
     transparent,
     rgba(255, 255, 255, 0.3)
   );
+}
+
+/* 手機版選單的 z-index 設置 */
+.nav-mobile-menu {
+  z-index: 9998;
+}
+
+.nav-mobile-overlay {
+  z-index: 9997;
 }

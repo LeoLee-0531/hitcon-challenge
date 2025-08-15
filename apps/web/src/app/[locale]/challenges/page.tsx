@@ -29,18 +29,21 @@ interface Challenge {
   link: string;
 }
 
-
 export default function ChallengesPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const t = useTranslations('challenges');
 
   const [challengesList, setChallengesList] = useState<Challenge[]>([]);
-  const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null);
+  const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(
+    null
+  );
   const [password, setPassword] = useState('');
   const [isMobile, setIsMobile] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<
+    'idle' | 'success' | 'error'
+  >('idle');
   const [isSubmitting, setIsSubmitting] = useState(false);
   // 登入提醒狀態
   const [showLoginAlert, setShowLoginAlert] = useState(false);
@@ -300,8 +303,8 @@ export default function ChallengesPage() {
             // 安全地處理錯誤訊息
             const errorMsg =
               result.error &&
-                typeof result.error === 'object' &&
-                'message' in result.error
+              typeof result.error === 'object' &&
+              'message' in result.error
                 ? String(result.error.message)
                 : t('errorMessage');
             setSubmitMessage(errorMsg);
@@ -319,8 +322,8 @@ export default function ChallengesPage() {
           // 安全地處理錯誤訊息
           const errorMsg =
             errorData.error &&
-              typeof errorData.error === 'object' &&
-              'message' in errorData.error
+            typeof errorData.error === 'object' &&
+            'message' in errorData.error
               ? String(errorData.error.message)
               : t('errorMessage');
           setSubmitMessage(errorMsg);
