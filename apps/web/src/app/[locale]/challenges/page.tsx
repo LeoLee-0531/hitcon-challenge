@@ -360,18 +360,9 @@ export default function ChallengesPage() {
 
   return (
     <>
-      {/* 防止任何外層樣式覆蓋 */}
-      <style jsx global>{`
-        html,
-        body {
-          overflow: hidden !important;
-          height: 100% !important;
-        }
-      `}</style>
-
       {/* 以 fixed 方式鋪滿視窗，並避開 layout 的 pt-[100px] */}
-      <div className="fixed left-0 right-0 bottom-0 top-[100px] overflow-hidden">
-        <div className="h-full w-full overflow-hidden">
+      <div className="fixed left-0 right-0 bottom-0 top-[100px] overflow-auto">
+        <div className="h-full w-full overflow-auto">
           <div className="flex items-center justify-center min-h-screen">
             <div
               className={isMobile ? 'layout-mobile ' : 'layout-desktop pb-4'}

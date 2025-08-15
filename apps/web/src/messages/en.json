@@ -122,7 +122,8 @@
     "submitting": "Submitting...",
     "loginRequired": "Please login first to verify the challenge",
     "invalidFlagFormat": "Invalid flag format. Please use our flag format.",
-    "selectChallenge": "Please select a challenge"
+    "selectChallenge": "Please select a challenge",
+    "redirectingToHome": "Redirecting to home page..."
   },
   "errors": {
     "notFound": "Page not found",

@@ -122,7 +122,8 @@
     "submitting": "送出中...",
     "loginRequired": "請先登入後再進行關卡驗證",
     "invalidFlagFormat": "無效的 flag 格式，請使用輸入框提示的 flag 格式。",
-    "selectChallenge": "請選擇關卡"
+    "selectChallenge": "請選擇關卡",
+    "redirectingToHome": "正在導回首頁..."
   },
   "errors": {
     "notFound": "找不到頁面",
