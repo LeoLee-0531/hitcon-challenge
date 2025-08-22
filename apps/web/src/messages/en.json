@@ -23,20 +23,12 @@
     "login": "Login"
   },
   "home": {
-    "welcome": "Welcome to HITCON Challenge",
-    "description": "Test your cybersecurity skills with our challenging problems",
-    "getStarted": "Get Started",
-    "learnMore": "Learn More",
-    "featuredChallenges": "Featured Challenges",
-    "recentActivity": "Recent Activity",
+    "title": "Complete 6 challenges to win SITCON exclusive rewards!",
     "hero": {
       "title": "SITCON X HITCON 2025",
       "subtitle": "Hacker Challenge, Limited Time Only!",
       "date": "8/15–8/16",
       "location": "Academia Sinica Humanities and Social Sciences Building"
-    },
-    "banner": {
-      "content": "Complete 6 challenges to win SITCON exclusive rewards!"
     },
     "eventDescription": {
       "title": "Event Description",

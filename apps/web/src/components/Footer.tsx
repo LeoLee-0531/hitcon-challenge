@@ -1,4 +1,4 @@
-// components/BaseFooter.tsx
+// components/Footer.tsx
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import FacebookLogo from './logos/facebook';
@@ -9,7 +9,7 @@ import ThreadsLogo from './logos/threads';
 import YoutubeLogo from './logos/youtube';
 import SitconLogo from './logos/sitcon';
 
-export default function BaseFooter() {
+export default function Footer() {
   const t = useTranslations('footer');
 
   return (

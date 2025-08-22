@@ -24,19 +24,6 @@ export function middleware(request: NextRequest) {
     (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`)
   );
 
-  // 只有在沒有語言前綴時才根據 cookie 導向
-  if (
-    !matchedLocale &&
-    localeCookie &&
-    locales.includes(localeCookie as (typeof locales)[number]) &&
-    pathname !== '/'
-  ) {
-    const url = request.nextUrl.clone();
-    url.pathname = `/${localeCookie}${pathname}`;
-    url.search = search;
-    return NextResponse.redirect(url);
-  }
-
   // 執行原本的 intlMiddleware
   const intlResponse = intlMiddleware(request);
   if (intlResponse) return intlResponse;

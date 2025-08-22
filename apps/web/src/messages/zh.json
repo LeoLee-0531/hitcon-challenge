@@ -23,20 +23,12 @@
     "login": "登入"
   },
   "home": {
-    "welcome": "歡迎來到 HITCON 挑戰賽",
-    "description": "透過我們的挑戰題目測試您的資安技能",
-    "getStarted": "開始挑戰",
-    "learnMore": "了解更多",
-    "featuredChallenges": "精選挑戰",
-    "recentActivity": "最近活動",
+    "title": "挑戰 6 道關卡，贏得 SITCON 限定好禮！",
     "hero": {
       "title": "SITCON X HITCON 2025",
       "subtitle": "駭客挑戰，限時開啟！",
       "date": "8/15–8/16",
       "location": "中央研究院 人文社會科學館"
-    },
-    "banner": {
-      "content": "挑戰 6 道關卡，贏得 SITCON 限定好禮！"
     },
     "eventDescription": {
       "title": "活動說明",

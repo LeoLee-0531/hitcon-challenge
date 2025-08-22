@@ -1,7 +1,7 @@
 // app/recruit/page.tsx
 import React from 'react';
 import Link from 'next/link';
-import BaseFooter from '@/components/BaseFooter';
+import Footer from '@/components/Footer';
 import { useTranslations } from 'next-intl';
 
 type Team = {
@@ -272,7 +272,7 @@ export default function RecruitPage() {
           </main>
         </div>
       </div>
-      <BaseFooter />
+      <Footer />
     </>
   );
 }

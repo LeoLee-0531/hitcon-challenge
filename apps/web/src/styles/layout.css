@@ -1,4 +1,5 @@
-/* Layout Components */
+
+
 .flex-center {
   display: flex;
   align-items: center;
@@ -23,14 +24,16 @@
   justify-content: flex-end;
 }
 
-.flex-col {
-  display: flex;
-  flex-direction: column;
-}
-
 .flex-col-center {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-row-center {
+  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 }
@@ -61,7 +64,6 @@
   }
 }
 
-/* Spacing utilities */
 .gap-xs {
   gap: var(--space-xs);
 }
@@ -78,7 +80,6 @@
   gap: var(--space-xl);
 }
 
-/* Width utilities */
 .w-full {
   width: 100%;
 }
@@ -92,7 +93,6 @@
   height: auto;
 }
 
-/* Position utilities */
 .relative {
   position: relative;
 }

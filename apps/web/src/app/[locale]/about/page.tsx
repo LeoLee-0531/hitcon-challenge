@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { useTranslations } from 'next-intl';
-import BaseFooter from '@/components/BaseFooter';
+import Footer from '@/components/Footer';
 
 export default function AboutSITCONPage() {
   const t = useTranslations('about');
@@ -110,7 +110,7 @@ export default function AboutSITCONPage() {
         </div>
         <div className="sm:col-span-2 col-span-1" />
       </div>
-      <BaseFooter />
+      <Footer />
     </>
   );
 }
