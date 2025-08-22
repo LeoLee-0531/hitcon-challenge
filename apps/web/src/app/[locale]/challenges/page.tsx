@@ -1,22 +1,18 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 
-import ChallengeSidebar from '@/components/Challenges/ChallengeSidebar';
 import ChallengeMain from '@/components/Challenges/ChallengeMain';
-import { apiFetch } from '@/utils/apiFetch';
-import { env } from '@/config/env';
 import '@/styles/components/Challenges.css';
 
 // 響應式設計斷點
 const MOBILE_BREAKPOINT = 1024; // 使用標準的桌面斷點 (lg)
 
 // 安全設定常數
-const FLAG_MAX_LENGTH = 150; // Flag 輸入的最大長度限制
+const FLAG_MAX_LENGTH = 30; // Flag 輸入的最大長度限制
 const FLAG_PATTERN = /^SITCON\{.*\}$/; // Flag 格式驗證正則表達式
 
 interface Challenge {
@@ -27,6 +23,28 @@ interface Challenge {
   completed: boolean;
   current: boolean;
   link: string;
+}
+
+function ChallengeIcon({ completed }: { completed: boolean }) {
+  // TODO: active 樣式
+  const [hovered, setHovered] = useState(false);
+  const src = completed
+    ? hovered
+      ? '/challenges/completeHover.svg'
+      : '/challenges/complete.svg'
+    : hovered
+      ? '/challenges/incompleteHover.svg'
+      : '/challenges/incomplete.svg';
+
+  return (
+    <img
+      className="sidebar-icon"
+      src={src}
+      alt="challenge status"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    />
+  );
 }
 
 
@@ -216,29 +234,6 @@ export default function ChallengesPage() {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  // 鎖定整頁捲動（最高優先，避免被其他 overflow-* 類別覆蓋）
-  useEffect(() => {
-    const html = document.documentElement;
-    const body = document.body;
-
-    const prevHtmlOverflow = html.style.overflow;
-    const prevBodyOverflow = body.style.overflow;
-    const prevHtmlH = html.style.height;
-    const prevBodyH = body.style.height;
-
-    html.style.overflow = 'hidden';
-    body.style.overflow = 'hidden';
-    html.style.height = '100%';
-    body.style.height = '100%';
-
-    return () => {
-      html.style.overflow = prevHtmlOverflow;
-      body.style.overflow = prevBodyOverflow;
-      html.style.height = prevHtmlH;
-      body.style.height = prevBodyH;
-    };
-  }, []);
-
   const handleSubmit = async () => {
     if (!selectedChallenge) return;
 
@@ -347,32 +342,40 @@ export default function ChallengesPage() {
 
   return (
     <>
-      {/* 以 fixed 方式鋪滿視窗，並避開 layout 的 pt-[100px] */}
-      <div className="fixed left-0 right-0 bottom-0 top-[100px] overflow-auto">
-        <div className="h-full w-full overflow-auto">
-          <div className="flex items-center justify-center min-h-screen">
-            <div
-              className={isMobile ? 'layout-mobile ' : 'layout-desktop pb-4'}
-            >
-              <ChallengeSidebar
-                challengesList={challengesList}
-                selectedChallenge={selectedChallenge}
-                setSelectedChallenge={setSelectedChallenge}
-                isMobile={isMobile}
-              />
-              {selectedChallenge && (
-                <ChallengeMain
-                  selectedChallenge={selectedChallenge}
-                  password={password}
-                  setPassword={setPassword}
-                  handleSubmit={handleSubmit}
-                  isMobile={isMobile}
-                  submitMessage={submitMessage}
-                  submitStatus={submitStatus}
-                  isSubmitting={isSubmitting}
-                />
-              )}
+      <div className="fixed left-0 right-0 bottom-0 top-[100px] h-screen">
+        <div className="flex items-center justify-center min-h-screen">
+          <div
+            className={isMobile ? 'layout-mobile ' : 'layout-desktop pb-4'}
+          >
+            <div className='relative'>
+              {challengesList.map((challenge, index) => (
+                <div
+                  key={challenge.id}
+                  className="sidebar-box-desktop"
+                  onClick={() => setSelectedChallenge(challenge)}
+                >
+                  <ChallengeIcon completed={challenge.completed} />
+                  <span className="font-bold sidebar-text-desktop">
+                    {challenge.title}
+                  </span>
+                  {index < challengesList.length - 1 && (
+                    <div className="sidebar-line-desktop" />
+                  )}
+                </div>
+              ))}
             </div>
+            {selectedChallenge && (
+              <ChallengeMain
+                selectedChallenge={selectedChallenge}
+                password={password}
+                setPassword={setPassword}
+                handleSubmit={handleSubmit}
+                isMobile={isMobile}
+                submitMessage={submitMessage}
+                submitStatus={submitStatus}
+                isSubmitting={isSubmitting}
+              />
+            )}
           </div>
         </div>
       </div>

@@ -38,12 +38,12 @@
 }
 
 .sidebar-line-desktop {
-  background-color: #54443b;
+  background-color: #3B543B;
   position: absolute;
   left: 15px;
   top: 40px;
-  width: 2px;
-  height: 20px;
+  width: 3px;
+  height: 30px;
 }
 
 /* Sidebar Styles - Mobile */
