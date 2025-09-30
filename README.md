@@ -1,6 +1,6 @@
 # HITCON Challenge
 
-本專案為 HITCON Challenge 的 Monorepo 架構，包含一個 Next.js 前端和一個 Express 後端。
+本專案是 SITCON 為 2025 年 HITCON 年會攤位活動所開發的闖關系統，整體採用 Monorepo 架構。
 
 ## 專案結構
 
